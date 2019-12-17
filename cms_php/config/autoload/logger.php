@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://doc.hyperf.io
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
+ */
+
+$driver = env('LOG_DRIVER', 'file');
+$handlers = [];
+if ($driver == 'file') {
+    $handlers = [
+        // info、waring、notice日志等
+        [
+            'class' => App\Core\Handler\LogFileHandler::class,
+            'constructor' => [
+                'stream' => BASE_PATH . '/runtime/logs/hyperf.log',
+                'level' => Monolog\Logger::INFO,
+            ],
+            'formatter' => [
+                'class' => Monolog\Formatter\LineFormatter::class,
+                'constructor' => [
+                    'format' => "%datetime%||%channel%||%level_name%||%message%||%context%||%extra%\n",
+                    'dateFormat' => null,
+                    'allowInlineLineBreaks' => true,
+                ],
+            ]
+        ],
+        // debug日志
+        [
+            'class' => App\Core\Handler\LogFileHandler::class,
+            'constructor' => [
+                'stream' => BASE_PATH . '/runtime/logs/hyperf-debug.log',
+                'level' => Monolog\Logger::DEBUG,
+            ],
+            'formatter' => [
+                'class' => Monolog\Formatter\LineFormatter::class,
+                'constructor' => [
+                    'format' => "%datetime%||%channel%||%level_name%||%message%||%context%||%extra%\n",
+                    'dateFormat' => null,
+                    'allowInlineLineBreaks' => true,
+                ],
+            ]
+        ],
+        // error日志
+        [
+            'class' => App\Core\Handler\LogFileHandler::class,
+            'constructor' => [
+                'stream' => BASE_PATH . '/runtime/logs/hyperf-error.log',
+                'level' => Monolog\Logger::ERROR,
+            ],
+            'formatter' => [
+                'class' => Monolog\Formatter\LineFormatter::class,
+                'constructor' => [
+                    'format' => "%datetime%||%channel%||%level_name%||%message%||%context%||%extra%\n",
+                    'dateFormat' => null,
+                    'allowInlineLineBreaks' => true,
+                ],
+            ]
+        ],
+    ];
+}
+if ($driver == 'db') {
+
+}
+if ($driver == 'sls') {
+
+}
+
+
+return [
+    'default' => [
+        // 配置多个hander，根据每个handel产生日志
+        'handlers' => $handlers
+    ],
+];

@@ -1,0 +1,79 @@
+<?php
+/**
+ * Created by PhpStorm.
+ *​
+ * BaseRepository.php
+ *
+ * 仓库基类
+ *
+ * User：YM
+ * Date：2019/11/21
+ * Time：下午2:36
+ */
+
+
+namespace App\Repositories;
+
+
+use Psr\Container\ContainerInterface;
+use Hyperf\Di\Annotation\Inject;
+use App\Constants\StatusCode;
+
+/**
+ * BaseRepository
+ * 仓库基类
+ * @package App\Repositories
+ * User：YM
+ * Date：2019/11/21
+ * Time：下午2:36
+ */
+abstract class BaseRepository
+{
+    /**
+     * @Inject
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * __get
+     * 隐式注入服务类
+     * User：YM
+     * Date：2019/11/21
+     * Time：上午9:27
+     * @param $key
+     * @return \Psr\Container\ContainerInterface|void
+     */
+    public function __get($key)
+    {
+        if ($key == 'app') {
+            return $this->container;
+        } elseif (substr($key, -7) == 'Service') {
+            return $this->getServiceInstance($key);
+        } else {
+            throw new \RuntimeException("服务{$key}不存在，书写错误！", StatusCode::ERR_SERVER);
+        }
+    }
+
+    /**
+     * getServiceInstance
+     * 获取服务类实例
+     * User：YM
+     * Date：2019/11/21
+     * Time：上午10:30
+     * @param $key
+     * @return mixed
+     */
+    public function getServiceInstance($key)
+    {
+        $key = ucfirst($key);
+        $fileName = BASE_PATH."/app/Services/{$key}.php";
+        $className = "App\\Services\\{$key}";
+
+        if (file_exists($fileName)) {
+            return $this->container->get($className);
+        } else {
+            throw new \RuntimeException("服务{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
+        }
+    }
+}
