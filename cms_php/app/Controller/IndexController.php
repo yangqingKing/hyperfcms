@@ -56,9 +56,10 @@ class IndexController extends BaseController
             'method1' => $method,
             'message' => $tmp,
             'aaaa' => getCookie('aaa'),
-            'num' => getClientInfo(),
-            'QQ' => $this->request->getHeaderLine('qid'),
+            'QQ' => $this->request->getHeaders(),
             'DDD' => $this->request->getServerParams(),
+            'bb' => $this->request->getCookieParams(),
+            'adb' => getClientInfo(),
         ];
 
 

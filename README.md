@@ -1,6 +1,6 @@
 # 介绍
 
-Hyperf-cms基于Hyperf v1.1、VUE+Element UI开发的前后分离管理后台，内容管理系统
+HyperfCMS基于Hyperf v1.1、VUE+Element UI开发的前后分离管理后台，内容管理系统
 
 演示地址：
 
@@ -21,4 +21,5 @@ https://doc.hyperf.io/
 https://element.eleme.cn/2.0/#/zh-CN
 https://cn.vuejs.org/
 https://cli.vuejs.org/zh/
+
 
