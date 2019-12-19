@@ -65,7 +65,20 @@ if ($driver == 'file') {
     ];
 }
 if ($driver == 'db') {
-
+    $handlers = [
+        // 数据库日志存储
+        [
+            'class' => App\Core\Handler\LogDbHandler::class,
+            'formatter' => [
+                'class' => Monolog\Formatter\LineFormatter::class,
+                'constructor' => [
+                    'format' => "%datetime%||%channel%||%level_name%||%message%||%context%||%extra%\n",
+                    'dateFormat' => null,
+                    'allowInlineLineBreaks' => true,
+                ],
+            ]
+        ],
+    ];
 }
 if ($driver == 'sls') {
 

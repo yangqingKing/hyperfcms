@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *​
- * StreamHandler.php
+ * LogFileHandler.php
  *
  * 日志处理
  *

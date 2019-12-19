@@ -18,6 +18,7 @@ use App\Constants\StatusCode;
 use Hyperf\Pool\SimplePool\PoolFactory;
 use App\Core\Facade\Cookie;
 
+
 /**
  * IndexController
  * 类的介j
@@ -49,17 +50,25 @@ class IndexController extends BaseController
         $user = $this->request->input('aa', 'Hyperf2');
         $method = $this->request->getMethod();
 //        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
-        $tmp = $this->testRepo->test();
+//        $tmp = $this->testRepo->test();
 //        var_dump($tmp);
-        setCookies('aaa','000000000');
+//        setCookies('aaa','杨庆');
+
+//        $this->session->setId('taP3tE9E6smm6zGr0mfcSOLpBv4uQfJw7rpeSjMu');
+//        setSession('aa','杨庆');
+//        clearSession();
         $data = [
-            'method1' => $method,
-            'message' => $tmp,
-            'aaaa' => getCookie('aaa'),
-            'QQ' => $this->request->getHeaders(),
-            'DDD' => $this->request->getServerParams(),
-            'bb' => $this->request->getCookieParams(),
-            'adb' => getClientInfo(),
+//            'method1' => $method,
+//            'message' => $tmp,
+//            'aaaa' => getCookie('aaa'),
+//            'QQ' => $this->request->getHeaders(),
+//            'DDD' => $this->request->getServerParams(),
+//            'bb' => $this->request->getCookieParams(),
+//            'adb' => getClientInfo(),
+            '888' => array_values(swoole_get_local_ip()),
+//            '999' => $this->request->getBody(),
+            '090' => getSessionId(),
+            '999' => getAllSession(),
         ];
 
 

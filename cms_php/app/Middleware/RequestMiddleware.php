@@ -42,11 +42,15 @@ class RequestMiddleware implements MiddlewareInterface
         // 为每一个请求增加一个qid
         $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) {
             $request = $request->withAddedHeader('qid', $this->getRequestId());
+//            $request = $request->withCookieParams(['HYPERF_SESSION_ID'=>'taP3tE9E6smm6zGr0mfcSOLpBv4uQfJw7rpeSjMu']);
 
             return $request;
         });
 
-        return $handler->handle($request);
+        var_dump($request->getHeaders());
+        $response = $handler->handle($request);
+
+        return $response;
     }
 
     /**
@@ -62,8 +66,7 @@ class RequestMiddleware implements MiddlewareInterface
         $tmp = $this->request->getServerParams();
         $name = strtoupper(substr(md5(gethostname()), 12, 8));
         $remote = strtoupper(substr(md5($tmp['remote_addr']),12,8));
-        $ips = swoole_get_local_ip();
-        $ip = strtoupper(substr(md5($ips['en0']??'127.0.0.1'), 14, 4));
+        $ip = strtoupper(substr(md5(getServerLocalIp()), 14, 4));
         return uniqid(). '-' . $remote. '-'.$ip.'-'. $name;
     }
 }

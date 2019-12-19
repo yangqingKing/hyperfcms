@@ -22,6 +22,7 @@ use Hyperf\Utils\Context;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\HttpMessage\Cookie\Cookie as HyperfCookie;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use \Hyperf\Contract\SessionInterface;
 
 
 if (! function_exists('requestEntry')) {
@@ -84,6 +85,30 @@ if (! function_exists('getClientInfo')) {
         $request =  Context::get(ServerRequestInterface::class);
         $server = make(SwooleServer::class);
         return $server->getClientInfo($request->getSwooleRequest()->fd);
+    }
+}
+
+if (! function_exists('getServerLocalIp')) {
+    /**
+     * getServerLocalIp
+     * 获取服务端内网ip地址
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午5:48
+     * @return string
+     */
+    function getServerLocalIp()
+    {
+        $ip = '127.0.0.1';
+        $ips = array_values(swoole_get_local_ip());
+        foreach ($ips as $v) {
+            if ($v && $v != $ip) {
+                $ip = $v;
+                break;
+            }
+        }
+
+        return $ip;
     }
 }
 
@@ -177,5 +202,156 @@ if (! function_exists('delCookie')) {
         setCookies($key,'', time()-1);
 
         return true;
+    }
+}
+
+if (! function_exists('setSessionId')) {
+    /**
+     * setSessionId
+     * 设置sessionid
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午6:56
+     * @param string $id
+     */
+    function setSessionId(string $id)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        $session->setId($id);
+        return ;
+    }
+}
+
+if (! function_exists('getSessionId')) {
+    /**
+     * getSessionId
+     * 获取sessionid
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午6:56
+     */
+    function getSessionId()
+    {
+        $session =  ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->getId();
+    }
+}
+
+if (! function_exists('setSession')) {
+    /**
+     * setSession
+     * 设置session
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午5:59
+     * @param string $k
+     * @param $v
+     */
+    function setSession(string $k,$v)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        $session->set($k,$v);
+        return ;
+    }
+}
+
+if (! function_exists('getSession')) {
+    /**
+     * getSession
+     * 获取session
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:32
+     * @param string $k
+     * @param null $default
+     * @return mixed
+     */
+    function getSession(string $k,$default = null)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->get($k,$default);
+    }
+}
+
+if (! function_exists('getAllSession')) {
+    /**
+     * getAllSession
+     * 获取所有session
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:32
+     * @return mixed
+     */
+    function getAllSession()
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->all();
+    }
+}
+
+
+if (! function_exists('hasSession')) {
+    /**
+     * hasSession
+     * 判断session是否存在
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:52
+     * @param string $name
+     * @return bool
+     */
+    function hasSession(string $name)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->has($name);
+    }
+}
+
+if (! function_exists('removeSession')) {
+    /**
+     * removeSession
+     * 从 Session 中获取并删除一条数据
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:54
+     * @param string $name
+     * @return mixed
+     */
+    function removeSession(string $name)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->remove($name);
+    }
+}
+
+if (! function_exists('forgetSession')) {
+    /**
+     * forgetSession
+     * 从session中删除一条或多条数据
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:54
+     * @param $keys string|array
+     */
+    function forgetSession($keys)
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        $session->forget($keys);
+        return;
+    }
+}
+
+if (! function_exists('clearSession')) {
+    /**
+     * clearSession
+     * 清空当前 Session 里的所有数据
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:56
+     */
+    function clearSession()
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->clear();
     }
 }
