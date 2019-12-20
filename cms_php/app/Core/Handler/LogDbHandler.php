@@ -31,6 +31,6 @@ class LogDbHandler extends AbstractProcessingHandler
     public function write(array $record)
     {
 
-        var_dump(json_encode($record));
+//        var_dump(json_encode($record));
     }
 }

@@ -21,6 +21,9 @@ use Hyperf\HttpMessage\Cookie\Cookie;
 use App\Constants\StatusCode;
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Hyperf\Utils\Coroutine;
+use App\Core\Facade\Log;
+use Hyperf\Contract\StdoutLoggerInterface;
 
 /**
  * ReqResponse
@@ -32,6 +35,11 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
  */
 class Response
 {
+    /**
+     * @var StdoutLoggerInterface
+     */
+    protected $logger;
+
     /**
      * @Inject
      * @var RequestInterface
@@ -63,8 +71,14 @@ class Response
             'msg'=> $msg,
             'data' => $data
         ];
+        $response = $this->response->json($data);
+        $executionTime = microtime(true) - Context::get('request_start_time');
+        $rbs = strlen($response->getBody()->getContents());
+        // 获取日志实例，记录日志
+        $this->logger = Log::get(requestEntry(Coroutine::getBackTrace()));
+        $this->logger->info($msg,getLogArguments($executionTime,$rbs));
 
-        return $this->response->json($data);
+        return $response;
     }
 
     /**

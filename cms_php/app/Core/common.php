@@ -23,6 +23,7 @@ use Hyperf\Utils\ApplicationContext;
 use Hyperf\HttpMessage\Cookie\Cookie as HyperfCookie;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use \Hyperf\Contract\SessionInterface;
+use Jenssegers\Agent\Agent;
 
 
 if (! function_exists('requestEntry')) {
@@ -33,25 +34,24 @@ if (! function_exists('requestEntry')) {
      * User：YM
      * Date：2019/12/15
      * Time：上午10:53
-     * @param $traceString
-     * @return mixed
+     * @param array $backTrace
+     * @return mixed|string
      */
-    function requestEntry($traceString)
+    function requestEntry(array $backTrace)
     {
-        // 分析异常，找到路由入口，既模块，控制器-方法
-        $moduleName = array_reduce(explode("\n",$traceString),function ($res,$val) {
-            // 这里是分析返回数据，得出这样截取能到找匹配值，CoreMiddleware这里如果修改后需要重新处理
-            $tmp = stristr($val,'CoreMiddleware.php(143):');
-            if ($tmp) {
-                $mArr = array_reverse(explode('\\',trim($tmp)));
-                $res = str_replace(['controller','>','()'],'',strtolower($mArr[0]));
-                $mStr = strtolower($mArr[1]);
-                $res = $mStr == 'controller' ?$res:$mStr.'-'.$res;
-            }
-            return $res;
-        });
+        $moduleName = 'hyperf';
 
-        return $moduleName??'hyperf';
+        foreach ($backTrace as $v) {
+            if (stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
+                $class =str_replace('controller','',strtolower(array_reverse(explode('\\',trim($v['class'])))[0]));
+                $function = $v['function'];
+                $moduleName = $class.'-'.$function;
+
+                break;
+            }
+        }
+
+        return $moduleName;
     }
 }
 
@@ -353,5 +353,50 @@ if (! function_exists('clearSession')) {
     {
         $session = ApplicationContext::getContainer()->get(SessionInterface::class);
         return $session->clear();
+    }
+}
+
+if (! function_exists('getLogArguments')) {
+    /**
+     * getLogArguments
+     * 获取要存储的日志部分字段，monolog以外的业务信息
+     * User：YM
+     * Date：2019/12/20
+     * Time：下午12:57
+     * @param float $executionTime 程序执行时间，运行时才能判断这里初始化为0
+     * @param int $rbs 响应包体大小，初始化0，只有正常请求响应才有值
+     * @return array
+     */
+    function getLogArguments($executionTime = null,$rbs = 0)
+    {
+        $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+        $requestHeaders = $request->getHeaders();
+        $serverParams = $request->getServerParams();
+        $agent = new Agent();
+        $agent->setUserAgent($requestHeaders['user-agent'][0]);
+        return [
+            'qid' => $requestHeaders['qid'][0]??'',
+            'server_name' => $requestHeaders['host'][0]??'',
+            'server_addr' => getServerLocalIp()??'',
+            'remote_addr' => $serverParams['remote_addr']??'',
+            'forwarded_for' => $requestHeaders['x-forwarded-for']??'',
+            'real_ip' => isset($requestHeaders['x-forwarded-for'])?$requestHeaders['x-forwarded-for']:getServerLocalIp(),
+            'user_agent' => $requestHeaders['user-agent'][0]??'',
+            'platform' => $agent->platform()??'',
+            'device' => $agent->device()??'',
+            'browser' => $agent->browser()??'',
+            'url' => $request->fullUrl()??'',
+            'uri' => $serverParams['request_uri']??'',
+            'arguments' => $request->all()??'',
+            'method' => $serverParams['request_method']??'',
+            'execution_time' => $executionTime,
+            'request_body_size' => $requestHeaders['content-length'][0]??'',
+            'response_body_size' => $rbs,
+            'user_id' => getSession('user_id')??'',
+            'referer' => $requestHeaders['referer']??'',
+            'unix_time' => $serverParams['request_time']??'',
+            'time_day' => isset($serverParams['request_time'])?date('Y-m-d',$serverParams['request_time']):'',
+            'time_hour' => isset($serverParams['request_time'])?date('Y-m-d H:00:00',$serverParams['request_time']):'',
+        ];
     }
 }

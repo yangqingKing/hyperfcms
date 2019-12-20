@@ -49,7 +49,7 @@ class IndexController extends BaseController
     {
         $user = $this->request->input('aa', 'Hyperf2');
         $method = $this->request->getMethod();
-//        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
+        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
 //        $tmp = $this->testRepo->test();
 //        var_dump($tmp);
 //        setCookies('aaa','杨庆');
@@ -69,8 +69,12 @@ class IndexController extends BaseController
 //            '999' => $this->request->getBody(),
             '090' => getSessionId(),
             '999' => getAllSession(),
+//            '98989' => getLogArguments(),
+            '0909' => $this->request->getHeaders(),
+            '98989' => $this->request->getServerParams(),
+            '88888' => $this->request->fullUrl(),
+            '1288' => getLogArguments(),
         ];
-
 
         return $this->success($data);
     }

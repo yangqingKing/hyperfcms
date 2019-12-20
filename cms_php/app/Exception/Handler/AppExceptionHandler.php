@@ -42,18 +42,22 @@ class AppExceptionHandler extends ExceptionHandler
         // 异常信息处理
         $throwableMsg = sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()).PHP_EOL.$throwable->getTraceAsString();
         // 获取日志实例
-        $this->logger = $this->getLogInstance($throwable);
+        $this->logger = Log::get(requestEntry($throwable->getTrace()));
+
+
 
         // 判断是否由业务异常类抛出的异常
         if ($throwable instanceof BusinessException) {
             // 阻止异常冒泡
             $this->stopPropagation();
             // 业务逻辑错误日志处理
-            $this->logger->warning($throwableMsg);
+            $this->logger->warning($throwableMsg,getLogArguments());
             return $this->response->error($throwable->getCode(),$throwable->getMessage());
         }
+
+
         // 系统错误日志处理
-        $this->logger->error($throwableMsg);
+        $this->logger->error($throwableMsg,getLogArguments());
         $msg = !empty($throwable->getMessage())?$throwable->getMessage():StatusCode::getMessage(StatusCode::ERR_SERVER);
         return $response->withAddedHeader('content-type', 'text/html; charset=utf-8')
             ->withStatus(StatusCode::ERR_SERVER)
@@ -64,26 +68,5 @@ class AppExceptionHandler extends ExceptionHandler
     {
         return true;
     }
-
-    /**
-     * getLogInstance
-     * 根据业务区分channel，实例化log
-     * 获取区分了channel的实例化log
-     * User：YM
-     * Date：2019/12/15
-     * Time：上午12:26
-     * @param Throwable $throwable
-     * @return mixed
-     */
-    public function getLogInstance(Throwable $throwable)
-    {
-
-        $moduleName = requestEntry($throwable->getTraceAsString());
-//        var_dump($moduleName);
-        return Log::get($moduleName);
-    }
-
-
-
 
 }
