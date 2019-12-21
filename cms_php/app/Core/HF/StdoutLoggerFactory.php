@@ -12,9 +12,9 @@
  */
 
 
-namespace App\Core\Factory;
+namespace App\Core\HF;
 
-use \App\Core\Facade\Log;
+use App\Core\Facade\Log;
 
 /**
  * StdoutLoggerFactory

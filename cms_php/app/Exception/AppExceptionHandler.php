@@ -10,10 +10,9 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
 
-namespace App\Exception\Handler;
+namespace App\Exception;
 
 use Hyperf\Di\Annotation\Inject;
-use App\Exception\BusinessException;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;

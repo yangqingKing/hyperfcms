@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Core\Handler;
+namespace App\Core\LogHandler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Hyperf\DbConnection\Db;
@@ -53,6 +53,6 @@ class LogDbHandler extends AbstractProcessingHandler
 
 
 //        Db::table('_logs')->insert($saveData);
-        Log::create($saveData);
+//        Log::create($saveData);
     }
 }

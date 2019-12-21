@@ -15,6 +15,7 @@ use Psr\Log\LogLevel;
 
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
+    // 定义日志类型的输出
     StdoutLoggerInterface::class => [
         'log_level' => [
             LogLevel::ALERT,

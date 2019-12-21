@@ -16,7 +16,7 @@ if ($driver == 'file') {
     $handlers = [
         // info、waring、notice日志等
         [
-            'class' => App\Core\Handler\LogFileHandler::class,
+            'class' => App\Core\LogHandler\LogFileHandler::class,
             'constructor' => [
                 'stream' => BASE_PATH . '/runtime/logs/hyperf.log',
                 'level' => Monolog\Logger::INFO,
@@ -32,7 +32,7 @@ if ($driver == 'file') {
         ],
         // debug日志
         [
-            'class' => App\Core\Handler\LogFileHandler::class,
+            'class' => App\Core\LogHandler\LogFileHandler::class,
             'constructor' => [
                 'stream' => BASE_PATH . '/runtime/logs/hyperf-debug.log',
                 'level' => Monolog\Logger::DEBUG,
@@ -48,7 +48,7 @@ if ($driver == 'file') {
         ],
         // error日志
         [
-            'class' => App\Core\Handler\LogFileHandler::class,
+            'class' => App\Core\LogHandler\LogFileHandler::class,
             'constructor' => [
                 'stream' => BASE_PATH . '/runtime/logs/hyperf-error.log',
                 'level' => Monolog\Logger::ERROR,
@@ -68,7 +68,7 @@ if ($driver == 'db') {
     $handlers = [
         // 数据库日志存储
         [
-            'class' => App\Core\Handler\LogDbHandler::class,
+            'class' => App\Core\LogHandler\LogDbHandler::class,
             'constructor' => [
                 'level' => Monolog\Logger::DEBUG,
             ],

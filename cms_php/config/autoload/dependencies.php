@@ -3,6 +3,7 @@
 declare(strict_types=1);
 /**
  * This file is part of Hyperf.
+ * 改变依赖关系
  *
  * @link     https://www.hyperf.io
  * @document https://doc.hyperf.io
@@ -11,5 +12,6 @@ declare(strict_types=1);
  */
 
 return [
-    \Hyperf\Contract\StdoutLoggerInterface::class => \App\Core\Factory\StdoutLoggerFactory::class
+    \Hyperf\Contract\StdoutLoggerInterface::class => \App\Core\HF\StdoutLoggerFactory::class,
+    \Psr\EventDispatcher\EventDispatcherInterface::class => \App\Core\HF\EventDispatcherFactory::class,
 ];
