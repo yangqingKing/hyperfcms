@@ -57,8 +57,8 @@ class DbQueryExecutedListener implements ListenerInterface
             }
 
             if (strpos($sql,'`ymkj_logs`') === false) {
-                echo 1;
-                $this->logger->info(sprintf('[%s] %s', $event->time, $sql));
+
+//                $this->logger->info(sprintf('[%s] %s', $event->time, $sql));
             }
         }
     }

@@ -2,9 +2,9 @@
 /**
  * Created by PhpStorm.
  *​
- * EventDispatcherFactory.php
+ * EventDispatcher.php
  *
- * 事件工厂类
+ * 事件处理
  *
  * User：YM
  * Date：2019/12/21
@@ -22,6 +22,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
+
+/**
+ * EventDispatcher
+ * 事件处理,改变框架原来的事件处理逻辑
+ * @package App\Core\HF
+ * User：YM
+ * Date：2019/12/21
+ * Time：上午11:48
+ */
 class EventDispatcher implements EventDispatcherInterface
 {
     /**
@@ -61,8 +70,13 @@ class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * Dump the debug message if $logger property is provided.
-     * @param mixed $listener
+     * dump
+     * 函数的含义说明
+     * User：YM
+     * Date：2019/12/21
+     * Time：上午11:49
+     * @param $listener
+     * @param object $event
      */
     private function dump($listener, object $event)
     {
@@ -79,6 +93,6 @@ class EventDispatcher implements EventDispatcherInterface
             $listenerName = get_class($listener);
         }
 
-        $this->logger->debug(sprintf('Event %s handled by 111112222 %s listener.', $eventName, $listenerName));
+        $this->logger->debug(sprintf('Event %s handled by %s listener.', $eventName, $listenerName));
     }
 }
