@@ -69,6 +69,9 @@ if ($driver == 'db') {
         // 数据库日志存储
         [
             'class' => App\Core\Handler\LogDbHandler::class,
+            'constructor' => [
+                'level' => Monolog\Logger::DEBUG,
+            ],
             'formatter' => [
                 'class' => Monolog\Formatter\LineFormatter::class,
                 'constructor' => [

@@ -49,7 +49,7 @@ class IndexController extends BaseController
     {
         $user = $this->request->input('aa', 'Hyperf2');
         $method = $this->request->getMethod();
-        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
+//        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
 //        $tmp = $this->testRepo->test();
 //        var_dump($tmp);
 //        setCookies('aaa','杨庆');

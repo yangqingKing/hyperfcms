@@ -374,6 +374,7 @@ if (! function_exists('getLogArguments')) {
         $serverParams = $request->getServerParams();
         $agent = new Agent();
         $agent->setUserAgent($requestHeaders['user-agent'][0]);
+        $arguments = $request->all();
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
@@ -387,7 +388,7 @@ if (! function_exists('getLogArguments')) {
             'browser' => $agent->browser()??'',
             'url' => $request->fullUrl()??'',
             'uri' => $serverParams['request_uri']??'',
-            'arguments' => $request->all()??'',
+            'arguments' => $arguments?json_encode($arguments):'',
             'method' => $serverParams['request_method']??'',
             'execution_time' => $executionTime,
             'request_body_size' => $requestHeaders['content-length'][0]??'',

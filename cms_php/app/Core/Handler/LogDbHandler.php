@@ -15,6 +15,8 @@
 namespace App\Core\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
+use Hyperf\DbConnection\Db;
+use App\Models\Log;
 
 /**
  * LogDbHandler
@@ -28,9 +30,29 @@ use Monolog\Handler\AbstractProcessingHandler;
 class LogDbHandler extends AbstractProcessingHandler
 {
 
+    /**
+     * write
+     * 记录日志
+     * User：YM
+     * Date：2019/12/20
+     * Time：下午6:02
+     * @param array $record
+     */
     public function write(array $record)
     {
+        $saveData = $record['context'];
+        $saveData['channel'] = $record['channel'];
+        $saveData['message'] = is_array($record['message'])?json_encode($record['message']):$record['message'];
+        $saveData['level_name'] = $record['level_name'];
 
-//        var_dump(json_encode($record));
+//        if ($saveData['channel']  == 'hyperf') {
+//            return;
+//        }
+
+       var_dump($record['message']);
+
+
+//        Db::table('_logs')->insert($saveData);
+        Log::create($saveData);
     }
 }

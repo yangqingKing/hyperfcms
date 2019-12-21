@@ -50,7 +50,6 @@ class RequestMiddleware implements MiddlewareInterface
         // 利用协程上下文存储请求开始的时间，用来计算程序执行时间
         Context::set('request_start_time',microtime(true));
 
-
         $response = $handler->handle($request);
         return $response;
     }
