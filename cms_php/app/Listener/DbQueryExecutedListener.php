@@ -33,7 +33,7 @@ class DbQueryExecutedListener implements ListenerInterface
 
     public function __construct(ContainerInterface $container)
     {
-        $this->logger = $container->get(LoggerFactory::class)->get('sql');
+        $this->logger = $container->get(LoggerFactory::class)->get('SQL');
     }
 
     public function listen(): array
@@ -44,7 +44,7 @@ class DbQueryExecutedListener implements ListenerInterface
     }
 
     /**
-     * @param QueryExecuted $event
+     * @param object $event
      */
     public function process(object $event)
     {
@@ -55,10 +55,9 @@ class DbQueryExecutedListener implements ListenerInterface
                     $sql = Str::replaceFirst('?', "'{$value}'", $sql);
                 }
             }
-
+            // 日志表的操作，不处理
             if (strpos($sql,'`ymkj_logs`') === false) {
-
-//                $this->logger->info(sprintf('[%s] %s', $event->time, $sql));
+                $this->logger->info(sprintf('[%s] %s', $event->time, $sql),getLogArguments());
             }
         }
     }

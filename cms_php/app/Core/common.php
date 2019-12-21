@@ -24,6 +24,7 @@ use Hyperf\HttpMessage\Cookie\Cookie as HyperfCookie;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use \Hyperf\Contract\SessionInterface;
 use Jenssegers\Agent\Agent;
+use Hyperf\Contract\StdoutLoggerInterface;
 
 
 if (! function_exists('requestEntry')) {
@@ -400,4 +401,23 @@ if (! function_exists('getLogArguments')) {
             'time_hour' => isset($serverParams['request_time'])?date('Y-m-d H:00:00',$serverParams['request_time']):'',
         ];
     }
+}
+
+
+if (! function_exists('isStdoutLog')) {
+    /**
+     * isStdoutLog
+     * 判断日志类型是否允许输出
+     * User：YM
+     * Date：2019/12/21
+     * Time：下午7:13
+     * @param string $level
+     * @return bool
+     */
+    function isStdoutLog(string $level)
+    {
+        $config = config(StdoutLoggerInterface::class, ['log_level' => []]);
+        return in_array(strtolower($level), $config['log_level'], true);
+    }
+
 }

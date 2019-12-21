@@ -15,6 +15,7 @@
 namespace App\Core\LogHandler;
 
 use Monolog\Handler\StreamHandler;
+use Hyperf\Contract\StdoutLoggerInterface;
 use Monolog\Logger;
 
 /**
@@ -28,6 +29,39 @@ use Monolog\Logger;
  */
 class LogFileHandler extends StreamHandler
 {
+
+    /**
+     * handle
+     * 改写父类方法，增加判断日志输出，框架日志
+     * User：YM
+     * Date：2019/12/21
+     * Time：下午7:16
+     * @param array $record
+     * @return bool
+     */
+    public function handle(array $record)
+    {
+        if (!$this->isHandling($record)) {
+            return false;
+        }
+        $record = $this->processRecord($record);
+
+        // 判断系统允许日志类型
+        if ( ! isStdoutLog($record['level_name']) ) {
+            return false;
+        }
+
+        // 判断是否处理框架日志
+        if ( ! env('HF_LOG', false) && $record['channel'] == 'hyperf' ) {
+            return false;
+        }
+
+        $record['formatted'] = $this->getFormatter()->format($record);
+
+        $this->write($record);
+
+        return false === $this->bubble;
+    }
 
     /**
      * isHandling

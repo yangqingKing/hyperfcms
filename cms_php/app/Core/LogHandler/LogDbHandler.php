@@ -42,11 +42,9 @@ class LogDbHandler extends AbstractProcessingHandler
     public function write(array $record)
     {
         // 判断系统允许日志类型
-        $config = config(StdoutLoggerInterface::class, ['log_level' => []]);
-        if (! in_array(strtolower($record['level_name']), $config['log_level'], true)) {
+        if ( ! isStdoutLog($record['level_name']) ) {
             return false;
         }
-
 
         $saveData = $record['context'];
         $saveData['channel'] = $record['channel'];
@@ -63,7 +61,6 @@ class LogDbHandler extends AbstractProcessingHandler
         if ($saveData['channel'] == 'hyperf') {
             return;
         }
-
         Log::create($saveData);
     }
 }
