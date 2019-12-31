@@ -47,7 +47,8 @@
         "hyperf/elasticsearch": "~1.1.0",
         "hyperf/tracer": "~1.1.0",
         "hyperf/session": "^1.1",
-        "jenssegers/agent": "^2.6"
+        "jenssegers/agent": "^2.6",
+        "yoctometre/aliyun-sls": "v1.0.0"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "^4.2",

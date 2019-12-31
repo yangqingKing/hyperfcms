@@ -15,7 +15,6 @@
 namespace App\Core\LogHandler;
 
 use Monolog\Handler\StreamHandler;
-use Hyperf\Contract\StdoutLoggerInterface;
 use Monolog\Logger;
 
 /**

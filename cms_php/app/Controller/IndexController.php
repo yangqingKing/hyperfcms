@@ -18,6 +18,8 @@ use App\Constants\StatusCode;
 use Hyperf\Pool\SimplePool\PoolFactory;
 use App\Core\Facade\Cookie;
 
+use App\Repositories\TestRepository;
+
 
 /**
  * IndexController
@@ -51,12 +53,7 @@ class IndexController extends BaseController
         $method = $this->request->getMethod();
 //        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
         $tmp = $this->testRepo->test();
-//        var_dump($tmp);
-//        setCookies('aaa','杨庆');
 
-//        $this->session->setId('taP3tE9E6smm6zGr0mfcSOLpBv4uQfJw7rpeSjMu');
-//        setSession('aa','杨庆');
-//        clearSession();
         $data = [
 //            'method1' => $method,
 //            'message' => $tmp,
@@ -74,6 +71,8 @@ class IndexController extends BaseController
             '98989' => $this->request->getServerParams(),
             '88888' => $this->request->fullUrl(),
             '1288' => getLogArguments(),
+//            '2222' => $text,
+//            '3333' => getHostByName(getHostName()),
         ];
 
         return $this->success($data);

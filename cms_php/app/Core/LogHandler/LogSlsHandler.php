@@ -1,34 +1,43 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  *​
- * LogDbHandler.php
+ * LogSlsHandler.php
  *
- * 日志处理
+ * 阿里云sls日志处理
  *
  * User：YM
- * Date：2019/11/29
- * Time：下午6:39
+ * Date：2019/12/31
+ * Time：下午3:17
  */
 
 
 namespace App\Core\LogHandler;
 
+use Hyperf\Di\Annotation\Inject;
 use Monolog\Handler\AbstractProcessingHandler;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use App\Models\Log;
+use Ym\AliyunSls\ClientInterface;
+
 
 /**
- * LogDbHandler
- * 日志处理，存储数据库
- * 将info、warning、notic等类型存储一个文件，debug类型存储一个文件，error类型存储一个文件
- * @package App\Core\Handler
+ * LogSlsHandler
+ * 阿里云sls日志处理
+ * @package App\Core\LogHandler
  * User：YM
- * Date：2019/11/29
- * Time：下午6:39
+ * Date：2019/12/31
+ * Time：下午3:17
  */
-class LogDbHandler extends AbstractProcessingHandler
+class LogSlsHandler extends AbstractProcessingHandler
 {
+    /**
+     * @Inject
+     * @var ClientInterface
+     */
+    protected $sls;
+
     /**
      * write
      * 记录日志
@@ -44,22 +53,21 @@ class LogDbHandler extends AbstractProcessingHandler
         if ( ! isStdoutLog($record['level_name']) ) {
             return false;
         }
-
+        // 判断是否处理框架日志
+        if ( ! env('HF_LOG', false) && $record['channel'] == 'hyperf' ) {
+            return false;
+        }
         $saveData = $record['context'];
         $saveData['channel'] = $record['channel'];
         $saveData['message'] = is_array($record['message'])?json_encode($record['message']):$record['message'];
         $saveData['level_name'] = $record['level_name'];
-
-        // db驱动是，允许打印框架日志，则直接输出
-        if (env('HF_LOG', false) && $record['channel'] == 'hyperf') {
-            $output = new ConsoleOutput();
-            $output->writeln($record['formatted']);
+        // 阿里云日志不能有空字段
+        foreach ($saveData as &$v) {
+            if (!$v) {
+                $v = 0;
+            }
         }
-
-        // db驱动，不记录框架日志，框架启动时死循环，原因不明
-        if ($saveData['channel'] == 'hyperf') {
-            return;
-        }
-        Log::create($saveData);
+        unset($v);
+        $this->sls->putLogs($saveData);
     }
 }

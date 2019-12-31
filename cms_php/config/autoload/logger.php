@@ -69,9 +69,6 @@ if ($driver == 'db') {
         // 数据库日志存储
         [
             'class' => App\Core\LogHandler\LogDbHandler::class,
-            'constructor' => [
-                'level' => Monolog\Logger::DEBUG,
-            ],
             'formatter' => [
                 'class' => Monolog\Formatter\LineFormatter::class,
                 'constructor' => [
@@ -84,7 +81,20 @@ if ($driver == 'db') {
     ];
 }
 if ($driver == 'sls') {
-
+    $handlers = [
+        // 数据库日志存储
+        [
+            'class' => App\Core\LogHandler\LogSlsHandler::class,
+            'formatter' => [
+                'class' => Monolog\Formatter\LineFormatter::class,
+                'constructor' => [
+                    'format' => "%datetime%||%channel%||%level_name%||%message%||%context%||%extra%\n",
+                    'dateFormat' => null,
+                    'allowInlineLineBreaks' => true,
+                ],
+            ]
+        ],
+    ];
 }
 
 
