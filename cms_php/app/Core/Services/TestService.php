@@ -12,13 +12,13 @@
  */
 
 
-namespace App\Services;
+namespace App\Core\Services;
 
 
 /**
  * TestServices
  * 类的介绍
- * @package App\Services
+ * @package App\Core\Services
  * User：YM
  * Date：2019/11/21
  * Time：下午2:46

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  *​
@@ -12,7 +14,7 @@
  */
 
 
-namespace App\Repositories;
+namespace App\Core\Repositories;
 
 
 use Psr\Container\ContainerInterface;
@@ -22,12 +24,12 @@ use App\Constants\StatusCode;
 /**
  * BaseRepository
  * 仓库基类
- * @package App\Repositories
+ * @package App\Core\Repositories
  * User：YM
  * Date：2019/11/21
  * Time：下午2:36
  */
-abstract class BaseRepository
+class BaseRepository
 {
     /**
      * @Inject
@@ -67,8 +69,8 @@ abstract class BaseRepository
     public function getServiceInstance($key)
     {
         $key = ucfirst($key);
-        $fileName = BASE_PATH."/app/Services/{$key}.php";
-        $className = "App\\Services\\{$key}";
+        $fileName = BASE_PATH."/app/Core/Services/{$key}.php";
+        $className = "App\\Core\\Services\\{$key}";
 
         if (file_exists($fileName)) {
             return $this->container->get($className);

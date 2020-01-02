@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  *​
@@ -12,17 +14,17 @@
  */
 
 
-namespace App\Repositories;
+namespace App\Core\Repositories;
 
 
 /**
  * TestRepository
  * 类的介绍
- * @package App\Repositories
+ * @package App\Core\Repositories
  * User：YM
  * Date：2019/11/21
  * Time：上午10:25
- * @property \APP\Services\TestService $testService
+ * @property \APP\Core\Services\TestService $testService
  */
 class TestRepository extends BaseRepository
 {

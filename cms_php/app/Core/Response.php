@@ -4,8 +4,6 @@
  *​
  * ReqResponse.php
  *
- * 文件描述
- *
  * User：YM
  * Date：2019/11/15
  * Time：下午5:35

@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Services;
+namespace App\Core\Services;
 
 use Psr\Container\ContainerInterface;
 use Hyperf\Di\Annotation\Inject;
@@ -21,12 +21,12 @@ use App\Constants\StatusCode;
 /**
  * BaseService
  * 服务基类
- * @package App\Services
+ * @package App\Core\Services
  * User：YM
  * Date：2019/11/21
  * Time：下午3:21
  */
-abstract class BaseService
+class BaseService
 {
     /**
      * @Inject

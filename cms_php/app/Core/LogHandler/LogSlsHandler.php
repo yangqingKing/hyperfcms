@@ -18,7 +18,6 @@ namespace App\Core\LogHandler;
 
 use Hyperf\Di\Annotation\Inject;
 use Monolog\Handler\AbstractProcessingHandler;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Ym\AliyunSls\ClientInterface;
 
 
