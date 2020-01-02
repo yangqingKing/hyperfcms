@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Core\LogHandler;
+namespace App\Core\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Symfony\Component\Console\Output\ConsoleOutput;

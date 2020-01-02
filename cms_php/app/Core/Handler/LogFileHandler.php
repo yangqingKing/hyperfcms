@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Core\LogHandler;
+namespace App\Core\Handler;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
