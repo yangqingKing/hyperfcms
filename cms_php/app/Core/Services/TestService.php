@@ -14,6 +14,7 @@
 
 namespace App\Core\Services;
 
+use Hyperf\Cache\Annotation\Cacheable;
 
 /**
  * TestServices
@@ -28,12 +29,22 @@ namespace App\Core\Services;
  */
 class TestService extends BaseService
 {
-    public function test()
+    /**
+     * @Cacheable(prefix="ccategory", ttl=3600)
+     */
+    public function test($id)
     {
 //        throw new \App\Exception\BusinessException(1000,'11');
-//        $tmp = $this->categoryModel->getList();
-        $tmp = $this->categoryModel->findFromCache(4);
+        $tmp = $this->categoryModel->getOne($id);
+        //$tmp = $this->categoryModel->findFromCache(4);
 //        $tmp = 1;
+
+        return $tmp;
+    }
+
+    public function test2($id)
+    {
+        $tmp = $this->categoryModel->getOne($id);
 
         return $tmp;
     }

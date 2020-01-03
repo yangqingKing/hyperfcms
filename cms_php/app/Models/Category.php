@@ -39,4 +39,11 @@ class Category extends BaseModel
     {
         return self::where('id',2)->first()->toArray();
     }
+
+    public function getOne($id)
+    {
+        var_dump(111);
+        return self::findFromCache($id);
+        //return self::where('id', $id)->first()->toArray();
+    }
 }
