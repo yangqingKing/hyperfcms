@@ -28,7 +28,7 @@ use App\Repositories\TestRepository;
  * User：YM
  * Date：2019/11/12
  * Time：下午5:03
- * @property \APP\Repositories\TestRepository $testRepo
+ * @property \APP\Core\Repositories\TestRepository $testRepo
  *
  *
  *

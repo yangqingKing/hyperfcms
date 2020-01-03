@@ -31,8 +31,8 @@ class TestService extends BaseService
     public function test()
     {
 //        throw new \App\Exception\BusinessException(1000,'11');
-        $tmp = $this->categoryModel->getList();
-//        $tmp = $this->categoryModel->findFromCache(4);
+//        $tmp = $this->categoryModel->getList();
+        $tmp = $this->categoryModel->findFromCache(4);
 //        $tmp = 1;
 
         return $tmp;

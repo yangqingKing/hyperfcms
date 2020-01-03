@@ -28,10 +28,12 @@ return [
             'heartbeat' => -1,
             'max_idle_time' => (float) env('DB_MAX_IDLE_TIME', 60),
         ],
+        // 模型缓存配置
         'cache' => [
             'handler' => Hyperf\ModelCache\Handler\RedisHandler::class,
             'cache_key' => 'mc:%s:m:%s:%s:%s',
-            'prefix' => 'default',
+            'pool' => 'model_cache', // 这里确定使用redis.php，中的那个配置
+            'prefix' => 'model_cache',
             'ttl' => 3600 * 24,
             'empty_model_ttl' => 600,
             'load_script' => true,
