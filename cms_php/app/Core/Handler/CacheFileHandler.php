@@ -13,60 +13,61 @@ use Hyperf\ModelCache\Config;
 use Hyperf\Cache\Collector\FileStorage;
 use Hyperf\Cache\Exception\CacheException;
 use Hyperf\Cache\Exception\InvalidArgumentException;
-use Hyperf\Utils\Packer\PhpSerializerPacker;
 use Psr\Container\ContainerInterface;
 use Hyperf\Cache\Driver\Driver;
 use Hyperf\ModelCache\Handler\HandlerInterface;
-use Hyperf\Utils\InteractsWithTime;
 
-class FileSystemHandler implements HandlerInterface
+/**
+ * CacheFileHandler
+ * 文件缓存
+ * @uses Driver
+ * @package App\Core\Handler
+ * date 2020-01-03
+ * @author YQ
+ */
+class CacheFileHandler extends Driver
 {
-    use InteractsWithTime;
-
     /**
      * @var string
+     * 文件缓存目录
      */
-    protected $storePath = BASE_PATH . '/runtime/model_caches';
+    protected $storePath = BASE_PATH . '/runtime/caches';
 
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var string
-     */
-    protected $prefix = '';
-
-    /**
-     * @var PackerInterface
-     */
-    protected $packer;
-
-    public function __construct(ContainerInterface $container, Config $config)
+    public function __construct(ContainerInterface $container, array $config)
     {
+        parent::__construct($container, $config);
         if (! file_exists($this->storePath)) {
             $results = mkdir($this->storePath, 0777, true);
             if (! $results) {
                 throw new CacheException('Has no permission to create cache directory!');
             }
         }
-        $this->container = $container;
-        $this->config = $config;
-        $packerClass = PhpSerializerPacker::class;
-        $this->packer = $container->get($packerClass);
     }
 
+    /**
+     * getCacheKey
+     * 获取缓存完成路径文件名称
+     * @param string $key
+     * @access public
+     * @return string
+     * Date: 2020-01-03
+     * Created by YQ
+     */
     public function getCacheKey(string $key)
     {
         return $this->getStorePathLevel($key) . $this->getPrefix() . $key . '.cache';
     }
 
+    /**
+     * get
+     * 获取缓存内容
+     * @param mixed $key 
+     * @param mixed $default 
+     * @access public
+     * @return mixed
+     * Date: 2020-01-03
+     * Created by YQ
+     */
     public function get($key, $default = null)
     {
         $file = $this->getCacheKey($key);
@@ -180,23 +181,6 @@ class FileSystemHandler implements HandlerInterface
         $storePath = $this->getStorePathLevel();
         $this->clearFileCache($storePath, $prefix);
         return true;
-    }
-
-    public function getConfig(): Config
-    {
-        return $this->config;
-    }
-
-    public function incr($key, $column, $amount): bool
-    {
-        $value = $this->get($key);
-        if($value && isset($value[$column])){
-            $value[$column] = $value[$column]+1;
-            $this->set($key, $value);
-            return true;
-        }else{
-            throw new CacheException('Cache incr value err!');
-        }
     }
 
     protected function clearFileCache($path, string $prefix)

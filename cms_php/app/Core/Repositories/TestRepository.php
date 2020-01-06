@@ -34,7 +34,7 @@ class TestRepository extends BaseRepository
 //        throw new \App\Exception\BusinessException(1000,'11');
 
         
-        $tmp = $this->testService->test();
+        $tmp = $this->testService->test(2);
 
         return $tmp;
     }
