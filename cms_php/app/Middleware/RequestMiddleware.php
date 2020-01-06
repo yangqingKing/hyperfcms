@@ -42,8 +42,6 @@ class RequestMiddleware implements MiddlewareInterface
         // 为每一个请求增加一个qid
         $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) {
             $request = $request->withAddedHeader('qid', $this->getRequestId());
-//            $request = $request->withCookieParams(['HYPERF_SESSION_ID'=>'taP3tE9E6smm6zGr0mfcSOLpBv4uQfJw7rpeSjMu']);
-
             return $request;
         });
 
