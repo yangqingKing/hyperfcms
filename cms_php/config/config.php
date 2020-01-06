@@ -15,6 +15,15 @@ use Psr\Log\LogLevel;
 
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
+    // 是否允许跨域资源访问
+    'cors_access' => env('CORS_ACCESS', false),
+    // 允许跨域的域名
+    'allow_origins' => [
+        'http://127.0.0.1',
+        'http://localhost',
+        'http://www.yoctometer.com',
+        'http://www.yinmengkeji.com',
+    ],
     // 定义日志类型的输出
     StdoutLoggerInterface::class => [
         'log_level' => [
