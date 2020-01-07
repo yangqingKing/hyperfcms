@@ -34,6 +34,7 @@ class TestService extends BaseService
      */
     public function test($id)
     {
+        var_dump(333);
 //        throw new \App\Exception\BusinessException(1000,'11');
         $tmp = $this->categoryModel->getOne($id);
         //$tmp = $this->categoryModel->findFromCache(4);
@@ -44,6 +45,7 @@ class TestService extends BaseService
 
     public function test2($id)
     {
+        var_dump(444);
         $tmp = $this->categoryModel->getOne($id);
 
         return $tmp;

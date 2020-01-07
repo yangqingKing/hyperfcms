@@ -53,6 +53,7 @@ class IndexController extends BaseController
         $method = $this->request->getMethod();
 //        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
         $tmp = $this->testRepo->test();
+        //return $this->success([$tmp]);
 
         $data = [
 //            'method1' => $method,

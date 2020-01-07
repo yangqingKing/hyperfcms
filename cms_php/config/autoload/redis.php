@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 return [
-    // redis默认配置
+    // redis默认配置, 数据缓存
     'default' => [
         'host' => env('REDIS_HOST', 'localhost'),
         'auth' => env('REDIS_AUTH', null),
