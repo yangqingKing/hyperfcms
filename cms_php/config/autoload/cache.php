@@ -15,6 +15,7 @@ return [
         //'driver' => Hyperf\Cache\Driver\RedisDriver::class,
         'driver' => App\Core\HF\CacheFactory::class,
         'packer' => Hyperf\Utils\Packer\PhpSerializerPacker::class,
+        'pool' => 'cache',
         'prefix' => 'c:',
     ],
 ];

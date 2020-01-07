@@ -10,7 +10,7 @@ namespace App\Core\HF;
 
 use Psr\Container\ContainerInterface;
 use App\Core\Handler\CacheFileHandler;
-use Hyperf\Cache\Driver\RedisDriver;
+use App\Core\Handler\CacheRedisHandler;
 use Hyperf\Cache\Driver\Driver;
 
 /**
@@ -47,11 +47,11 @@ class CacheFactory extends Driver
     {
         switch($driver){
             case 'file':
-                return new CacheFileHandler($container, $config);
+                return make(CacheFileHandler::class, [$container, $config]);
             case 'redis':
-                return new RedisDriver($container, $config);
+                return make(CacheRedisHandler::class, [$container, $config]);
             default:
-                throw new Exception("cache [$driver] not found");
+                throw new \RuntimeException("cache [$driver] not found");
         }
     }
 

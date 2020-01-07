@@ -48,11 +48,11 @@ class ModelCacheFactory  implements HandlerInterface
     {
         switch($driver){
             case 'file':
-                return new ModelCacheFileHandler($container, $config);
+                return make(ModelCacheFileHandler::class, [$container, $config]);
             case 'redis':
-                return new RedisHandler($container, $config);
+                return make(RedisHandler::class, [$container, $config]);
             default:
-                throw new Exception("model cache [$driver] not found");
+                throw new \RuntimeException("model cache [$driver] not found");
         }
     }
 
