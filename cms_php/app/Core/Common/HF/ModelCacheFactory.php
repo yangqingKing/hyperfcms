@@ -6,12 +6,12 @@
  */
 declare(strict_types=1);
 
-namespace App\Core\HF;
+namespace Core\Common\HF;
 
 use Psr\Container\ContainerInterface;
 use Hyperf\ModelCache\Handler\HandlerInterface;
 use Hyperf\ModelCache\Handler\RedisHandler;
-use App\Core\Handler\ModelCacheFileHandler;
+use Core\Common\Handler\ModelCacheFileHandler;
 use Hyperf\ModelCache\Config;
 
 /**
@@ -36,9 +36,9 @@ class ModelCacheFactory  implements HandlerInterface
     /**
      * getCacheInstance
      * 获取缓存驱动实例
-     * @param mixed $driver 
-     * @param ContainerInterface $container 
-     * @param array $config 
+     * @param mixed $driver
+     * @param ContainerInterface $container
+     * @param array $config
      * @access private
      * @return class
      * Date: 2020-01-07

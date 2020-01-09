@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Core\Services;
+namespace Core\Services;
 
 use Psr\Container\ContainerInterface;
 use Hyperf\Di\Annotation\Inject;
@@ -21,7 +21,7 @@ use App\Constants\StatusCode;
 /**
  * BaseService
  * 服务基类
- * @package App\Core\Services
+ * @package Core\Services
  * User：YM
  * Date：2019/11/21
  * Time：下午3:21
@@ -91,8 +91,8 @@ class BaseService
     public function getServiceInstance($key)
     {
         $key = ucfirst($key);
-        $fileName = BASE_PATH."/app/Services/{$key}.php";
-        $className = "App\\Services\\{$key}";
+        $fileName = BASE_PATH."/app/Core/Services/{$key}.php";
+        $className = "Core\\Services\\{$key}";
 
         if (file_exists($fileName)) {
             return $this->container->get($className);

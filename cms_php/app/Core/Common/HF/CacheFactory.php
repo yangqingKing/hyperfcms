@@ -6,7 +6,7 @@
  */
 declare(strict_types=1);
 
-namespace App\Core\HF;
+namespace Core\Common\HF;
 
 use Psr\Container\ContainerInterface;
 use App\Core\Handler\CacheFileHandler;

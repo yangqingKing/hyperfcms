@@ -54,7 +54,6 @@ class StatusCode extends AbstractConstants
 
 
 
-
     /**
      * @Message("请登录！")
      */
@@ -75,5 +74,12 @@ class StatusCode extends AbstractConstants
      * @Message("业务逻辑异常！")
      */
     const ERR_EXCEPTION = 3001;
+
+    /**
+     * 用户相关逻辑异常
+     * @Message("用户名密码不正确！")
+     */
+    const ERR_EXCEPTION_USER = 3002;
+
 
 }

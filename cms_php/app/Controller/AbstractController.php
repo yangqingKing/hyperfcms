@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Core\Response;
+use Core\Common\Container\Response;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 //use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Container\ContainerInterface;
 use Hyperf\Contract\SessionInterface;
+use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
 abstract class AbstractController
 {
@@ -44,5 +45,11 @@ abstract class AbstractController
      * @var SessionInterface
      */
     protected $session;
+
+    /**
+     * @Inject()
+     * @var ValidatorFactoryInterface
+     */
+    protected $validation;
 
 }

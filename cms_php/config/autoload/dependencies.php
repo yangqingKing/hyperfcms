@@ -12,6 +12,6 @@ declare(strict_types=1);
  */
 
 return [
-    \Hyperf\Contract\StdoutLoggerInterface::class => \App\Core\HF\StdoutLoggerFactory::class,
-    \Psr\EventDispatcher\EventDispatcherInterface::class => \App\Core\HF\EventDispatcherFactory::class,
+    \Hyperf\Contract\StdoutLoggerInterface::class => \Core\Common\HF\StdoutLoggerFactory::class,
+    \Psr\EventDispatcher\EventDispatcherInterface::class => \Core\Common\HF\EventDispatcherFactory::class,
 ];

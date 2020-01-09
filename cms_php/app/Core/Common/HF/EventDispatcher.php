@@ -15,7 +15,7 @@
 declare(strict_types=1);
 
 
-namespace App\Core\HF;
+namespace Core\Common\HF;
 
 use Hyperf\Contract\StdoutLoggerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;

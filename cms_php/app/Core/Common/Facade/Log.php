@@ -12,10 +12,10 @@
  */
 
 
-namespace App\Core\Facade;
+namespace Core\Common\Facade;
 
 use Hyperf\Utils\ApplicationContext;
-use \Hyperf\Logger\LoggerFactory;
+use Hyperf\Logger\LoggerFactory;
 
 /**
  * Log

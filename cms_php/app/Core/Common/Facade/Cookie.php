@@ -12,7 +12,7 @@
  */
 
 
-namespace App\Core\Facade;
+namespace Core\Common\Facade;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;

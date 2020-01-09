@@ -22,7 +22,7 @@ use Hyperf\Utils\Context;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\HttpMessage\Cookie\Cookie as HyperfCookie;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
-use \Hyperf\Contract\SessionInterface;
+use Hyperf\Contract\SessionInterface;
 use Jenssegers\Agent\Agent;
 use Hyperf\Contract\StdoutLoggerInterface;
 
@@ -44,14 +44,17 @@ if (! function_exists('requestEntry')) {
 
         foreach ($backTrace as $v) {
             if (stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
-                $class =str_replace('controller','',strtolower(array_reverse(explode('\\',trim($v['class'])))[0]));
+                $tmp = array_reverse(explode('\\',trim($v['class'])));
+                $module = str_replace('controller','',strtolower($tmp[1]));
+                $class = str_replace('controller','',strtolower($tmp[0]));
                 $function = $v['function'];
                 $moduleName = $class.'-'.$function;
-
+                if ($module) {
+                    $moduleName = $module.'-'.$moduleName;
+                }
                 break;
             }
         }
-
         return $moduleName;
     }
 }

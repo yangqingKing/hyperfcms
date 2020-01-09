@@ -18,9 +18,9 @@ use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use App\Core\Response;
+use Core\Common\Container\Response;
 use App\Constants\StatusCode;
-use App\Core\Facade\Log;
+use Core\Common\Facade\Log;
 
 class AppExceptionHandler extends ExceptionHandler
 {

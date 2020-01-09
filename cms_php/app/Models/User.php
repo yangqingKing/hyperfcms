@@ -38,4 +38,11 @@ class User extends BaseModel
      * @var array
      */
     protected $casts = ['avatar' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    /**
+     * 主键id类型为字符串
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 }
