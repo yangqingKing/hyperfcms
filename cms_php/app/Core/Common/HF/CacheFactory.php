@@ -9,14 +9,14 @@ declare(strict_types=1);
 namespace Core\Common\HF;
 
 use Psr\Container\ContainerInterface;
-use App\Core\Handler\CacheFileHandler;
-use App\Core\Handler\CacheRedisHandler;
+use Core\Common\Handler\CacheFileHandler;
+use Core\Common\Handler\CacheRedisHandler;
 use Hyperf\Cache\Driver\Driver;
 
 /**
  * CacheFactory
  * 缓存工厂
- * package App\Core\HF
+ * package Core\Common\HF
  * date 2020-01-07
  * @author YQ
  */

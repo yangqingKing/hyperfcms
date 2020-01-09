@@ -20,7 +20,7 @@ use Hyperf\Logger\LoggerFactory;
 /**
  * Log
  * 日志类
- * @package App\Core\Facade
+ * @package Core\Common\Facade
  * User：YM
  * Date：2019/12/13
  * Time：下午5:18

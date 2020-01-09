@@ -26,7 +26,7 @@ use Psr\EventDispatcher\StoppableEventInterface;
 /**
  * EventDispatcher
  * 事件处理,改变框架原来的事件处理逻辑
- * @package App\Core\HF
+ * @package Core\Common\HF
  * User：YM
  * Date：2019/12/21
  * Time：上午11:48

@@ -23,7 +23,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 /**
  * EventDispatcherFactory
  * 改变框架的事件执行
- * @package App\Core\HF
+ * @package Core\Common\HF
  * User：YM
  * Date：2019/12/21
  * Time：上午11:34

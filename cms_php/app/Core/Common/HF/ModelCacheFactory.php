@@ -17,7 +17,7 @@ use Hyperf\ModelCache\Config;
 /**
  * ModelCacheFactory
  * 数据模型缓存工厂
- * package App\Core\HF
+ * package Core\Common\HF
  * date 2020-01-07
  * @author YQ
  */

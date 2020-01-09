@@ -22,7 +22,7 @@ use Hyperf\Contract\SessionInterface;
 /**
  * Session
  * session处理
- * @package App\Core\Facade
+ * @package Core\Common\Facade
  * User：YM
  * Date：2020/1/3
  * Time：下午2:17

@@ -24,7 +24,7 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 /**
  * Cookie
  * cookie处理
- * @package App\Core\Facade
+ * @package Core\Common\Facade
  * User：YM
  * Date：2019/12/16
  * Time：下午10:14

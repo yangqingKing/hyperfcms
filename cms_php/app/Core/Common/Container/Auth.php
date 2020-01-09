@@ -22,7 +22,7 @@ use Hyperf\Di\Annotation\Inject;
 /**
  * Auth
  * 用户认证（登录、退出、权限）
- * @package App\Core\Container
+ * @package Core\Common\Container
  * User：YM
  * Date：2020/1/8
  * Time：下午4:51

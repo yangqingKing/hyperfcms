@@ -21,7 +21,7 @@ use Hyperf\ModelCache\Handler\HandlerInterface;
  * CacheFileHandler
  * 文件缓存
  * @uses Driver
- * @package App\Core\Handler
+ * @package Core\Common\Handler
  * date 2020-01-03
  * @author YQ
  */

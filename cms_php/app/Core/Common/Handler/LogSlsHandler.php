@@ -24,7 +24,7 @@ use Ym\AliyunSls\ClientInterface;
 /**
  * LogSlsHandler
  * 阿里云sls日志处理
- * @package App\Core\LogHandler
+ * @package Core\Common\LogHandler
  * User：YM
  * Date：2019/12/31
  * Time：下午3:17

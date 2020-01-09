@@ -19,7 +19,7 @@ use Core\Common\Facade\Log;
 /**
  * StdoutLoggerFactory
  * 日志输出工厂类
- * @package App\Core\Factory
+ * @package Core\Common\Factory
  * User：YM
  * Date：2019/12/12
  * Time：下午7:17
