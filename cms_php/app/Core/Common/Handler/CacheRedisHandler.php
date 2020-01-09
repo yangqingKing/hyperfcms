@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Handler;
+namespace Core\Common\Handler;
 
 use Hyperf\Cache\Exception\InvalidArgumentException;
 use Psr\Container\ContainerInterface;

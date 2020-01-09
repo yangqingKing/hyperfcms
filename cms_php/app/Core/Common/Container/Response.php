@@ -20,7 +20,7 @@ use App\Constants\StatusCode;
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Hyperf\Utils\Coroutine;
-use Core\Common\Container\Facade\Log;
+use Core\Common\Facade\Log;
 use Hyperf\Contract\StdoutLoggerInterface;
 
 /**
