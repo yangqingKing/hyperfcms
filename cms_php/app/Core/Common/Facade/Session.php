@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 
-namespace App\Core\Facade;
+namespace Core\Common\Facade;
 
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Contract\SessionInterface;

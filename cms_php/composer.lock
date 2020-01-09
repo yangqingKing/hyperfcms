@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fa94ea4d33cc373d047222519ba500e",
+    "content-hash": "065a86b569b39653cd8595d0e9797190",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -282,6 +282,69 @@
                 "php"
             ],
             "time": "2019-10-30T14:39:59+00:00"
+        },
+        {
+            "name": "egulias/email-validator",
+            "version": "2.1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c4b8d12921999d8a561004371701dbc2e05b5ece",
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "doctrine/lexer": "^1.0.1",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "dominicsayers/isemail": "^3.0.7",
+                "phpunit/phpunit": "^4.8.36|^7.5.15",
+                "satooshi/php-coveralls": "^1.0.1"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "EmailValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2020-01-05T14:11:20+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",
@@ -863,16 +926,16 @@
         },
         {
             "name": "hyperf/cache",
-            "version": "v1.1.11",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/cache.git",
-                "reference": "6e310437383b6b53d5785631c910dc15d5b0f4bd"
+                "reference": "f13bb502b71a77382ec98b3636d7b650c7269dc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/cache/zipball/6e310437383b6b53d5785631c910dc15d5b0f4bd",
-                "reference": "6e310437383b6b53d5785631c910dc15d5b0f4bd",
+                "url": "https://api.github.com/repos/hyperf/cache/zipball/f13bb502b71a77382ec98b3636d7b650c7269dc3",
+                "reference": "f13bb502b71a77382ec98b3636d7b650c7269dc3",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -924,7 +987,7 @@
                 "hyperf",
                 "php"
             ],
-            "time": "2019-12-16T07:56:59+00:00"
+            "time": "2019-12-27T05:37:21+00:00"
         },
         {
             "name": "hyperf/command",
@@ -1129,16 +1192,16 @@
         },
         {
             "name": "hyperf/constants",
-            "version": "v1.1.3",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/constants.git",
-                "reference": "844d163f6bb9d2ed3566469bf2ea4305089bd39d"
+                "reference": "9371b056a2f7ec04d135f913d34e36c8aee5f5cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/constants/zipball/844d163f6bb9d2ed3566469bf2ea4305089bd39d",
-                "reference": "844d163f6bb9d2ed3566469bf2ea4305089bd39d",
+                "url": "https://api.github.com/repos/hyperf/constants/zipball/9371b056a2f7ec04d135f913d34e36c8aee5f5cd",
+                "reference": "9371b056a2f7ec04d135f913d34e36c8aee5f5cd",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1157,6 +1220,9 @@
                 "malukenho/docheader": "^0.1.6",
                 "mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^7.0.0"
+            },
+            "suggest": {
+                "hyperf/translation": "Required to use translation."
             },
             "type": "library",
             "extra": {
@@ -1182,7 +1248,7 @@
                 "hyperf",
                 "php"
             ],
-            "time": "2019-10-22T01:35:48+00:00"
+            "time": "2020-01-01T01:53:14+00:00"
         },
         {
             "name": "hyperf/contract",
@@ -1239,16 +1305,16 @@
         },
         {
             "name": "hyperf/database",
-            "version": "v1.1.12",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/database.git",
-                "reference": "9a84b2edd0a0c8878ff2658bec19a1178c2c4a46"
+                "reference": "8ab9fc5109d1af25d0e0c631fe9e416bcaf25264"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/database/zipball/9a84b2edd0a0c8878ff2658bec19a1178c2c4a46",
-                "reference": "9a84b2edd0a0c8878ff2658bec19a1178c2c4a46",
+                "url": "https://api.github.com/repos/hyperf/database/zipball/8ab9fc5109d1af25d0e0c631fe9e416bcaf25264",
+                "reference": "8ab9fc5109d1af25d0e0c631fe9e416bcaf25264",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1296,7 +1362,7 @@
                 "hyperf",
                 "php"
             ],
-            "time": "2019-12-26T06:25:56+00:00"
+            "time": "2020-01-03T06:57:05+00:00"
         },
         {
             "name": "hyperf/db-connection",
@@ -1422,16 +1488,16 @@
         },
         {
             "name": "hyperf/di",
-            "version": "v1.1.9",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/di.git",
-                "reference": "63c80537a885b72eaacca1765f2b0882e47f04d7"
+                "reference": "89814e8e1f5db54c36adaf668eb68f768620f88c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/di/zipball/63c80537a885b72eaacca1765f2b0882e47f04d7",
-                "reference": "63c80537a885b72eaacca1765f2b0882e47f04d7",
+                "url": "https://api.github.com/repos/hyperf/di/zipball/89814e8e1f5db54c36adaf668eb68f768620f88c",
+                "reference": "89814e8e1f5db54c36adaf668eb68f768620f88c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1492,7 +1558,7 @@
                 "php",
                 "swoole"
             ],
-            "time": "2019-12-05T03:40:33+00:00"
+            "time": "2020-01-03T06:56:05+00:00"
         },
         {
             "name": "hyperf/dispatcher",
@@ -1862,16 +1928,16 @@
         },
         {
             "name": "hyperf/http-message",
-            "version": "v1.1.8",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/http-message.git",
-                "reference": "401717e1e42e39e88bf55867ea11e427d8216212"
+                "reference": "c2fb7b96b92199ef9955e30d981bce6a3b0e99a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/http-message/zipball/401717e1e42e39e88bf55867ea11e427d8216212",
-                "reference": "401717e1e42e39e88bf55867ea11e427d8216212",
+                "url": "https://api.github.com/repos/hyperf/http-message/zipball/c2fb7b96b92199ef9955e30d981bce6a3b0e99a5",
+                "reference": "c2fb7b96b92199ef9955e30d981bce6a3b0e99a5",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1881,8 +1947,8 @@
                 ]
             },
             "require": {
-                "psr/http-message": "^1.0",
-                "zendframework/zend-mime": "^2.7"
+                "laminas/laminas-mime": "^2.7",
+                "psr/http-message": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7",
@@ -1911,20 +1977,20 @@
                 "php",
                 "swoole"
             ],
-            "time": "2019-11-25T16:57:00+00:00"
+            "time": "2020-01-03T07:12:03+00:00"
         },
         {
             "name": "hyperf/http-server",
-            "version": "v1.1.8",
+            "version": "v1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/http-server.git",
-                "reference": "2c3f70f4881809590f8c68f5b3109e998e7d3020"
+                "reference": "3f09ef2f303e06c87db3624cdbbb8cff23ecc3f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/http-server/zipball/2c3f70f4881809590f8c68f5b3109e998e7d3020",
-                "reference": "2c3f70f4881809590f8c68f5b3109e998e7d3020",
+                "url": "https://api.github.com/repos/hyperf/http-server/zipball/3f09ef2f303e06c87db3624cdbbb8cff23ecc3f0",
+                "reference": "3f09ef2f303e06c87db3624cdbbb8cff23ecc3f0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1981,7 +2047,7 @@
                 "php",
                 "swoole"
             ],
-            "time": "2019-11-27T02:44:10+00:00"
+            "time": "2020-01-03T06:29:26+00:00"
         },
         {
             "name": "hyperf/json-rpc",
@@ -2987,6 +3053,65 @@
             "time": "2019-12-19T03:54:58+00:00"
         },
         {
+            "name": "hyperf/translation",
+            "version": "v1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/translation.git",
+                "reference": "714582f72b9328593f54e01770f2289512b3ced8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/translation/zipball/714582f72b9328593f54e01770f2289512b3ced8",
+                "reference": "714582f72b9328593f54e01770f2289512b3ced8",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "hyperf/contract": "~1.1.0",
+                "hyperf/utils": "~1.1.0",
+                "php": ">=7.2",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "mockery/mockery": "^1.2",
+                "phpstan/phpstan": "^0.10.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Translation\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Functions.php"
+                ],
+                "psr-4": {
+                    "Hyperf\\Translation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An independent translation component, forked by illuminate/translation.",
+            "keywords": [
+                "hyperf",
+                "translation"
+            ],
+            "time": "2019-11-13T01:38:09+00:00"
+        },
+        {
             "name": "hyperf/utils",
             "version": "v1.1.12",
             "source": {
@@ -3058,6 +3183,77 @@
             "time": "2019-12-26T06:55:41+00:00"
         },
         {
+            "name": "hyperf/validation",
+            "version": "v1.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/validation.git",
+                "reference": "38f89d5749f32691ba19f77d4e5f5c85d2e766d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/validation/zipball/38f89d5749f32691ba19f77d4e5f5c85d2e766d6",
+                "reference": "38f89d5749f32691ba19f77d4e5f5c85d2e766d6",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "egulias/email-validator": "^2.1",
+                "ext-swoole": ">=4.3",
+                "hyperf/command": "~1.1.0",
+                "hyperf/contract": "~1.1.0",
+                "hyperf/database": "~1.1.0",
+                "hyperf/devtool": "~1.1.0",
+                "hyperf/di": "~1.1.0",
+                "hyperf/framework": "~1.1.0",
+                "hyperf/http-server": "~1.1.0",
+                "hyperf/translation": "~1.1.0",
+                "hyperf/utils": "~1.1.0",
+                "nesbot/carbon": "^2.21",
+                "php": ">=7.2",
+                "psr/container": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "hyperf/db-connection": "^1.0",
+                "hyperf/testing": "1.0.*",
+                "mockery/mockery": "^1.2",
+                "phpstan/phpstan": "^0.10.5",
+                "swoft/swoole-ide-helper": "^4.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Validation\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Validation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "hyperf validation",
+            "keywords": [
+                "hyperf",
+                "validation"
+            ],
+            "time": "2019-12-31T11:44:35+00:00"
+        },
+        {
             "name": "jaybizzle/crawler-detect",
             "version": "v1.2.90",
             "source": {
@@ -3114,16 +3310,16 @@
         },
         {
             "name": "jcchavezs/zipkin-opentracing",
-            "version": "0.1.3",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jcchavezs/zipkin-php-opentracing.git",
-                "reference": "bee35b51355882df0384d55dd627b60f62f99abd"
+                "reference": "d2c05915c3628610eeed4d2acec14e96d56ff056"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jcchavezs/zipkin-php-opentracing/zipball/bee35b51355882df0384d55dd627b60f62f99abd",
-                "reference": "bee35b51355882df0384d55dd627b60f62f99abd",
+                "url": "https://api.github.com/repos/jcchavezs/zipkin-php-opentracing/zipball/d2c05915c3628610eeed4d2acec14e96d56ff056",
+                "reference": "d2c05915c3628610eeed4d2acec14e96d56ff056",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3133,8 +3329,9 @@
                 ]
             },
             "require": {
-                "opentracing/opentracing": "1.0.0-beta5",
-                "openzipkin/zipkin": "^1.3.4"
+                "opentracing/opentracing": "^1@beta",
+                "openzipkin/zipkin": "^1.3.4",
+                "php": "~5.6 || ~7.0"
             },
             "provide": {
                 "opentracing/opentracing": "dev-master"
@@ -3160,7 +3357,7 @@
                 }
             ],
             "description": "A Zipkin bridge with OpenTracing",
-            "time": "2019-09-20T09:33:35+00:00"
+            "time": "2020-01-02T14:00:00+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -3236,6 +3433,180 @@
                 "useragent"
             ],
             "time": "2019-01-19T21:32:55+00:00"
+        },
+        {
+            "name": "laminas/laminas-mime",
+            "version": "2.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-mime.git",
+                "reference": "2dbace2c69542e5a251af3becb6d7209ac9fb42b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-mime/zipball/2dbace2c69542e5a251af3becb6d7209ac9fb42b",
+                "reference": "2dbace2c69542e5a251af3becb6d7209ac9fb42b",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laminas/laminas-stdlib": "^2.7 || ^3.0",
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^5.6 || ^7.0"
+            },
+            "replace": {
+                "zendframework/zend-mime": "self.version"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~1.0.0",
+                "laminas/laminas-mail": "^2.6",
+                "phpunit/phpunit": "^5.7.21 || ^6.3"
+            },
+            "suggest": {
+                "laminas/laminas-mail": "Laminas\\Mail component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7.x-dev",
+                    "dev-develop": "2.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Mime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Create and parse MIME messages and parts",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "mime"
+            ],
+            "time": "2019-12-31T17:25:27+00:00"
+        },
+        {
+            "name": "laminas/laminas-stdlib",
+            "version": "3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-stdlib.git",
+                "reference": "2b18347625a2f06a1a485acfbc870f699dbe51c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/2b18347625a2f06a1a485acfbc870f699dbe51c6",
+                "reference": "2b18347625a2f06a1a485acfbc870f699dbe51c6",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^5.6 || ^7.0"
+            },
+            "replace": {
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~1.0.0",
+                "phpbench/phpbench": "^0.13",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev",
+                    "dev-develop": "3.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Stdlib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "SPL extensions, array utilities, error handlers, and more",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "stdlib"
+            ],
+            "time": "2019-12-31T17:51:15+00:00"
+        },
+        {
+            "name": "laminas/laminas-zendframework-bridge",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
+                "reference": "0fb9675b84a1666ab45182b6c5b29956921e818d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/0fb9675b84a1666ab45182b6c5b29956921e818d",
+                "reference": "0fb9675b84a1666ab45182b6c5b29956921e818d",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.1",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
+                },
+                "laminas": {
+                    "module": "Laminas\\ZendFrameworkBridge"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
+                "psr-4": {
+                    "Laminas\\ZendFrameworkBridge\\": "src//"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Alias legacy ZF class names to Laminas Project equivalents.",
+            "keywords": [
+                "ZendFramework",
+                "autoloading",
+                "laminas",
+                "zf"
+            ],
+            "time": "2020-01-07T22:58:31+00:00"
         },
         {
             "name": "markrogoyski/math-php",
@@ -5177,114 +5548,6 @@
                 "swoole"
             ],
             "time": "2019-12-31T10:24:03+00:00"
-        },
-        {
-            "name": "zendframework/zend-mime",
-            "version": "2.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-mime.git",
-                "reference": "c91e0350be53cc9d29be15563445eec3b269d7c1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-mime/zipball/c91e0350be53cc9d29be15563445eec3b269d7c1",
-                "reference": "c91e0350be53cc9d29be15563445eec3b269d7c1",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": "^5.6 || ^7.0",
-                "zendframework/zend-stdlib": "^2.7 || ^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7.21 || ^6.3",
-                "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-mail": "^2.6"
-            },
-            "suggest": {
-                "zendframework/zend-mail": "Zend\\Mail component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7.x-dev",
-                    "dev-develop": "2.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Mime\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Create and parse MIME messages and parts",
-            "keywords": [
-                "ZendFramework",
-                "mime",
-                "zf"
-            ],
-            "time": "2019-10-16T19:30:37+00:00"
-        },
-        {
-            "name": "zendframework/zend-stdlib",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "66536006722aff9e62d1b331025089b7ec71c065"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/66536006722aff9e62d1b331025089b7ec71c065",
-                "reference": "66536006722aff9e62d1b331025089b7ec71c065",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "phpbench/phpbench": "^0.13",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
-                "zendframework/zend-coding-standard": "~1.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2.x-dev",
-                    "dev-develop": "3.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Stdlib\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "SPL extensions, array utilities, error handlers, and more",
-            "keywords": [
-                "ZendFramework",
-                "stdlib",
-                "zf"
-            ],
-            "time": "2018-08-28T21:34:05+00:00"
         }
     ],
     "packages-dev": [
@@ -5832,16 +6095,16 @@
         },
         {
             "name": "doctrine/reflection",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/reflection.git",
-                "reference": "02538d3f95e88eb397a5f86274deb2c6175c2ab6"
+                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/reflection/zipball/02538d3f95e88eb397a5f86274deb2c6175c2ab6",
-                "reference": "02538d3f95e88eb397a5f86274deb2c6175c2ab6",
+                "url": "https://api.github.com/repos/doctrine/reflection/zipball/bc420ead87fdfe08c03ecc3549db603a45b06d4c",
+                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5855,13 +6118,15 @@
                 "ext-tokenizer": "*",
                 "php": "^7.1"
             },
+            "conflict": {
+                "doctrine/common": "<2.9"
+            },
             "require-dev": {
-                "doctrine/coding-standard": "^4.0",
-                "doctrine/common": "^2.8",
-                "phpstan/phpstan": "^0.9.2",
-                "phpstan/phpstan-phpunit": "^0.9.4",
-                "phpunit/phpunit": "^7.0",
-                "squizlabs/php_codesniffer": "^3.0"
+                "doctrine/coding-standard": "^5.0",
+                "doctrine/common": "^2.10",
+                "phpstan/phpstan": "^0.11.0",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
@@ -5880,16 +6145,16 @@
             ],
             "authors": [
                 {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
                 {
                     "name": "Benjamin Eberlei",
                     "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
                 },
                 {
                     "name": "Jonathan Wage",
@@ -5904,12 +6169,13 @@
                     "email": "ocramius@gmail.com"
                 }
             ],
-            "description": "Doctrine Reflection component",
+            "description": "The Doctrine Reflection project is a simple library used by the various Doctrine projects which adds some additional functionality on top of the reflection functionality that comes with PHP. It allows you to get the reflection information about classes, methods and properties statically.",
             "homepage": "https://www.doctrine-project.org/projects/reflection.html",
             "keywords": [
-                "reflection"
+                "reflection",
+                "static"
             ],
-            "time": "2018-06-14T14:45:07+00:00"
+            "time": "2020-01-08T19:53:19+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -6466,16 +6732,16 @@
         },
         {
             "name": "nette/finder",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/finder.git",
-                "reference": "14164e1ddd69e9c5f627ff82a10874b3f5bba5fe"
+                "reference": "4ad2c298eb8c687dd0e74ae84206a4186eeaed50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/finder/zipball/14164e1ddd69e9c5f627ff82a10874b3f5bba5fe",
-                "reference": "14164e1ddd69e9c5f627ff82a10874b3f5bba5fe",
+                "url": "https://api.github.com/repos/nette/finder/zipball/4ad2c298eb8c687dd0e74ae84206a4186eeaed50",
+                "reference": "4ad2c298eb8c687dd0e74ae84206a4186eeaed50",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6485,7 +6751,7 @@
                 ]
             },
             "require": {
-                "nette/utils": "^2.4 || ~3.0.0",
+                "nette/utils": "^2.4 || ^3.0",
                 "php": ">=7.1"
             },
             "conflict": {
@@ -6493,6 +6759,7 @@
             },
             "require-dev": {
                 "nette/tester": "^2.0",
+                "phpstan/phpstan": "^0.12",
                 "tracy/tracy": "^2.3"
             },
             "type": "library",
@@ -6530,7 +6797,7 @@
                 "iterator",
                 "nette"
             ],
-            "time": "2019-07-11T18:02:17+00:00"
+            "time": "2020-01-03T20:35:40+00:00"
         },
         {
             "name": "nette/neon",
@@ -6602,16 +6869,16 @@
         },
         {
             "name": "nette/php-generator",
-            "version": "v3.3.1",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/php-generator.git",
-                "reference": "4240fd7adf499138c07b814ef9b9a6df9f6d7187"
+                "reference": "facde285ba959366e7eee09c7f198f2d9ef176ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/php-generator/zipball/4240fd7adf499138c07b814ef9b9a6df9f6d7187",
-                "reference": "4240fd7adf499138c07b814ef9b9a6df9f6d7187",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/facde285ba959366e7eee09c7f198f2d9ef176ca",
+                "reference": "facde285ba959366e7eee09c7f198f2d9ef176ca",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6621,11 +6888,12 @@
                 ]
             },
             "require": {
-                "nette/utils": "^2.4.2 || ~3.0.0",
+                "nette/utils": "^2.4.2 || ^3.0",
                 "php": ">=7.1"
             },
             "require-dev": {
                 "nette/tester": "^2.0",
+                "phpstan/phpstan": "^0.12",
                 "tracy/tracy": "^2.3"
             },
             "type": "library",
@@ -6655,7 +6923,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 7.3 features.",
+            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 7.4 features.",
             "homepage": "https://nette.org",
             "keywords": [
                 "code",
@@ -6663,7 +6931,7 @@
                 "php",
                 "scaffolding"
             ],
-            "time": "2019-11-22T11:12:11+00:00"
+            "time": "2020-01-03T19:49:13+00:00"
         },
         {
             "name": "nette/robot-loader",
@@ -6736,16 +7004,16 @@
         },
         {
             "name": "nette/schema",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/schema.git",
-                "reference": "337117df1dade22e2ba1fdc4a4b832c1e9b06b76"
+                "reference": "febf71fb4052c824046f5a33f4f769a6e7fa0cb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/schema/zipball/337117df1dade22e2ba1fdc4a4b832c1e9b06b76",
-                "reference": "337117df1dade22e2ba1fdc4a4b832c1e9b06b76",
+                "url": "https://api.github.com/repos/nette/schema/zipball/febf71fb4052c824046f5a33f4f769a6e7fa0cb4",
+                "reference": "febf71fb4052c824046f5a33f4f769a6e7fa0cb4",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6755,18 +7023,17 @@
                 ]
             },
             "require": {
-                "nette/utils": "^3.0.1",
+                "nette/utils": "^3.1",
                 "php": ">=7.1"
             },
             "require-dev": {
                 "nette/tester": "^2.2",
+                "phpstan/phpstan-nette": "^0.12",
                 "tracy/tracy": "^2.3"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
+                "branch-alias": []
             },
             "autoload": {
                 "classmap": [
@@ -6795,20 +7062,20 @@
                 "config",
                 "nette"
             ],
-            "time": "2019-10-31T20:52:19+00:00"
+            "time": "2020-01-06T22:52:48+00:00"
         },
         {
             "name": "nette/utils",
-            "version": "v3.0.3",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "f1b5ce0fae07f13e066e64f9a8f59e53b8f4982e"
+                "reference": "d6cd63d77dd9a85c3a2fae707e1255e44c2bc182"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/f1b5ce0fae07f13e066e64f9a8f59e53b8f4982e",
-                "reference": "f1b5ce0fae07f13e066e64f9a8f59e53b8f4982e",
+                "url": "https://api.github.com/repos/nette/utils/zipball/d6cd63d77dd9a85c3a2fae707e1255e44c2bc182",
+                "reference": "d6cd63d77dd9a85c3a2fae707e1255e44c2bc182",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6837,7 +7104,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -6879,7 +7146,7 @@
                 "utility",
                 "validation"
             ],
-            "time": "2019-12-27T03:47:50+00:00"
+            "time": "2020-01-03T18:13:31+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -7944,16 +8211,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.18",
+            "version": "7.5.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fcf6c4bfafaadc07785528b06385cce88935474d"
+                "reference": "9467db479d1b0487c99733bb1e7944d32deded2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fcf6c4bfafaadc07785528b06385cce88935474d",
-                "reference": "fcf6c4bfafaadc07785528b06385cce88935474d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9467db479d1b0487c99733bb1e7944d32deded2c",
+                "reference": "9467db479d1b0487c99733bb1e7944d32deded2c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -8030,7 +8297,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-06T05:14:37+00:00"
+            "time": "2020-01-08T08:45:45+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

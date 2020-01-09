@@ -12,14 +12,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\AutoController;
-use App\Constants\StatusCode;
-use Hyperf\Pool\SimplePool\PoolFactory;
-use App\Core\Facade\Cookie;
-
-use App\Repositories\TestRepository;
-
 
 /**
  * IndexController
@@ -28,7 +21,6 @@ use App\Repositories\TestRepository;
  * User：YM
  * Date：2019/11/12
  * Time：下午5:03
- * @property \APP\Core\Repositories\TestRepository $testRepo
  *
  *
  *
@@ -52,7 +44,7 @@ class IndexController extends BaseController
         $user = $this->request->input('aa', 'Hyperf2');
         $method = $this->request->getMethod();
 //        throw new \App\Exception\BusinessException(StatusCode::ERR_EXCEPTION,'11');
-        $tmp = $this->testRepo->test();
+//        $tmp = $this->testRepo->test();
         //return $this->success([$tmp]);
 
         $data = [

@@ -12,14 +12,14 @@
  */
 
 
-namespace App\Core\Services;
+namespace Core\Services;
 
 use Hyperf\Cache\Annotation\Cacheable;
 
 /**
  * TestServices
  * 类的介绍
- * @package App\Core\Services
+ * @package Core\Services
  * User：YM
  * Date：2019/11/21
  * Time：下午2:46

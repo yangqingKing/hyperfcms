@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 
-namespace App\Core\Repositories;
+namespace Core\Repositories;
 
 
 use Psr\Container\ContainerInterface;
@@ -24,7 +24,7 @@ use App\Constants\StatusCode;
 /**
  * BaseRepository
  * 仓库基类
- * @package App\Core\Repositories
+ * @package Core\Repositories
  * User：YM
  * Date：2019/11/21
  * Time：下午2:36
@@ -70,7 +70,7 @@ class BaseRepository
     {
         $key = ucfirst($key);
         $fileName = BASE_PATH."/app/Core/Services/{$key}.php";
-        $className = "App\\Core\\Services\\{$key}";
+        $className = "Core\\Services\\{$key}";
 
         if (file_exists($fileName)) {
             return $this->container->get($className);

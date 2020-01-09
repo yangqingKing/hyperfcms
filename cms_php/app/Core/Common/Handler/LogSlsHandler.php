@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 
-namespace App\Core\Handler;
+namespace Core\Common\Handler;
 
 use Hyperf\Di\Annotation\Inject;
 use Monolog\Handler\AbstractProcessingHandler;

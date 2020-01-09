@@ -10,7 +10,7 @@
  */
 
 
-namespace App\Core;
+namespace Core\Common\Container;
 
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -20,13 +20,13 @@ use App\Constants\StatusCode;
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Hyperf\Utils\Coroutine;
-use App\Core\Facade\Log;
+use Core\Common\Container\Facade\Log;
 use Hyperf\Contract\StdoutLoggerInterface;
 
 /**
  * ReqResponse
  * 请求响应结果
- * @package App\Container
+ * @package Core\Common\Container
  * User：YM
  * Date：2019/11/15
  * Time：下午5:35
@@ -60,7 +60,7 @@ class Response
      * @param string|null $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success(array $data = [], string $msg = null)
+    public function success($data = [], string $msg = null)
     {
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);;
         $data = [

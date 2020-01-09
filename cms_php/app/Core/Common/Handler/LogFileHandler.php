@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 
-namespace App\Core\Handler;
+namespace Core\Common\Handler;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

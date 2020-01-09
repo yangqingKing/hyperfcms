@@ -6,29 +6,28 @@
  */
 declare(strict_types=1);
 
-namespace App\Core\HF;
+namespace Core\Common\HF;
 
 use Psr\Container\ContainerInterface;
-use Hyperf\ModelCache\Handler\HandlerInterface;
-use Hyperf\ModelCache\Handler\RedisHandler;
-use App\Core\Handler\ModelCacheFileHandler;
-use Hyperf\ModelCache\Config;
+use App\Core\Handler\CacheFileHandler;
+use Hyperf\Cache\Driver\RedisDriver;
+use Hyperf\Cache\Driver\Driver;
 
 /**
- * ModelCacheFactory
- * 数据模型缓存工厂
+ * CacheFactory
+ * 缓存工厂
  * package App\Core\HF
  * date 2020-01-07
  * @author YQ
  */
-class ModelCacheFactory  implements HandlerInterface
+class CacheFactory extends Driver
 {
     private $cacheInstance = null;
 
-    public function __construct(ContainerInterface $container, Config $config)
+    public function __construct(ContainerInterface $container, array $config)
     {
         if($this->cacheInstance == null){
-            $driver = env('MODEL_CACHE_DRIVER', 'file');
+            $driver = env('CACHE_DRIVER', 'file');
             $this->cacheInstance = $this->getCacheInstance($driver, $container, $config);
         }
     }
@@ -44,21 +43,31 @@ class ModelCacheFactory  implements HandlerInterface
      * Date: 2020-01-07
      * Created by YQ
      */
-    private function getCacheInstance($driver, ContainerInterface $container, Config $config)
+    private function getCacheInstance($driver, ContainerInterface $container, array $config)
     {
         switch($driver){
             case 'file':
-                return new ModelCacheFileHandler($container, $config);
+                return new CacheFileHandler($container, $config);
             case 'redis':
-                return new RedisHandler($container, $config);
+                return new RedisDriver($container, $config);
             default:
-                throw new Exception("model cache [$driver] not found");
+                throw new Exception("cache [$driver] not found");
         }
+    }
+
+    public function getCacheKey(string $key)
+    {
+        return $this->cacheInstance->getCacheKey($key);
     }
 
     public function get($key, $default = null)
     {
         return $this->cacheInstance->get($key, $default);
+    }
+
+    public function fetch(string $key, $default = null): array
+    {
+        return $this->cacheInstance->fetch($key, $default);
     }
 
     public function set($key, $value, $ttl = null)
@@ -96,14 +105,9 @@ class ModelCacheFactory  implements HandlerInterface
         return $this->cacheInstance->has($key);
     }
 
-    public function getConfig(): Config
+    public function clearPrefix(string $prefix): bool
     {
-        return $this->cacheInstance->getConfig();
-    }
-
-    public function incr($key, $column, $amount): bool
-    {
-        return $this->cacheInstance->incr($key, $column, $amount);
+        return $this->cacheInstance->clearPrefix($prefix);
     }
 
     public function __call($name, $arguments)

@@ -13,7 +13,7 @@ declare(strict_types=1);
 return [
     'default' => [
         //'driver' => Hyperf\Cache\Driver\RedisDriver::class,
-        'driver' => App\Core\HF\CacheFactory::class,
+        'driver' => Core\Common\HF\CacheFactory::class,
         'packer' => Hyperf\Utils\Packer\PhpSerializerPacker::class,
         'prefix' => 'c:',
     ],

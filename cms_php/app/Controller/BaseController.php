@@ -73,14 +73,14 @@ class BaseController extends AbstractController
         }
         if ($module) {
             $filename = BASE_PATH."/app/Core/Repositories/{$module}/{$key}.php";
-            $classname = "App\\Core\\Repositories\\{$module}\\{$key}";
+            $className = "Core1\\Repositories\\{$module}\\{$key}";
         } else {
             $filename = BASE_PATH."/app/Core/Repositories/{$key}.php";
-            $classname = "App\\Core\\Repositories\\{$key}";
+            $className = "Core1\\Repositories\\{$key}";
         }
 
         if (file_exists($filename)) {
-            return $this->container->get($classname);
+            return $this->container->get($className);
         } else {
             throw new \RuntimeException("仓库{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
         }
@@ -96,8 +96,8 @@ class BaseController extends AbstractController
      */
     private function getModuleName()
     {
-        $classname = get_called_class();
-        $name = substr($classname, 15);
+        $className = get_called_class();
+        $name = substr($className, 15);
         $space = explode('\\', $name);
         if(count($space) > 1){
             return $space[0];

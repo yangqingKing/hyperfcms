@@ -27,7 +27,8 @@ use App\Exception\BusinessException;
  * User：YM
  * Date：2019/11/13
  * Time：上午11:32
- * @AutoController()
+ *
+ * @AutoController(prefix="admin_api/test")
  */
 class TestController extends BaseController
 {
@@ -40,7 +41,7 @@ class TestController extends BaseController
             'method-test' => $method,
             'message' => "Hello {$user}.",
         ];
-        $this->aaaaRepo;
+
         return $this->success($data);
     }
 }
