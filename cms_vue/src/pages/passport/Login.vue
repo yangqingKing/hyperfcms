@@ -13,7 +13,7 @@
             <el-button class="login-button" type="primary" @click="loginClick">登 录</el-button>
           </el-form-item>
           <el-form-item>
-            <el-checkbox >自动登录</el-checkbox>
+            <el-checkbox v-model="loginData.remember">记住密码</el-checkbox>
             <router-link class="login-register" to="login" @click.native="registerClick" >注册账户</router-link>
           </el-form-item>
         </el-form>
@@ -74,23 +74,28 @@ export default {
     // 实际登录请求
     async formSubmit() {
       let userInfo = await this.$api.submitLoginInfo(this.loginData)
-      if (userInfo) {
+      if (userInfo.length > 0) {
         localStorage.setItem('user_info',JSON.stringify(userInfo))
         this.handleUserInfo(userInfo)
         this.$message.success('登录成功！')
+        console.log('000')
         this.go()
       } else {
+        this.initRespErrMsgBoxMark()
         this.$message.error('登录失败，请联系管理员！')
       }
     },
     // 路由跳转
     go(url='/') {
       this.$router.push(url);
+    },
+    // 初始化响应错误弹窗标志
+    initRespErrMsgBoxMark() {
+      this.$store.commit('changeRespErrMsgBoxMark',false)
     }
   },
   mounted() {
-    // 初始化错误响应弹窗标志
-    this.$store.commit('changeRespErrMsgBoxMark',false)
+    this.initRespErrMsgBoxMark()
   },
 }
 </script>

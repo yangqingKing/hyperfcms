@@ -64,7 +64,8 @@ service.interceptors.response.use(
     if (res.code === 200) {
       return res.data
     } else {
-      Message.error(res.info)
+      console.log(1112)
+      Message.error(res.msg)
       if (res.code === 401 || res.code === 402) {
         localStorage.removeItem('user_info')
         router.push('/login')

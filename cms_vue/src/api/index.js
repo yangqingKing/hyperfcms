@@ -1,9 +1,13 @@
 import * as request from '@/utils/request'
+import PASSPORT from './passport'
 import STATISTICS from './statistics'
 
 export default {
+  // 通行证
+  ...PASSPORT,
   //统计数据
   ...STATISTICS,
+
   // --------------------------------------  通用功能接口 -------------------------------------------
   /**
    * getOssToken
@@ -46,24 +50,6 @@ export default {
    */
   getUserPermissionsList() {
     return request.post('/permissions/user_permissions')
-  },
-  /**
-   * @description 提交登录信息，进行登录
-   * @author YM
-   * @date 2019-02-12
-   * @returns 
-   */
-  submitLoginInfo(data) {
-    return request.post('/passport/login',data)
-  },
-  /**
-   * @description 提交退出登录
-   * @author YM
-   * @date 2019-02-13
-   * @returns 
-   */
-  submitLogout() {
-    return request.post('/passport/logout')
   },
   /**
    * @description 获取阿里云vod视频上传令牌信息
