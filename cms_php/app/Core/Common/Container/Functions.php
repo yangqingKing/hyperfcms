@@ -422,5 +422,25 @@ if (! function_exists('isStdoutLog')) {
         $config = config(StdoutLoggerInterface::class, ['log_level' => []]);
         return in_array(strtolower($level), $config['log_level'], true);
     }
+}
 
+if (! function_exists('isMobileNum')) {
+    /**
+     * isMobileNum
+     * 判断是否为手机号
+     * User：YM
+     * Date：2020/1/10
+     * Time：上午12:21
+     * @param $v
+     * @return bool
+     */
+    function isMobileNum($v)
+    {
+        $search = '/^0?1[3|4|5|6|7|8][0-9]\d{8}$/';
+        if (preg_match($search, $v)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

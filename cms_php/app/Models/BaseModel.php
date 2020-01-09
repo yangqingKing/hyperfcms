@@ -74,7 +74,7 @@ abstract class BaseModel extends Model implements CacheableInterface
 
     /**
      * getInfoByWhere
-     * 函数的含义说明
+     * 根据条件获取结果
      * User：YM
      * Date：2020/1/9
      * Time：下午10:24

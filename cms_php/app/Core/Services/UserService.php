@@ -74,5 +74,22 @@ class UserService extends BaseService
         return $id;
     }
 
+    /**
+     * getInfoByWhere
+     * 根据条件获取用户信息
+     * User：YM
+     * Date：2020/1/10
+     * Time：上午12:32
+     * @param $where
+     * @param bool $type 是否多条
+     * @return array
+     */
+    public function getInfoByWhere($where,$type=false)
+    {
+        $res = $this->userModel->getInfoByWhere($where,$type);
+
+        return $res;
+    }
+
 
 }
