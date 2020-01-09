@@ -31,7 +31,7 @@ use App\Constants\StatusCode;
  *
  * @AutoController(prefix="admin_api/passport")
  *
- * @property \Core\Common\Repositories\Admin\PassportRepository $passportRepo
+ * @property \Core\Repositories\Admin\PassportRepository $passportRepo
  */
 class PassportController extends BaseController
 {

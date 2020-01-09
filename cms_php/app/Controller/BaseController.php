@@ -73,10 +73,10 @@ class BaseController extends AbstractController
         }
         if ($module) {
             $filename = BASE_PATH."/app/Core/Repositories/{$module}/{$key}.php";
-            $className = "Core1\\Repositories\\{$module}\\{$key}";
+            $className = "Core\\Repositories\\{$module}\\{$key}";
         } else {
             $filename = BASE_PATH."/app/Core/Repositories/{$key}.php";
-            $className = "Core1\\Repositories\\{$key}";
+            $className = "Core\\Repositories\\{$key}";
         }
 
         if (file_exists($filename)) {

@@ -22,7 +22,7 @@ abstract class BaseModel extends Model implements CacheableInterface
 
     /**
      * getInfo
-     * 通过主键id获取信息
+     * 通过主键id/ids获取信息
      * User：YM
      * Date：2020/1/8
      * Time：下午5:55
@@ -32,11 +32,13 @@ abstract class BaseModel extends Model implements CacheableInterface
      */
     public function getInfo($id,$useCache = true)
     {
+        $instance = make(get_called_class());
+
         if ($useCache === true) {
-            $modelCache = self::findFromCache($id);
+            $modelCache = is_array($id)?$instance->findManyFromCache($id):$instance->findFromCache($id);
             return isset($modelCache) && $modelCache ? $modelCache->toArray() : [];
         }
-        $query = self::where('id', $id)->first();
+        $query = $instance->query()->find($id);
         return isset($query) && $query ? $query->toArray() : [];
     }
 
@@ -52,22 +54,43 @@ abstract class BaseModel extends Model implements CacheableInterface
      */
     public function saveInfo($data,$type=false)
     {
+        $instance = make(get_called_class());
         if (isset($data['id']) && $data['id'] && !$type) {
-            $query = self::query()->find($data['id']);
+            $query = $instance->query()->find($data['id']);
             unset($data['id']);
             foreach ($data as $k => $v) {
                 $query->$k = $v;
             }
             $query->save();
         } else {
-            $className = get_called_class();
-            $query = new $className;
             foreach ($data as $k => $v) {
-                $query->$k = $v;
+                $instance->$k = $v;
             }
-            $query->save();
+            $instance->save();
         }
 
         return true;
+    }
+
+    /**
+     * getInfoByWhere
+     * 函数的含义说明
+     * User：YM
+     * Date：2020/1/9
+     * Time：下午10:24
+     * @param $where
+     * @param bool $type 是否查询多条
+     * @return array
+     */
+    public function getInfoByWhere($where,$type=false)
+    {
+        $instance = make(get_called_class());
+        foreach ($where as $k => $v) {
+            $instance = is_array($v)?$instance->where($k,$v[0],$v[1]):$instance->where($k,$v);
+        }
+
+        $instance = $type?$instance->get():$instance->first();
+
+        return isset($instance) && $instance ? $instance->toArray() : [];
     }
 }

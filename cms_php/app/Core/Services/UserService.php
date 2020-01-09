@@ -35,16 +35,26 @@ class UserService extends BaseService
      * User：YM
      * Date：2020/1/8
      * Time：下午7:52
-     * @param $id
+     * @param $id 可以传入数组
      * @return \App\Models\BaseModel|\Hyperf\Database\Model\Model|null
      */
     public function getInfo($id)
     {
-        $info = $this->userModel->getInfo($id);
-        unset($info['password']);
-        unset($info['session_id']);
-        unset($info['deleted_at']);
-        return $info;
+        $res = $this->userModel->getInfo($id,false);
+        if (count($res) == count($res,1)) {
+            unset($res['password']);
+            unset($res['session_id']);
+            unset($res['deleted_at']);
+        } else {
+            foreach ($res as &$v) {
+                unset($v['password']);
+                unset($v['session_id']);
+                unset($v['deleted_at']);
+            }
+            unset($v);
+        }
+
+        return $res;
     }
 
     /**
@@ -63,4 +73,6 @@ class UserService extends BaseService
 
         return $id;
     }
+
+
 }
