@@ -135,4 +135,41 @@ class Auth
         return $uid;
     }
 
+    /**
+     * check
+     * 检测用户登录状态，登录返回用户信息
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午2:50
+     * @return array|bool
+     */
+    public function check()
+    {
+        $loginTag = getSession(self::LOGIN_TAG);
+        if (!$loginTag) {
+            return false;
+        }
+        $uid = $this->decodeUid($loginTag);
+        $user = $this->userService->getInfo($uid);
+        if(!$user){
+            throw new BusinessException(StatusCode::ERR_USER_ABSENT);
+        }
+
+        return $user;
+    }
+
+    /**
+     * logout
+     * 退出登录
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午2:58
+     * @return string
+     */
+    public function logout()
+    {
+        destroySession();
+        return getSessionId();
+    }
+
 }

@@ -360,6 +360,21 @@ if (! function_exists('clearSession')) {
     }
 }
 
+if (! function_exists('destroySession')) {
+    /**
+     * destroySession
+     * 销毁session
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:56
+     */
+    function destroySession()
+    {
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
+        return $session->invalidate();
+    }
+}
+
 if (! function_exists('getLogArguments')) {
     /**
      * getLogArguments
