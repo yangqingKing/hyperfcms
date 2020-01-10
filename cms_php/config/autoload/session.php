@@ -12,11 +12,18 @@ declare(strict_types=1);
 
 use Hyperf\Session\Handler;
 
+$driver = env('SESSION_DRIVER', 'file');
+if ($driver == 'file') {
+    $handler = Handler\FileHandler::class;
+}
+if ($driver == 'redis') {
+    $handler = Handler\RedisHandler::class;
+}
 return [
-    'handler' => Handler\FileHandler::class,
+    'handler' => $handler,
     'options' => [
-        'connection' => 'default',
+        'connection' => 'session',
         'path' => BASE_PATH . '/runtime/session',
-        'gc_maxlifetime' => 1200,
+        'gc_maxlifetime' => 60*60*24*3,
     ],
 ];

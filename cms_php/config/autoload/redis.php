@@ -56,4 +56,19 @@ return [
             'max_idle_time' => (float) env('MODEL_CACHE_REDIS_MAX_IDLE_TIME', 60),
         ],
     ],
+    // session用redis配置
+    'session' => [
+        'host' => env('SESSION_REDIS_HOST', 'localhost'),
+        'auth' => env('SESSION_REDIS_AUTH', null),
+        'port' => (int) env('SESSION_REDIS_PORT', 6379),
+        'db' => (int) env('SESSION_REDIS_DB', 0),
+        'pool' => [
+            'min_connections' => 1,
+            'max_connections' => 20,
+            'connect_timeout' => 10.0,
+            'wait_timeout' => 3.0,
+            'heartbeat' => -1,
+            'max_idle_time' => (float) env('MODEL_CACHE_REDIS_MAX_IDLE_TIME', 60),
+        ],
+    ],
 ];
