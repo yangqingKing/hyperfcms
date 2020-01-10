@@ -77,7 +77,7 @@ class StatusCode extends AbstractConstants
 
     /**
      * 用户相关逻辑异常
-     * @Message("用户名密码不正确！")
+     * @Message("用户密码不正确！")
      */
     const ERR_EXCEPTION_USER = 3002;
 

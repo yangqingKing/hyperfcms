@@ -18,6 +18,8 @@ namespace Core\Common\Container;
 
 use Core\Services\UserService;
 use Hyperf\Di\Annotation\Inject;
+use App\Constants\StatusCode;
+use App\Exception\BusinessException;
 
 /**
  * Auth
@@ -54,14 +56,17 @@ class Auth
             $key => $inputData['account']
         ];
         $row = $this->userService->getInfoByWhere($where);
-        if ($row && $this->checkPassword($inputData['password'], $row['password'])) {
-            $this->loginByUid($row['id'], $inputData['remember']??false);
-            $userInfo = $this->handleUserInfo($row);
-
-            return array_merge($userInfo,['sid' => getSessionId()]);
+        if (!$row) {
+            throw new BusinessException(StatusCode::ERR_USER_ABSENT);
+        }
+        if (!isset($row['password']) || !$row['password'] || !checkPassword($inputData['password'], $row['password'])) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER);
         }
 
-        return false;
+        $this->loginByUid($row['id'], $inputData['remember']??false);
+        $userInfo = $this->handleUserInfo($row);
+
+        return array_merge($userInfo,['sid' => getSessionId()]);
     }
 
     /**
@@ -128,35 +133,6 @@ class Auth
         $uid = base64_decode($uid);
         $uid = substr($uid, 2, -1);
         return $uid;
-    }
-
-    /**
-     * encryptPassword
-     * 加密密码
-     * @param string $password 用户输入的密码
-     * @access public
-     * @return void
-     */
-    public function encryptPassword($password)
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    /**
-     * checkPassword
-     * 验证密码
-     * @param mixed $value
-     * @param mixed $hashedValue
-     * @access public
-     * @return void
-     */
-    public function checkPassword($value, $hashedValue)
-    {
-        if (strlen($hashedValue) === 0) {
-            return false;
-        }
-
-        return password_verify($value, $hashedValue);
     }
 
 }

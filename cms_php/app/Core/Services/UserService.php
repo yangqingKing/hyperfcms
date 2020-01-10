@@ -67,8 +67,25 @@ class UserService extends BaseService
      * @param bool $type 是否强制创建
      * @return mixed
      */
+    /**
+     * saveInfo
+     * 函数的含义说明
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午1:12
+     * @param $data
+     * @param bool $type
+     * @return bool
+     * @throws \Exception
+     */
     public function saveInfo($data, $type = false)
     {
+        if ($type === true) {
+            $data['id'] = getUserUniqueId();
+        }
+        if (isset($data['password'])) {
+            $data['password'] = encryptPassword($data['password']);
+        }
         $id = $this->userModel->saveInfo($data,$type);
 
         return $id;

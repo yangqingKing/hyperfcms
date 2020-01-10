@@ -50,26 +50,31 @@ abstract class BaseModel extends Model implements CacheableInterface
      * Time：下午7:49
      * @param $data 保存数据
      * @param bool $type 是否强制写入，适用于主键是规则生成情况
-     * @return bool
+     * @return null
      */
     public function saveInfo($data,$type=false)
     {
+        $id = null;
         $instance = make(get_called_class());
         if (isset($data['id']) && $data['id'] && !$type) {
-            $query = $instance->query()->find($data['id']);
+            $id = $data['id'];
             unset($data['id']);
+            $query = $instance->query()->find($id);
             foreach ($data as $k => $v) {
                 $query->$k = $v;
             }
             $query->save();
         } else {
             foreach ($data as $k => $v) {
+                if ($k === 'id') {
+                    $id = $v;
+                }
                 $instance->$k = $v;
             }
             $instance->save();
         }
 
-        return true;
+        return $id;
     }
 
     /**

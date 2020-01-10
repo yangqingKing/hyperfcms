@@ -379,13 +379,16 @@ if (! function_exists('getLogArguments')) {
         $agent = new Agent();
         $agent->setUserAgent($requestHeaders['user-agent'][0]);
         $arguments = $request->all();
+        if (isset($arguments['password'])) {
+            unset($arguments['password']);
+        }
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
             'server_addr' => getServerLocalIp()??'',
             'remote_addr' => $serverParams['remote_addr']??'',
-            'forwarded_for' => $requestHeaders['x-forwarded-for']??'',
-            'real_ip' => isset($requestHeaders['x-forwarded-for'])?$requestHeaders['x-forwarded-for']:getServerLocalIp(),
+            'forwarded_for' => $requestHeaders['x-forwarded-for'][0]??'',
+            'real_ip' => isset($requestHeaders['x-forwarded-for'])?$requestHeaders['x-forwarded-for'][0]:getServerLocalIp(),
             'user_agent' => $requestHeaders['user-agent'][0]??'',
             'platform' => $agent->platform()??'',
             'device' => $agent->device()??'',
@@ -444,3 +447,77 @@ if (! function_exists('isMobileNum')) {
         }
     }
 }
+
+if (! function_exists('encryptPassword')) {
+    /**
+     * encryptPassword
+     * 加密密码
+     * @param string $password 用户输入的密码
+     * @access public
+     * @return void
+     */
+    function encryptPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+}
+
+if (! function_exists('checkPassword')) {
+    /**
+     * checkPassword
+     * 检测密码
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午12:48
+     * @param $value
+     * @param $hashedValue
+     * @return bool
+     */
+    function checkPassword($value, $hashedValue)
+    {
+        if (strlen($hashedValue) === 0) {
+            return false;
+        }
+
+        return password_verify($value, $hashedValue);
+    }
+}
+
+if (! function_exists('getUserUniqueId')) {
+    /**
+     * getUserUniqueId
+     * 获取用户唯一标示，用户ID生成规则，32位
+     * @access public
+     * @return string
+     * @throws Exception
+     */
+    function getUserUniqueId()
+    {
+        // 前缀3位
+        $prefix = config('app_uid_prefix');
+        $prefix = substr($prefix, 0, 3);
+        //随机字符串14位
+        $rand = substr(str_replace(['/', '+', '='], '', base64_encode(random_bytes(14))), 0, 14);
+        //根据当前时间生成的随机字符串11位
+        $uniqid = substr(uniqid(), 2);
+        //当前服务器ip后4位
+        $ip = getServerLocalIp();
+        $ipList = explode('.', $ip);
+        if(empty($ipList) || count($ipList) < 4 ){
+            $ipStr = '01';
+        }else{
+            $ipStr = $ipList[2].$ipList[3];
+        }
+        $ip = dechex($ipStr);
+        $ip = str_pad($ip, 6, 'f', STR_PAD_LEFT);
+        if(PHP_SAPI != 'cli'){
+            $ip = substr($ip, -4);
+        }else{
+            $ip = 'z'.substr($ip, -3);
+        }
+
+        //总共32位字符串
+        return strtolower($prefix.$ip.$rand.$uniqid);
+    }
+}
+

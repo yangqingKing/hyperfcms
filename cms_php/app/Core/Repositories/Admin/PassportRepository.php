@@ -28,6 +28,8 @@ use Hyperf\Di\Annotation\Inject;
  * User：YM
  * Date：2020/1/7
  * Time：下午6:56
+ *
+ * @property \Core\Services\UserService $userService
  */
 class PassportRepository extends BaseRepository
 {
@@ -38,9 +40,37 @@ class PassportRepository extends BaseRepository
      */
     protected $auth;
 
+    /**
+     * handleLogin
+     * 处理用户登录
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午12:26
+     * @param $inputData
+     * @return array|bool
+     */
     public function handleLogin($inputData)
     {
-        return $this->auth->handleLogin($inputData);
+        $userInfo = $this->auth->handleLogin($inputData);
+
+        return $userInfo;
+    }
+
+    /**
+     * createUser
+     * 创建用户
+     * User：YM
+     * Date：2020/1/10
+     * Time：下午2:10
+     * @param $inputData
+     * @return bool
+     * @throws \Exception
+     */
+    public function createUser($inputData)
+    {
+        $id = $this->userService->saveInfo($inputData,true);
+
+        return $id;
     }
 
 }

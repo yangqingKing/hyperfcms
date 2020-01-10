@@ -17,6 +17,8 @@ return [
     'app_name' => env('APP_NAME', 'skeleton'),
     // 是否允许跨域资源访问
     'cors_access' => env('CORS_ACCESS', false),
+    //用户id的前缀，作用在用户id的生成规则,最多使用3位
+    'app_uid_prefix'=> env('APP_UID_PREFIX', 'ym'),
     // 允许跨域的域名
     'allow_origins' => [
         'http://127.0.0.1',
