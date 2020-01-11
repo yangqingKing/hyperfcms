@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/dzjadmin/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ?  process.env.VUE_APP_BASE_URL : '/',
   configureWebpack: {
     resolve: {
       alias: {
@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/admin_api': {
-        target: 'http://127.0.0.1:9501',
+        target: 'http://localhost:9501',
         changeOrigin: true,
         pathRewrite: {
           // '^/admin_api': 'admin_api'

@@ -62,12 +62,15 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code === 200) {
+      if (res.data.sid) {
+        localStorage.setItem('HYPERF_SESSION_ID',res.data.sid)
+      }
       return res.data
     } else {
-      console.log(1112)
       Message.error(res.msg)
       if (res.code === 401 || res.code === 402) {
         localStorage.removeItem('user_info')
+        localStorage.removeItem('HYPERF_SESSION_ID')
         router.push('/login')
       }
       return Promise.reject(res)
@@ -76,6 +79,7 @@ service.interceptors.response.use(
   error => {
     // 移除本地用户数据
     localStorage.removeItem('user_info')
+    localStorage.removeItem('HYPERF_SESSION_ID')
     // 判断标志，防止出发多次弹窗
     if (store.getters.respErrMsgBoxMark === false) {
       let errMsg = error.response.status+' '+error.response.statusText + '，Please login again'

@@ -18,8 +18,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="" name="login2" disabled></el-tab-pane>
-      <el-tab-pane label="扫码登录" name="login3">
+      <el-tab-pane label="钉钉登录" name="login2">
         扫码登录
       </el-tab-pane>
     </el-tabs>
@@ -55,7 +54,7 @@ export default {
     // tab标签切换前调用,activeName, oldActiveNam
     beforeSwitch(active,old) {
       console.log(old)
-      if (active == 'login3') {
+      if (active == 'login2') {
         this.$message.error('功能暂未开放。')
         return false
       }
@@ -74,11 +73,10 @@ export default {
     // 实际登录请求
     async formSubmit() {
       let userInfo = await this.$api.submitLoginInfo(this.loginData)
-      if (userInfo.length > 0) {
+      if (userInfo) {
         localStorage.setItem('user_info',JSON.stringify(userInfo))
         this.handleUserInfo(userInfo)
         this.$message.success('登录成功！')
-        console.log('000')
         this.go()
       } else {
         this.initRespErrMsgBoxMark()
@@ -95,6 +93,7 @@ export default {
     }
   },
   mounted() {
+    console.log(process.env)
     this.initRespErrMsgBoxMark()
   },
 }
