@@ -31,7 +31,7 @@ class Video extends BaseModel
      *
      * @var string
      */
-    protected $table = '_video';
+    protected $table = 'video';
     /**
      * The attributes that are mass assignable.
      *

@@ -19,7 +19,7 @@ class VideoLog extends BaseModel
      *
      * @var string
      */
-    protected $table = '_video_logs';
+    protected $table = 'video_logs';
     /**
      * The attributes that are mass assignable.
      *

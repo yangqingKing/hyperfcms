@@ -34,7 +34,7 @@ class Article extends BaseModel
      *
      * @var string
      */
-    protected $table = '_article';
+    protected $table = 'article';
     /**
      * The attributes that are mass assignable.
      *

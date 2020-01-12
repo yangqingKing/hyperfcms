@@ -1,7 +1,6 @@
 <?php
 
 declare (strict_types=1);
-
 namespace App\Models;
 
 /**
@@ -25,7 +24,7 @@ class User extends BaseModel
      *
      * @var string
      */
-    protected $table = '_user';
+    protected $table = 'user';
     /**
      * The attributes that are mass assignable.
      *
@@ -38,7 +37,6 @@ class User extends BaseModel
      * @var array
      */
     protected $casts = ['avatar' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * 主键id类型为字符串
      *

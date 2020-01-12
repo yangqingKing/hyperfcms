@@ -17,7 +17,7 @@ class Setting extends BaseModel
      *
      * @var string
      */
-    protected $table = '_setting';
+    protected $table = 'setting';
     /**
      * The attributes that are mass assignable.
      *

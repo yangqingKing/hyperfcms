@@ -22,7 +22,7 @@ class SystemMenu extends BaseModel
      *
      * @var string
      */
-    protected $table = '_system_menu';
+    protected $table = 'system_menu';
     /**
      * The attributes that are mass assignable.
      *
@@ -35,4 +35,33 @@ class SystemMenu extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'system_permission_id' => 'integer', 'parent_id' => 'integer', 'order' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+    /**
+     * getList
+     * 获取系统菜单列表
+     * User：YM
+     * Date：2020/1/13
+     * Time：上午12:08
+     * @param array $where 查询条件
+     * @param array $order 排序条件
+     * @return array
+     */
+    public function getList($where = [], $order = [])
+    {
+        $query = $this->query()->select($this->table . '.id', $this->table . '.system_permission_id', $this->table . '.parent_id', $this->table . '.display_name', $this->table . '.icon', $this->table . '.url', $this->table . '.order', 'system_permissions.name as permission_name');
+        $query = $query->leftjoin('system_permissions', 'system_permissions.id', '=', $this->table . '.system_permission_id');
+        // 循环增加查询条件
+        foreach ($where as $k => $v) {
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
+            }
+        }
+        // 追加排序
+        if ($order && is_array($order)) {
+            foreach ($order as $k => $v) {
+                $query = $query->orderBy($this->table . '.' . $k, $v);
+            }
+        }
+        $query = $query->get();
+        return $query ? $query->toArray() : [];
+    }
 }

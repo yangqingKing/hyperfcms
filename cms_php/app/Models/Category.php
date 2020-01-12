@@ -21,7 +21,7 @@ class Category extends BaseModel
      *
      * @var string
      */
-    protected $table = '_category';
+    protected $table = 'category';
     /**
      * The attributes that are mass assignable.
      *
@@ -34,16 +34,4 @@ class Category extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'parent_id' => 'integer', 'order' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
-    public function getList()
-    {
-        return self::where('id',2)->first()->toArray();
-    }
-
-    public function getOne($id)
-    {
-        var_dump(111);
-        return self::findFromCache($id);
-        //return self::where('id', $id)->first()->toArray();
-    }
 }

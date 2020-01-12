@@ -20,7 +20,7 @@ class CourseComment extends BaseModel
      *
      * @var string
      */
-    protected $table = '_course_comments';
+    protected $table = 'course_comments';
     /**
      * The attributes that are mass assignable.
      *

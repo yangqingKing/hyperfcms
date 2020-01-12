@@ -17,7 +17,7 @@ class UserCourse extends BaseModel
      *
      * @var string
      */
-    protected $table = '_user_course';
+    protected $table = 'user_course';
     /**
      * The attributes that are mass assignable.
      *

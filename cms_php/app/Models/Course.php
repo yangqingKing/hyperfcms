@@ -43,7 +43,7 @@ class Course extends BaseModel
      *
      * @var string
      */
-    protected $table = '_course';
+    protected $table = 'course';
     /**
      * The attributes that are mass assignable.
      *

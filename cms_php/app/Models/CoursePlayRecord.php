@@ -21,7 +21,7 @@ class CoursePlayRecord extends BaseModel
      *
      * @var string
      */
-    protected $table = '_course_play_record';
+    protected $table = 'course_play_record';
     /**
      * The attributes that are mass assignable.
      *

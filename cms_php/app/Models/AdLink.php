@@ -22,7 +22,7 @@ class AdLink extends BaseModel
      *
      * @var string
      */
-    protected $table = '_ad_link';
+    protected $table = 'ad_link';
     /**
      * The attributes that are mass assignable.
      *

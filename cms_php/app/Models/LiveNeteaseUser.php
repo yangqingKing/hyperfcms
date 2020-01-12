@@ -18,7 +18,7 @@ class LiveNeteaseUser extends BaseModel
      *
      * @var string
      */
-    protected $table = '_live_netease_user';
+    protected $table = 'live_netease_user';
     /**
      * The attributes that are mass assignable.
      *

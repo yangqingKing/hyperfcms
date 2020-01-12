@@ -24,7 +24,7 @@ class AdCarousel extends BaseModel
      *
      * @var string
      */
-    protected $table = '_ad_carousel';
+    protected $table = 'ad_carousel';
     /**
      * The attributes that are mass assignable.
      *

@@ -23,7 +23,7 @@ class AuthorizationInfo extends BaseModel
      *
      * @var string
      */
-    protected $table = '_authorization_info';
+    protected $table = 'authorization_info';
     /**
      * The attributes that are mass assignable.
      *

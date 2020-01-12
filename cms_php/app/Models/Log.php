@@ -19,7 +19,7 @@ namespace App\Models;
  * @property string $uri 
  * @property string $arguments 
  * @property string $method 
- * @property int $execution_time 
+ * @property float $execution_time 
  * @property int $request_body_size 
  * @property int $response_body_size 
  * @property string $channel 
@@ -40,7 +40,7 @@ class Log extends BaseModel
      *
      * @var string
      */
-    protected $table = '_logs';
+    protected $table = 'logs';
     /**
      * The attributes that are mass assignable.
      *
@@ -52,5 +52,5 @@ class Log extends BaseModel
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'execution_time' => 'integer', 'request_body_size' => 'integer', 'response_body_size' => 'integer', 'unix_time' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+    protected $casts = ['id' => 'integer', 'execution_time' => 'float', 'request_body_size' => 'integer', 'response_body_size' => 'integer', 'unix_time' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 }

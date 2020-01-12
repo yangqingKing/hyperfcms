@@ -18,7 +18,7 @@ class LiveNeteaseTeam extends BaseModel
      *
      * @var string
      */
-    protected $table = '_live_netease_team';
+    protected $table = 'live_netease_team';
     /**
      * The attributes that are mass assignable.
      *

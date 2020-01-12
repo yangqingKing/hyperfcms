@@ -36,11 +36,12 @@ class UserService extends BaseService
      * Date：2020/1/8
      * Time：下午7:52
      * @param $id 可以传入数组
+     * @param bool $type 是否使用缓存
      * @return \App\Models\BaseModel|\Hyperf\Database\Model\Model|null
      */
-    public function getInfo($id)
+    public function getInfo($id,$type=true)
     {
-        $res = $this->userModel->getInfo($id,false);
+        $res = $this->userModel->getInfo($id,$type);
         if (count($res) == count($res,1)) {
             unset($res['password']);
             unset($res['session_id']);

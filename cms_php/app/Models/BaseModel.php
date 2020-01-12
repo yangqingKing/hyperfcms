@@ -38,8 +38,9 @@ abstract class BaseModel extends Model implements CacheableInterface
             $modelCache = is_array($id)?$instance->findManyFromCache($id):$instance->findFromCache($id);
             return isset($modelCache) && $modelCache ? $modelCache->toArray() : [];
         }
+
         $query = $instance->query()->find($id);
-        return isset($query) && $query ? $query->toArray() : [];
+        return $query ? $query->toArray() : [];
     }
 
     /**
@@ -96,6 +97,6 @@ abstract class BaseModel extends Model implements CacheableInterface
 
         $instance = $type?$instance->get():$instance->first();
 
-        return isset($instance) && $instance ? $instance->toArray() : [];
+        return $instance ? $instance->toArray() : [];
     }
 }

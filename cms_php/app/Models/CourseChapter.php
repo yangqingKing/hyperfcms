@@ -20,7 +20,7 @@ class CourseChapter extends BaseModel
      *
      * @var string
      */
-    protected $table = '_course_chapter';
+    protected $table = 'course_chapter';
     /**
      * The attributes that are mass assignable.
      *

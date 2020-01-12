@@ -20,7 +20,7 @@ use Hyperf\Utils\Arr;
 use Hyperf\Utils\Str;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-
+use Symfony\Component\Console\Output\ConsoleOutput;
 /**
  * @Listener
  */
@@ -55,9 +55,17 @@ class DbQueryExecutedListener implements ListenerInterface
                     $sql = Str::replaceFirst('?', "'{$value}'", $sql);
                 }
             }
+
+            $msg = sprintf('[%s] %s', $event->time, $sql);
+            // 当监听出发为脚本执行时
+            if (strpos($sql,'information_schema') !== false) {
+                $output = new ConsoleOutput();
+                $output->writeln($msg);
+                return ;
+            }
             // 日志表的操作，不处理
             if (strpos($sql,'`ymkj_logs`') === false) {
-                $this->logger->info(sprintf('[%s] %s', $event->time, $sql),getLogArguments());
+                $this->logger->info($msg,getLogArguments());
             }
         }
     }

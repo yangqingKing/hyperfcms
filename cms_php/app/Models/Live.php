@@ -24,7 +24,7 @@ class Live extends BaseModel
      *
      * @var string
      */
-    protected $table = '_live';
+    protected $table = 'live';
     /**
      * The attributes that are mass assignable.
      *

@@ -23,7 +23,7 @@ class AdPosition extends BaseModel
      *
      * @var string
      */
-    protected $table = '_ad_position';
+    protected $table = 'ad_position';
     /**
      * The attributes that are mass assignable.
      *

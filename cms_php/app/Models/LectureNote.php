@@ -23,7 +23,7 @@ class LectureNote extends BaseModel
      *
      * @var string
      */
-    protected $table = '_lecture_notes';
+    protected $table = 'lecture_notes';
     /**
      * The attributes that are mass assignable.
      *

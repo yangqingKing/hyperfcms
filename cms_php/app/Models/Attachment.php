@@ -21,7 +21,7 @@ class Attachment extends BaseModel
      *
      * @var string
      */
-    protected $table = '_attachment';
+    protected $table = 'attachment';
     /**
      * The attributes that are mass assignable.
      *

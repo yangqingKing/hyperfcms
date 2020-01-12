@@ -19,7 +19,7 @@ class Lecturer extends BaseModel
      *
      * @var string
      */
-    protected $table = '_lecturer';
+    protected $table = 'lecturer';
     /**
      * The attributes that are mass assignable.
      *

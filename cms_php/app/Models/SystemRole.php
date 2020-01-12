@@ -18,7 +18,7 @@ class SystemRole extends BaseModel
      *
      * @var string
      */
-    protected $table = '_system_roles';
+    protected $table = 'system_roles';
     /**
      * The attributes that are mass assignable.
      *
