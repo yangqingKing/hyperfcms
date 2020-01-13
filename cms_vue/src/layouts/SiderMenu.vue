@@ -141,7 +141,7 @@ export default {
   background-color:#000c17
 .el-menu-item:hover a, .el-menu-item:focus a
   color #ffffff
-.el-submenu__title:hover,.el-submenu__title:hover i, .el-submenu__title:focus i .el-submenu__title:focu
+.el-submenu__title:hover,.el-submenu__title:hover i, .el-submenu__title:focus i .el-submenu__title:focus
   background-color:#001529
   color #ffffff
 .el-submenu.is-opened .el-submenu__title,.el-submenu.is-opened .el-submenu__title>i,.el-submenu.is-active .el-submenu__title,.is-active>a,.el-submenu.is-active .el-submenu__title>i
