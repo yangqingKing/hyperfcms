@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Core\Common\Container;
 
+use Hyperf\Cache\Annotation\Cacheable;
 use Hyperf\DbConnection\Db;
 
 
@@ -64,6 +65,8 @@ class AdminPermission
      * Time：下午11:46
      * @param $userId
      * @return array
+     *
+     * @Cacheable(prefix="admin_user_permission",ttl=9000)
      */
     public function getUserAllPermissions($userId)
     {
@@ -72,9 +75,8 @@ class AdminPermission
             ->where("system_roles_user.user_id","=", $userId)
             ->where("system_roles_user.system_role_id","=", self::ROOT_ROLE_ID)
             ->first();
-
         $selectList = ['system_permissions.id', 'system_permissions.parent_id', 'system_permissions.name', 'system_permissions.display_name', 'system_permissions.order'];
-        if($isRoot){
+        if(!is_null($isRoot)){
             //超级管理员拥有所有权限
             $list = Db::table('system_permissions')->select($selectList)->get()->toArray();
 

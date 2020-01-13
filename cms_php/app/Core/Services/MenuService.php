@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Core\Services;
 
 
+use Hyperf\Cache\Annotation\Cacheable;
+
 /**
  * MenuService
  * 菜单服务
@@ -54,6 +56,8 @@ class MenuService extends BaseService
      * Time：上午11:23
      * @param string $userId
      * @return array
+     *
+     * @Cacheable(prefix="admin_user_menu",ttl=9000)
      */
     public function getUserMenuList($userId = '')
     {

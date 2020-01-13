@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Core\Repositories\Admin;
 
 
+use App\Constants\StatusCode;
+use App\Exception\BusinessException;
 use Core\Repositories\BaseRepository;
 
 /**
@@ -36,12 +38,14 @@ class MenuRepository extends BaseRepository
      * User：YM
      * Date：2020/1/12
      * Time：上午8:27
-     * @return mixed
+     * @return array
      */
     public function getUserMenuList()
     {
         $userInfo = $this->auth->check();
-
+        if (!isset($userInfo['id']) || !$userInfo['id']) {
+            throw new BusinessException(StatusCode::ERR_NOT_LOGIN);
+        }
         $list = $this->menuService->getUserMenuList($userInfo['id']);
         return $list;
     }

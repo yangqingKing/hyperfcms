@@ -26,11 +26,27 @@ use Core\Repositories\BaseRepository;
  * User：YM
  * Date：2020/1/11
  * Time：下午2:44
+ * @property \Core\Common\Container\Auth $auth
+ * @property \Core\Common\Container\AdminPermission $adminPermission
  */
 class PermissionsRepository extends BaseRepository
 {
+    /**
+     * getUserPermissionsList
+     * 获取用户对应所有权限
+     * User：YM
+     * Date：2020/1/13
+     * Time：下午4:43
+     * @return array
+     */
     public function getUserPermissionsList()
     {
-        return [];
+        $userInfo = $this->auth->check();
+        if (!isset($userInfo['id']) || !$userInfo['id']) {
+            throw new BusinessException(StatusCode::ERR_NOT_LOGIN);
+        }
+        $userPermissions = $this->adminPermission->getUserAllPermissions($userInfo['id']);
+
+        return $userPermissions;
     }
 }
