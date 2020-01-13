@@ -1,10 +1,13 @@
 import * as request from '@/utils/request'
 import PASSPORT from './passport'
+import COMMON from './common'
 import STATISTICS from './statistics'
 
 export default {
   // 通行证
   ...PASSPORT,
+  // 通用
+  ...COMMON,
   //统计数据
   ...STATISTICS,
 
@@ -32,24 +35,6 @@ export default {
     }else{
       return request.post('/upload/editor', data)
     }
-  },
-  /**
-   * @description 获取用户菜单list，用于左侧导航
-   * @author YM
-   * @date 2019-01-10
-   * @returns promise
-   */
-  getUserMenuList() {
-    return request.get('/menu/user_menu')
-  },
-  /**
-   * @description 获取用户权限list，用于页面按钮相关的控制
-   * @author YM
-   * @date 2019-01-10
-   * @returns promise
-   */
-  getUserPermissionsList() {
-    return request.post('/permissions/user_permissions')
   },
   /**
    * @description 获取阿里云vod视频上传令牌信息

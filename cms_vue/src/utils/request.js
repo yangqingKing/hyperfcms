@@ -77,7 +77,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    // 移除本地用户数据
+    // 移除本地用户数据,开发时请注释
     localStorage.removeItem('user_info')
     localStorage.removeItem('HYPERF_SESSION_ID')
     // 判断标志，防止出发多次弹窗

@@ -175,7 +175,7 @@ const routes = [
 
 // 实例化
 const router = new Router({
-  base : process.env.NODE_ENV === 'production' ? '/dzjadmin/' : '/',
+  base : process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : '/',
   mode : 'history',
   routes
 })

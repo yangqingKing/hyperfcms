@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style  lang="stylus">
+<style lang="stylus">
   $screen-md-min = 768px
   $heading-color = rgba(0, 0, 0, 0.85)
   $font-size-base = 14px
