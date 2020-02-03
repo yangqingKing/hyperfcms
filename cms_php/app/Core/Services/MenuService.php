@@ -81,4 +81,100 @@ class MenuService extends BaseService
         }
         return $tree;
     }
+
+    /**
+     * getMenuTreeList
+     * 获取树形结构的菜单列表
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午12:25
+     * @return array
+     */
+    public function getMenuTreeList()
+    {
+        $list = $this->getList();
+        foreach ($list as &$v) {
+            if (!empty($v['url'])) {
+                $v['url'] = '/'.ltrim($v['url'],'/');
+            }
+        }
+
+        $tree = handleTreeList($list);
+
+        return $tree;
+    }
+
+    /**
+     * getMenuCount
+     * 根据条件获取菜单的总数
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午4:52
+     * @param array $where
+     * @return mixed
+     */
+    public function getMenuCount($where = [])
+    {
+        $count = $this->systemMenuModel->getMenuCount($where);
+
+        return $count;
+    }
+
+    /**
+     * saveMenu
+     * 保存菜单，构造数据，防止注入
+     * 不接收数据库字段以外数据
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午5:00
+     * @param $inputData
+     * @return null
+     */
+    public function saveMenu($inputData)
+    {
+        $saveData = [];
+        if (isset($inputData['id']) && $inputData['id']){
+            $saveData['id'] = $inputData['id'];
+        }
+        if (isset($inputData['parent_id'])){
+            $saveData['parent_id'] = $inputData['parent_id'];
+        }
+        if (isset($inputData['system_permission_id'])){
+            $saveData['system_permission_id'] = $inputData['system_permission_id'];
+        }
+        if (isset($inputData['display_name']) && $inputData['display_name']){
+            $saveData['display_name'] = $inputData['display_name'];
+        }
+        if (isset($inputData['icon'])){
+            $saveData['icon'] = $inputData['icon'];
+        }
+        if (isset($inputData['order'])){
+            $saveData['order'] = $inputData['order'];
+        }
+        if (isset($inputData['url'])){
+            $saveData['url'] = $inputData['url'];
+        }
+        if (isset($inputData['description'])){
+            $saveData['description'] = $inputData['description'];
+        }
+        $id = $this->systemMenuModel->saveInfo($saveData);
+
+        return $id;
+    }
+
+    /**
+     * getInfo
+     * 根据id获取信息
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午4:56
+     * @param $id
+     * @return \App\Models\BaseModel|\Hyperf\Database\Model\Model|null
+     */
+    public function getInfo($id)
+    {
+        $info = $this->systemMenuModel->getInfo($id);
+
+        return $info;
+    }
 }

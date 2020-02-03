@@ -62,16 +62,6 @@ class UserService extends BaseService
      * saveInfo
      * 创建/编辑用户信息
      * User：YM
-     * Date：2020/1/8
-     * Time：下午7:57
-     * @param $data
-     * @param bool $type 是否强制创建
-     * @return mixed
-     */
-    /**
-     * saveInfo
-     * 函数的含义说明
-     * User：YM
      * Date：2020/1/10
      * Time：下午1:12
      * @param $data

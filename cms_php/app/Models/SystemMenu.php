@@ -64,4 +64,26 @@ class SystemMenu extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
+
+    /**
+     * getMenuCount
+     * 根据条件获取菜单的个数
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午4:54
+     * @param array $where 查询条件
+     * @return int
+     */
+    public function getMenuCount($where = [])
+    {
+        $query = $this->query();
+
+        foreach ($where as $k => $v) {
+            $query = $query->where($k,$v);
+        }
+
+        $query = $query->count();
+
+        return $query > 0 ? $query : 0;
+    }
 }
