@@ -146,6 +146,8 @@ class MenuController extends BaseController
      * Date：2020/2/3
      * Time：下午6:05
      * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="order")
      */
     public function orderMenu()
     {
@@ -163,6 +165,8 @@ class MenuController extends BaseController
      * Date：2020/2/3
      * Time：下午6:06
      * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="delete")
      */
     public function destroy()
     {

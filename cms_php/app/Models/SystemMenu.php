@@ -11,6 +11,7 @@ namespace App\Models;
  * @property string $icon 
  * @property string $url 
  * @property int $order 
+ * @property string $additional 
  * @property string $description 
  * @property \Carbon\Carbon $created_at 
  * @property \Carbon\Carbon $updated_at 
@@ -28,7 +29,7 @@ class SystemMenu extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'system_permission_id', 'parent_id', 'display_name', 'icon', 'url', 'order', 'description', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'system_permission_id', 'parent_id', 'display_name', 'icon', 'url', 'order', 'additional', 'description', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -64,7 +65,6 @@ class SystemMenu extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
-
     /**
      * getMenuCount
      * 根据条件获取菜单的个数
@@ -77,13 +77,10 @@ class SystemMenu extends BaseModel
     public function getMenuCount($where = [])
     {
         $query = $this->query();
-
         foreach ($where as $k => $v) {
-            $query = $query->where($k,$v);
+            $query = $query->where($k, $v);
         }
-
         $query = $query->count();
-
         return $query > 0 ? $query : 0;
     }
 }

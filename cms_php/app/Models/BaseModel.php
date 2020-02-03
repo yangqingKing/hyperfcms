@@ -102,4 +102,31 @@ abstract class BaseModel extends Model implements CacheableInterface
 
         return $instance ? $instance->toArray() : [];
     }
+
+    /**
+     * deleteInfo
+     * 删除/恢复
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午8:22
+     * @param $ids 删除的主键ids
+     * @param string 删除delete/恢复restore
+     * @return int
+     */
+    public function deleteInfo($ids, $type = 'delete') {
+        $instance = make(get_called_class());
+        if ($type == 'delete') {
+            return $instance->destroy($ids);
+        } else {
+            $count = 0;
+            $ids = is_array($ids)?$ids:[$ids];
+            foreach ($ids as $id) {
+                if ($instance::onlyTrashed()->find($id)->restore()) {
+                    ++$count;
+                }
+            }
+
+            return $count;
+        }
+    }
 }

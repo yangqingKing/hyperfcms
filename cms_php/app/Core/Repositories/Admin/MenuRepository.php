@@ -134,4 +134,53 @@ class MenuRepository extends BaseRepository
         $arr[] = $pid;
         return $arr;
     }
+
+    /**
+     * orderMenu
+     * 拖拽排序
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午7:31
+     * @param array $ids
+     * @return bool
+     */
+    public function orderMenu($ids = [])
+    {
+        if (count($ids) <= 1) {
+            return true;
+        }
+
+        $order = 0; // 排序计数器
+        foreach ($ids as $v) {
+            $saveData = [
+                'id' => $v,
+                'order' => $order
+            ];
+            $this->menuService->saveMenu($saveData);
+            $order++;
+        }
+
+        return true;
+    }
+
+    /**
+     * deleteInfo
+     * 删除信息，存在子节点不允许删除
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午7:32
+     * @param $id
+     * @return mixed
+     */
+    public function deleteInfo($id)
+    {
+        $count = $this->menuService->getMenuCount(['parent_id' => $id]);
+        if ($count) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'存在子节点不允许删除');
+        }
+
+        $info = $this->menuService->deleteInfo($id);
+
+        return $info;
+    }
 }

@@ -87,6 +87,9 @@
           <el-form-item label="ICON" prop="icon">
             <el-input v-model="formData.icon"></el-input>
           </el-form-item>
+          <el-form-item label="附加内容" prop="additional">
+            <el-input type="textarea" v-model="formData.additional"></el-input>
+          </el-form-item>
           <el-form-item label="备注" prop="description">
             <el-input type="textarea" v-model="formData.description"></el-input>
           </el-form-item>

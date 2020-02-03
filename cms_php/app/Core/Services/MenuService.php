@@ -157,6 +157,9 @@ class MenuService extends BaseService
         if (isset($inputData['description'])){
             $saveData['description'] = $inputData['description'];
         }
+        if (isset($inputData['additional'])){
+            $saveData['additional'] = $inputData['additional'];
+        }
         $id = $this->systemMenuModel->saveInfo($saveData);
 
         return $id;
@@ -174,6 +177,22 @@ class MenuService extends BaseService
     public function getInfo($id)
     {
         $info = $this->systemMenuModel->getInfo($id);
+
+        return $info;
+    }
+
+    /**
+     * deleteInfo
+     * 根据id删除信息
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午7:34
+     * @param $id
+     * @return mixed
+     */
+    public function deleteInfo($id)
+    {
+        $info = $this->systemMenuModel->deleteInfo($id);
 
         return $info;
     }
