@@ -24,7 +24,7 @@ import store from '@/store'
 
 const CancelToken = axios.CancelToken
 const source = CancelToken.source();
-const baseURL = '/admin_api';
+const baseURL = process.env.VUE_APP_AXIOS_BASE_URL;
 
 // create an axios instance实例
 const service = axios.create({

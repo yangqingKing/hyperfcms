@@ -4,7 +4,8 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont " v-if="userPermissions.indexOf('menu_create') != -1" @click="addButton(0)">添加主菜单</el-button>
+            <el-button type="primary" size="medium" icon="iconfont " v-if="userPermissions.indexOf('menu_create') != -1 && buttonType=='text'" @click="addButton(0)">添加主菜单</el-button>
+            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" v-if="userPermissions.indexOf('menu_create') != -1 && buttonType=='icon'" @click="addButton(0)"></el-button>
           </el-col>
         </el-row>
         <TreeTable :data="menuList" :columns="columns" :loading="loadingStaus" ref="treeTable" highlight-current-row >
@@ -18,6 +19,27 @@
             </template>
           </el-table-column>
           <el-table-column
+          v-if="buttonType=='icon'"
+          label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" icon="iconfont icon-zengjiazicaidan" v-if="userPermissions.indexOf('menu_create') != -1" @click="addButton(scope.row.id)"></el-button>
+              <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('menu_edit') != -1" @click="editButton(scope.row.id)"></el-button>
+              <el-popover
+                v-if="userPermissions.indexOf('menu_delete') != -1" 
+                placement="top"
+                width="150"
+                v-model="scope.row.visible">
+                <p>确定要删除记录吗？</p>
+                <div style="text-align: right; margin: 0;">
+                  <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                  <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                </div>
+                <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete" ></el-button>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column
+          v-if="buttonType=='text'"
           width="200"
           label="操作">
             <template slot-scope="scope">
@@ -149,7 +171,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 响应添加按钮

@@ -1,11 +1,13 @@
 <template>
   <el-table
+    class="tree-table"
     ref="treeTable"
     v-loading="loading"
     element-loading-text="玩命加载中……"
     element-loading-spinner="el-icon-loading"
     :data="tableData"
     :row-style="showRow"
+    row-key="id"
     v-bind="$attrs"
     @row-click="rowClick">
       <slot name="first-column"></slot>
@@ -22,7 +24,7 @@
           </span>
           <span class="tree-ctrl"
             v-if="iconShow(scope.row)"
-            @click="toggleExpanded(scope.$index)">
+            @click="toggleExpanded(scope.row)">
             <i v-if="!scope.row._expanded" class="el-icon-plus"/>
             <i v-else class="el-icon-minus"/>
           </span>
@@ -45,7 +47,7 @@
             </span>
             <span class="tree-ctrl"
               v-if="iconShow(scope.row)"
-              @click="toggleExpanded(scope.$index)">
+              @click="toggleExpanded(scope.row)">
               <i v-if="!scope.row._expanded" class="el-icon-plus"/>
               <i v-else class="el-icon-minus"/>
             </span>
@@ -59,7 +61,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 
 export default {
   props: {
@@ -84,8 +85,7 @@ export default {
   computed: {
     // 表格数据
     tableData() {
-      let tmp = this._treeToArray(this.data)
-      return tmp
+      return this.data
     }
   },
   methods: {
@@ -101,14 +101,17 @@ export default {
       return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' : 'display:none;'
     },
     /**
-     * @description 初始化每一行的css样式
+     * @description 折叠展开操作
      * @author YM
      * @date 2019-01-10
      * @returns string
      */
-    toggleExpanded(index) {
-      const record = this.tableData[index]
-      record._expanded = !record._expanded
+    toggleExpanded(row) {
+      if (typeof(row._expanded) === 'undefined') {
+        this.$set(row,'_expanded',false)
+      }
+      row._expanded = !row._expanded
+      this.$refs['treeTable'].toggleRowExpansion(row,row._expanded)
     },
     /**
      * @description 是否显示图标
@@ -162,35 +165,10 @@ export default {
       let list = this.tableData
       for(let i = 0,len=list.length; i < len; i++) {
         if (ids.indexOf(list[i]['id']) >= 0) {
-          this.toggleExpanded(i)
+          this.toggleExpanded(list[i])
         }
       }
     },
-    /**
-     * @description 将树形结构数据转换成数组结构
-     * @author YM
-     * @date 2019-01-10
-     * @returns array
-     */
-    _treeToArray(data, expandStatus = false, parent = null) {
-      let tmp = []
-      Array.from(data).forEach((r) => {
-        if (r._expanded === undefined) {
-          Vue.set(r, '_expanded', expandStatus)
-        }
-        // 如果有父元素，这样做的目的，如果是父级就冗余一下，折叠展开时候，方便用到
-        // 利用了数据绑定特性，一个地方变了都变
-        if (parent) {
-          Vue.set(r, 'parent', parent)
-        }
-        tmp.push(r)
-        if (r.children && r.children.length > 0) {
-          const children = this._treeToArray(r.children, expandStatus,r)
-          tmp = tmp.concat(children)
-        }
-      })
-      return tmp   
-    }
   },
   created() {
     
@@ -238,4 +216,7 @@ export default {
   .el-button + .el-button
     margin-left 0px
     margin-right 4px
+  .tree-table
+    .el-table__expand-icon,.el-table__placeholder,.el-table__indent
+      display none !important 
 </style>
