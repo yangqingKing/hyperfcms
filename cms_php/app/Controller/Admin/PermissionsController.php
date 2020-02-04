@@ -6,8 +6,6 @@ declare(strict_types=1);
  *​
  * PermissionsController.php
  *
- * 文件描述
- *
  * User：YM
  * Date：2020/1/11
  * Time：下午2:43
@@ -20,10 +18,13 @@ namespace App\Controller\Admin;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use App\Constants\StatusCode;
+use Throwable;
+use App\Exception\BusinessException;
 
 /**
  * PermissionsController
- * 类的介绍
+ * 权限控制器
  * @package App\Controller\Admin
  * User：YM
  * Date：2020/1/11
@@ -89,10 +90,14 @@ class PermissionsController extends BaseController
      */
     public function store()
     {
-        $reqParam = $this->request->all();
-        $id = $this->permissionsRepo->savePermissions($reqParam);
+        try {
+            $reqParam = $this->request->all();
+            $id = $this->permissionsRepo->savePermissions($reqParam);
 
-        return $this->success($id);
+            return $this->success($id);
+        } catch (Throwable $throwable) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,$throwable->getMessage());
+        }
     }
 
     /**

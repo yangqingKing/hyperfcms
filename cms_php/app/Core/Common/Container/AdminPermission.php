@@ -66,7 +66,7 @@ class AdminPermission
      * @param $userId
      * @return array
      *
-     * @Cacheable(prefix="admin_user_permission",ttl=9000)
+     * @Cacheable(prefix="admin_user_permission",ttl=9000,listener="admin-user-permission")
      */
     public function getUserAllPermissions($userId)
     {

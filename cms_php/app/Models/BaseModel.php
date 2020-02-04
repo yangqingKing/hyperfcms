@@ -129,4 +129,65 @@ abstract class BaseModel extends Model implements CacheableInterface
             return $count;
         }
     }
+
+    /**
+     * getPagesInfo
+     * 获取分页信息，适用于数据量小
+     * 数据量过大，可以采用服务层调用，加入缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午10:16
+     * @param $where
+     * @return array
+     */
+    public function getPagesInfo($where)
+    {
+        $pageSize = 10;
+        $currentPage = 1;
+        if (isset($where['page_size'])) {
+            $pageSize = $where['page_size']>0?$where['page_size']:10;
+            unset($where['page_size']);
+        }
+        if (isset($where['current_page'])) {
+            $currentPage = $where['current_page']>0?$where['current_page']:1;
+            unset($where['current_page']);
+        }
+
+        $offset = ($currentPage-1)*$pageSize;
+
+        $total = $this->getCount($where);
+
+        return [
+            'current_page' => (int)$currentPage,
+            'offset' => (int)$offset,
+            'page_size' => (int)$pageSize,
+            'total' => (int)$total,
+        ];
+    }
+
+    /**
+     * getCount
+     * 根据条件获取总数
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午10:16
+     * @param array $where
+     * @return int
+     */
+    public function getCount($where = [])
+    {
+        $instance = make(get_called_class());
+
+        foreach ($where as $k => $v) {
+            if ($k === 'title') {
+                $instance = $instance->where($k,'LIKE','%'.$v.'%');
+                continue;
+            }
+            $instance = $instance->where($k,$v);
+        }
+
+        $count = $instance->count();
+
+        return $count > 0 ? $count : 0;
+    }
 }

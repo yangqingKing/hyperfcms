@@ -29,4 +29,37 @@ class SystemRolesUser extends BaseModel
      * @var array
      */
     protected $casts = ['system_role_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    /**
+     * getList
+     * 获取列表
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午11:33
+     * @param array $where
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getList($where = [], $offset = 0, $limit = 0)
+    {
+        $query = $this->query()->select(
+            $this->table.'.system_role_id',$this->table.'.user_id', $this->table.'.created_at'
+        );
+        // 循环增加查询条件
+        foreach ($where as $k => $v) {
+            if ($v || $v!=null) {
+                $query = $query->where($this->table.'.'.$k, $v);
+            }
+        }
+
+        // 是否分页
+        if ($limit) {
+            $query = $query->offset($offset)->limit($limit);
+        }
+
+        $query = $query->get();
+
+        return $query ? $query->toArray() : [];
+    }
 }

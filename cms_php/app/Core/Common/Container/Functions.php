@@ -580,6 +580,7 @@ if(!function_exists('handleTreeList')) {
 if (! function_exists('array_pluck')) {
     /**
      * Pluck an array of values from an array.
+     * 从数组中提取值组成新数组
      *
      * @param  array   $array
      * @param  string|array  $value

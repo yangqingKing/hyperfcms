@@ -7,7 +7,10 @@
       ref="elTable"
       :data="tableData"
       v-bind="$attrs"
-      @row-click="rowClick">
+      :row-class-name="tableRowClassName"
+      @selection-change="handleSelectionChange"
+      @row-click="rowClick"
+      @expand-change="expandChange">
         <slot name="first-column"></slot>
         <slot name="second-column"></slot>
         <el-table-column
@@ -18,13 +21,36 @@
           <template slot-scope="scope">
             <span v-if="typeof(v.value)=='string'">
               <span v-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
-              <span v-else>{{ scope.row[v.value] }}</span>
+              <span v-else-if="v.value_alias">
+                <el-tooltip effect="dark" :content="scope.row[v.value_alias]" placement="top-end" popper-class="ape-table-tooltip">
+                  <span v-html="scope.row[v.value]"></span>
+                </el-tooltip>
+              </span>
+              <span v-else v-html="scope.row[v.value]"></span>
             </span>
             <span v-else-if="typeof(v.value)=='object'">
               <span v-for="(v1,k1) in v.value" :key="k1">
-                <span v-if="typeof(v1)=='string'" v-html="scope.row[v1]"></span>
-                <span v-if="typeof(v1)=='object'" v-html="v1.lable+scope.row[v1.value]"></span>
-                <br/>
+                <template v-if="v.key">
+                  <template v-for="(item, idx) in scope.row[v.key]">
+                    <el-tooltip :key="idx" effect="dark" placement="top-end">
+                      <div slot="content" v-html="item[v1.value_alias]"></div>
+                      <p class="is-value">{{ item[v1.value] }}</p>
+                    </el-tooltip>
+                  </template>
+                </template>
+                <span class="more-info-display" v-if="scope.row[v1.value] || scope.row[v1]" >
+                  <span class="is-value" v-if="typeof(v1)=='string'" v-html="scope.row[v1]"></span>
+                  <span class="is-lable" :style="{width:v1.width?parseInt(v1.width)+'px':'72px'}"  v-if="typeof(v1)=='object' && v1.lable" v-html="v1.lable"></span>
+                  <span v-if="v1.value_alias && v1.value">
+                    <el-tooltip effect="dark" placement="top-end" popper-class="ape-table-tooltip">
+                      <div slot="content" v-html="scope.row[v1.value_alias]"></div>
+                      <span class="is-value" v-if="typeof(v1)=='object'" v-html="scope.row[v1.value]"></span>
+                    </el-tooltip>
+                  </span>
+                  <span v-else>
+                    <span class="is-value" v-if="typeof(v1)=='object'" v-html="scope.row[v1.value]"></span>
+                  </span>
+                </span>
               </span>
             </span>
           </template>
@@ -66,6 +92,15 @@ export default {
       type: Object,
       default: () => {},
       // required: true
+    },
+    // 其它参数
+    otherParam: {
+      type: Object,
+      default: function() {
+        return {
+          expanded_all: false, // 默认只展开一个
+        }
+      }
     }
   },
   data() {
@@ -73,7 +108,7 @@ export default {
       // ------ 表格相关 ---------
       currentRowId: null,
       // ---- 分页相关配置 -------
-      pageSize: 10,
+      apePageSize: 0, // 用于组件切换了每一页数据后的显示
       currentPage: 1,
       // dataTotal: this.pagingData.total,
       // defaultLayout: 'total, sizes, prev, pager, next, jumper',
@@ -85,6 +120,20 @@ export default {
       return this.data
     },
     // ---- 分页相关配置 -------
+    // 每页条数，切换
+    pageSizes() {
+      if (!(typeof(this.pagingData.page_size) == 'undefined') && this.pagingData.page_size < 10) {
+        return [this.pagingData.page_size]
+      }
+      return [10, 20, 50, 100]
+    },
+    // 每一页大小，默认
+    pageSize() {
+      if (this.pagingData && !(typeof(this.pagingData.page_size) == 'undefined')) { 
+        return this.pagingData.page_size
+      }
+      return 10
+    },
     // 初始化分页
     initPaging() {
       if (!(typeof(this.pagingData) == 'undefined')) {
@@ -93,13 +142,6 @@ export default {
         }
       }
       return false
-    },
-    // 每页条数，切换
-    pageSizes() {
-      if (!(typeof(this.pagingData.page_size) == 'undefined') && this.pagingData.page_size < 10) {
-        return [this.pagingData.page_size]
-      }
-      return [10, 20, 50, 100]
     },
     // 数组总数
     dataTotal() {
@@ -117,6 +159,13 @@ export default {
   },
   methods: {
     // ------ 表格相关 ---------
+    /**
+     * @name: luo1o1o1o
+     * @desc: 选中项发生变化
+     */
+    handleSelectionChange(list) {
+      this.$emit('selectList', list)
+    },
     /**
      * @description 通过数据id，转换对应的行index，并且选中
      * @author YM
@@ -143,6 +192,7 @@ export default {
      */
     rowClick(row) {
       this.currentRowId = row.id
+      this.$emit('rowClick',row)
     },
     // ------ 分页相关 ---------
     // 获取当前分页相关信息,type类型主要处理删除删除后的情况处理
@@ -152,14 +202,15 @@ export default {
         this.currentPage = this.currentPage-1>0?this.currentPage-1:1
       }
       let pagingInfo = {
-        page_size: this.pageSize,
+        page_size: this.apePageSize?this.apePageSize:this.pageSize,
         current_page: this.currentPage
       }
       return pagingInfo
     },
     // pageSize 改变时处理
     handleSizeChange(val) {
-      this.pageSize = val
+      // this.pageSize = val
+      this.apePageSize=val
       this.currentPage = 1
       this.$emit('switchPaging')
     },
@@ -167,11 +218,33 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.$emit('switchPaging')
+    },
+    // 处理满足条件行的class类名，作用处理样式
+    tableRowClassName({row}) {
+      if (row.row_color == 'gray') {
+        return 'gray-row'
+      }
+      if (row.row_color == 'red') {
+        return 'red-row'
+      }
+      return ''
+    },
+    // 折叠展开change事件,当前操作行，所有展开的
+    expandChange(expandedRows,expanded) {
+      if (expanded.length > 1 && !this.otherParam.expanded_all) {
+        for (let v of expanded) {
+          this.$refs['elTable'].toggleRowExpansion(v,false)
+        }
+        this.$refs['elTable'].toggleRowExpansion(expandedRows,true)
+      }
+      this.$refs['elTable'].setCurrentRow(expandedRows)
     }
   },
   updated() {
     this.$nextTick(function () {
-      this.defaultSelectedRow(this.currentRowId)
+      if (this.currentRowId) {
+        this.defaultSelectedRow(this.currentRowId)
+      }
     }) 
   },
 }
@@ -195,4 +268,18 @@ export default {
   .el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next, .el-pagination.is-background .el-pager li 
     border: solid 1px #f5f5f5
     background-color #ffffff
+  .more-info-display
+    line-height 28px
+    display block
+    .is-lable
+      display inline-block
+      text-align right 
+    .is-value
+      display inline-block
+  .el-table .gray-row
+    background-color #f5f5f5
+  .el-table .red-row
+    background-color #ffcc00
+  .ape-table-tooltip
+    max-width 640px
 </style>

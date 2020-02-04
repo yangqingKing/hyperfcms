@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
