@@ -6,7 +6,7 @@
  */
 declare(strict_types=1);
 
-namespace Core\Common\HF;
+namespace Core\Common\Driver;
 
 use Psr\Container\ContainerInterface;
 use Core\Common\Handler\CacheFileHandler;
@@ -14,13 +14,13 @@ use Core\Common\Handler\CacheRedisHandler;
 use Hyperf\Cache\Driver\Driver;
 
 /**
- * CacheFactory
- * 缓存工厂
+ * CacheDriver
+ * 缓存驱动
  * package Core\Common\HF
  * date 2020-01-07
  * @author YQ
  */
-class CacheFactory extends Driver
+class CacheDriver extends Driver
 {
     private $cacheInstance = null;
 

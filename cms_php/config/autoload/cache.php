@@ -13,9 +13,9 @@ declare(strict_types=1);
 return [
     'default' => [
         //'driver' => Hyperf\Cache\Driver\RedisDriver::class,
-        'driver' => Core\Common\HF\CacheFactory::class,
+        'driver' => Core\Common\Driver\CacheDriver::class,
         'packer' => Hyperf\Utils\Packer\PhpSerializerPacker::class,
-        'pool' => 'cache',
+        'pool' => 'cache', // 对应redis.php的配置使用
         'prefix' => 'c:',
     ],
 ];

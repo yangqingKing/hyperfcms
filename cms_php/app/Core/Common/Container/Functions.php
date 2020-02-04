@@ -26,6 +26,9 @@ use Hyperf\Contract\SessionInterface;
 use Jenssegers\Agent\Agent;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Utils\Arr;
+use Hyperf\Cache\Listener\DeleteListenerEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Core\Common\Driver\CacheDriver;
 
 
 if (! function_exists('requestEntry')) {
@@ -588,4 +591,175 @@ if (! function_exists('array_pluck')) {
         return Arr::pluck($array, $value, $key);
     }
 }
+
+if (! function_exists('flushAnnotationCache')) {
+
+    /**
+     * flushAnnotationCache
+     * 刷新注解缓存，清楚注解缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午12:13
+     * @param string $listener
+     * @param array $keys
+     * @return bool
+     */
+    function flushAnnotationCache($listener = '', $keys = [])
+    {
+        if (!$listener || !$keys) {
+            throw new \RuntimeException('参数不正确！');
+        }
+        $keys = is_array($keys)?$keys:[$keys];
+        $dispatcher = ApplicationContext::getContainer()->get(EventDispatcherInterface::class);
+        foreach ($keys as $key) {
+            $dispatcher->dispatch(new DeleteListenerEvent($listener, [$key]));
+        }
+        return true;
+    }
+}
+
+if (! function_exists('clearCache')) {
+    /**
+     * clearCache
+     * 清空当前 缓存
+     * User：YM
+     * Date：2019/12/19
+     * Time：下午7:56
+     */
+    function clearCache()
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        return $cache->clear();
+    }
+}
+
+if (! function_exists('delCache')) {
+    /**
+     * delCache
+     * 删除缓存，1条/多条
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午4:25
+     * @param array $keys
+     * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function delCache($keys = [])
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        if (is_array($keys)) {
+            $cache->deleteMultiple($keys);
+        } else {
+            $cache->delete($keys);
+        }
+
+        return true;
+    }
+}
+
+if (! function_exists('clearPrefixCache')) {
+    /**
+     * clearPrefixCache
+     * 根据前缀清楚缓存
+     * 函数的含义说明
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午4:32
+     * @param string $prefix
+     * @return bool
+     */
+    function clearPrefixCache($prefix = '')
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache->clearPrefix($prefix);
+        return true;
+    }
+}
+
+if (! function_exists('setCache')) {
+    /**
+     * setCache
+     * 设置缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午4:58
+     * @param $key
+     * @param $value
+     * @param null $ttl
+     * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function setCache($key, $value, $ttl = null)
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        return $cache->set($key, $value, $ttl);
+    }
+}
+
+if (! function_exists('setMultipleCache')) {
+    /**
+     * setMultipleCache
+     * 批量设置缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午4:59
+     * @param $values
+     * @param null $ttl
+     * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function setMultipleCache($values, $ttl = null)
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        return $cache->setMultiple($values, $ttl);
+    }
+}
+
+if (! function_exists('getCache')) {
+    /**
+     * getCache
+     * 获取缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午5:37
+     * @param $key
+     * @param null $default
+     * @return iterable
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function getCache($key, $default = null)
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        return $cache->get($key, $default);
+    }
+}
+
+if (! function_exists('getMultipleCache')) {
+    /**
+     * getMultipleCache
+     * 获取多个缓存
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午5:37
+     * @param array $keys
+     * @param null $default
+     * @return iterable
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function getMultipleCache(array $keys, $default = null)
+    {
+        $config = config('cache.default');
+        $cache = make(CacheDriver::class,['config'=>$config]);
+        return $cache->getMultiple($keys, $default);
+    }
+}
+
+
+
 

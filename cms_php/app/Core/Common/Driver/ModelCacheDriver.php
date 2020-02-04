@@ -6,28 +6,29 @@
  */
 declare(strict_types=1);
 
-namespace Core\Common\HF;
+namespace Core\Common\Driver;
 
 use Psr\Container\ContainerInterface;
-use Core\Common\Handler\CacheFileHandler;
-use Core\Common\Handler\CacheRedisHandler;
-use Hyperf\Cache\Driver\Driver;
+use Hyperf\ModelCache\Handler\HandlerInterface;
+use Hyperf\ModelCache\Handler\RedisHandler;
+use Core\Common\Handler\ModelCacheFileHandler;
+use Hyperf\ModelCache\Config;
 
 /**
- * CacheFactory
- * 缓存工厂
+ * ModelCacheDriver
+ * 数据模型缓存驱动
  * package Core\Common\HF
  * date 2020-01-07
  * @author YQ
  */
-class CacheFactory extends Driver
+class ModelCacheDriver  implements HandlerInterface
 {
     private $cacheInstance = null;
 
-    public function __construct(ContainerInterface $container, array $config)
+    public function __construct(ContainerInterface $container, Config $config)
     {
         if($this->cacheInstance == null){
-            $driver = env('CACHE_DRIVER', 'file');
+            $driver = env('MODEL_CACHE_DRIVER', 'file');
             $this->cacheInstance = $this->getCacheInstance($driver, $container, $config);
         }
     }
@@ -35,39 +36,29 @@ class CacheFactory extends Driver
     /**
      * getCacheInstance
      * 获取缓存驱动实例
-     * @param mixed $driver 
-     * @param ContainerInterface $container 
-     * @param array $config 
+     * @param mixed $driver
+     * @param ContainerInterface $container
+     * @param array $config
      * @access private
      * @return class
      * Date: 2020-01-07
      * Created by YQ
      */
-    private function getCacheInstance($driver, ContainerInterface $container, array $config)
+    private function getCacheInstance($driver, ContainerInterface $container, Config $config)
     {
         switch($driver){
             case 'file':
-                return make(CacheFileHandler::class, [$container, $config]);
+                return make(ModelCacheFileHandler::class, [$container, $config]);
             case 'redis':
-                return make(CacheRedisHandler::class, [$container, $config]);
+                return make(RedisHandler::class, [$container, $config]);
             default:
-                throw new \RuntimeException("cache [$driver] not found");
+                throw new \RuntimeException("model cache [$driver] not found");
         }
-    }
-
-    public function getCacheKey(string $key)
-    {
-        return $this->cacheInstance->getCacheKey($key);
     }
 
     public function get($key, $default = null)
     {
         return $this->cacheInstance->get($key, $default);
-    }
-
-    public function fetch(string $key, $default = null): array
-    {
-        return $this->cacheInstance->fetch($key, $default);
     }
 
     public function set($key, $value, $ttl = null)
@@ -105,9 +96,14 @@ class CacheFactory extends Driver
         return $this->cacheInstance->has($key);
     }
 
-    public function clearPrefix(string $prefix): bool
+    public function getConfig(): Config
     {
-        return $this->cacheInstance->clearPrefix($prefix);
+        return $this->cacheInstance->getConfig();
+    }
+
+    public function incr($key, $column, $amount): bool
+    {
+        return $this->cacheInstance->incr($key, $column, $amount);
     }
 
     public function __call($name, $arguments)

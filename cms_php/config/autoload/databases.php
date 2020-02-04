@@ -31,7 +31,7 @@ return [
         // 模型缓存配置
         'cache' => [
             //'handler' => Hyperf\ModelCache\Handler\RedisHandler::class,
-            'handler' => Core\Common\HF\ModelCacheFactory::class,
+            'handler' => Core\Common\Driver\ModelCacheDriver::class,
             'cache_key' => 'mc:%s:m:%s:%s:%s',
             'pool' => 'model_cache', // 这里确定使用redis.php，中的那个配置
             'prefix' => 'model_cache',

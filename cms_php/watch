@@ -105,6 +105,7 @@ function serve(Process $serve)
 {
     $opt = getopt('c');
     if (isset($opt['c'])) echo exec(PHP . ' ' . ENTRY_POINT_FILE . ' di:init-proxy') . '..' . PHP_EOL;
+    exec('./vendor/bin/init-proxy.sh');
     $serve->exec(PHP, [ENTRY_POINT_FILE, 'start']);
 }
 

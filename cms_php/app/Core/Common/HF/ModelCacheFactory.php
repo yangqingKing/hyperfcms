@@ -110,9 +110,4 @@ class ModelCacheFactory  implements HandlerInterface
     {
         return $this->cacheInstance->$name(...$arguments);
     }
-
-    public static function __callStatic($name, $arguments)
-    {
-        return $this->cacheInstance::$name(...$arguments);
-    }
 }

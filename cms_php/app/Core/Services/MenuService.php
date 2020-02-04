@@ -57,7 +57,7 @@ class MenuService extends BaseService
      * @param string $userId
      * @return array
      *
-     * @Cacheable(prefix="admin_user_menu",ttl=9000)
+     * @Cacheable(prefix="admin_user_menu",ttl=9000, listener="admin-user-menu")
      */
     public function getUserMenuList($userId = '')
     {
@@ -161,7 +161,8 @@ class MenuService extends BaseService
             $saveData['additional'] = $inputData['additional'];
         }
         $id = $this->systemMenuModel->saveInfo($saveData);
-
+        // 清除缓存
+        clearPrefixCache('admin_user_menu');
         return $id;
     }
 
@@ -193,7 +194,8 @@ class MenuService extends BaseService
     public function deleteInfo($id)
     {
         $info = $this->systemMenuModel->deleteInfo($id);
-
+        // 清除缓存
+        clearPrefixCache('admin_user_menu');
         return $info;
     }
 }
