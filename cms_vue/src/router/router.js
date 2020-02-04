@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import $vuex from '@/store'
+import MENU from './menu'
+import PERMISSIONS from './permissions'
+import ROLES from './roles'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -17,28 +20,9 @@ const routes = [
     component: () => import('@/layouts/BasicLayout'),
     meta: {title:'首页'},
     children: [
-      {
-        path: 'menu',
-        component: () => import(/* webpackChunkName: "menu-list" */ '@/pages/menu/MenuList'),
-        meta: {title:'菜单管理'}
-      },
-      {
-        path: 'permissions',
-        component: () => import(/* webpackChunkName: "permissions-list" */ '@/pages/permissions/PermissionsList'),
-        meta: {title:'权限管理'}
-      },
-      {
-        path: 'roles',
-        component: () => import(/* webpackChunkName: "roles-list" */ '@/pages/roles/RolesList'),
-        meta: {title:'角色管理'},
-        children: [
-          {
-            path: ':role_id/manage-members',
-            component: () => import(/* webpackChunkName: "manage-members" */ '@/pages/roles/ManageMembers'),
-            meta: {title:'成员管理'},
-          }
-        ]
-      },
+      MENU,
+      PERMISSIONS,
+      ROLES,
       {
         path: 'category',
         component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),

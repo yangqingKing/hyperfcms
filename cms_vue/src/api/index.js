@@ -3,6 +3,8 @@ import PASSPORT from './passport'
 import COMMON from './common'
 import STATISTICS from './statistics'
 import MENU from './menu'
+import PERMISSIONS from './permissions'
+import ROLES from './roles'
 
 export default {
   // 通行证
@@ -13,6 +15,10 @@ export default {
   ...STATISTICS,
   // 菜单
   ...MENU,
+  // 权限
+  ...PERMISSIONS,
+  // 角色
+  ...ROLES,
 
   // --------------------------------------  通用功能接口 -------------------------------------------
   /**
@@ -48,164 +54,8 @@ export default {
   getVodToken(data) {
     return request.post('/upload/get_aliyun_vod_token',data)
   },
-  // --------------------------------------  权限管理 -------------------------------------------
-  /**
-   * @description 获取权限列表
-   * @author YM
-   * @date 2019-01-17
-   * @returns promise
-   */
-  getPermissionsList() {
-    return request.get('/permissions/list')
-  },
-  /**
-   * @description 保存权限，新建、编辑的保存都走此方法，却别是有没有主键id
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  savePermissions(data) {
-    return request.post('/permissions/store',data)
-  },
-  /**
-   * @description 根据id获取单条信息，编辑使用
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  getPermissionsInfo(id) {
-    let data = {id:id}
-    return request.post('/permissions/get_info',data)
-  },
-  /**
-   * @description 根据id删除单条信息
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  deletePermissions(id) {
-    let data = {id:id}
-    return request.post('/permissions/delete',data)
-  },
-  /**
-   * @description 相同层级权限排序
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  orderPermissions(ids) {
-    let data = {ids:ids}
-    return request.post('/permissions/order',data)
-  },
-
-  // --------------------------------------  角色管理 -------------------------------------------
-  /**
-   * @description 获取角色列表
-   * @author YM
-   * @date 2019-01-17
-   * @returns promise
-   */
-  getRolesList(data) {
-    return request.get('/roles/list',data)
-  },
-  /**
-   * @description 保存权限，新建、编辑的保存都走此方法，却别是有没有主键id
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  saveRoles(data) {
-    return request.post('/roles/store',data)
-  },
-  /**
-   * @description 根据id获取单条信息，编辑使用
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  getRolesInfo(id) {
-    let data = {id:id}
-    return request.post('/roles/get_info',data)
-  },
-  /**
-   * @description 根据id删除单条信息
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  deleteRoles(id) {
-    let data = {id:id}
-    return request.post('/roles/delete',data)
-  },
-  /**
-   * @description 角色权限绑定，获取信息
-   * @author YM
-   * @date 2019-01-26
-   * @param {*} id 角色id
-   * @returns 
-   */
-  getRolesPermissions(id) {
-    let data = {id:id}
-    return request.post('/roles/get_permissions',data)
-  },
-  /**
-   * @description 保存角色对应的权限
-   * @author YM
-   * @date 2019-01-26
-   * @param {*} data
-   * @returns 
-   */
-  saveRolesPermissions(data) {
-    return request.post('/roles/save_permissions',data)
-  },
-   /**
-   * @description 获取角色用户列表
-   * @author YM
-   * @date 2019-01-17
-   * @returns promise
-   */
-  getRolesUser(data) {
-    return request.post('/roles/get_users',data)
-  },
-  /**
-   * @description 用户组添加成员，用户搜索，qs请求参数
-   * @author YM
-   * @date 2019-01-31
-   * @param {*} qs 请求参数
-   * @param {*} rId 角色id
-   * @returns 
-   */
-  rolesSearchUser(qs,rId){
-    let data = {search:qs,role_id:rId}
-    return request.post('/roles/search_user',data)
-  },
-  /**
-   * @description 为角色添加用户
-   * @author YM
-   * @date 2019-01-31
-   * @param {*} data
-   * @returns 
-   */
-  saveRolesUser(data){
-    return request.post('/roles/save_user',data)
-  },
-  /**
-   * @description 为角色移除用户
-   * @author YM
-   * @date 2019-01-31
-   * @param {*} data
-   * @returns 
-   */
-  removeRolesUser(data) {
-    return request.post('/roles/remove_user',data)
-  },
+  
+  
   // --------------------------------------  用户管理 -------------------------------------------
   /**
    * @description 获取用户列表

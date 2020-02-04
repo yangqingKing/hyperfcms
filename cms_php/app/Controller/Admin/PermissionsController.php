@@ -55,4 +55,104 @@ class PermissionsController extends BaseController
 
         return $this->success($data);
     }
+
+    /**
+     * index
+     * 权限列表，权限管理
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午8:23
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="list")
+     */
+    public function index()
+    {
+
+        $list = $this->permissionsRepo->getPermissionsList();
+
+        $data = [
+            'list' => $list
+        ];
+
+        return $this->success($data);
+    }
+
+    /**
+     * store
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:05
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="store")
+     */
+    public function store()
+    {
+        $reqParam = $this->request->all();
+        $id = $this->permissionsRepo->savePermissions($reqParam);
+
+        return $this->success($id);
+    }
+
+    /**
+     * getInfo
+     * 根据id获取单条记录信息
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:04
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="get_info")
+     */
+    public function getInfo()
+    {
+        $reqParam = $this->request->all();
+        $info = $this->permissionsRepo->getInfo($reqParam['id']);
+
+        $data = [
+            'info' => $info,
+        ];
+
+        return $this->success($data);
+    }
+
+    /**
+     * orderPermissions
+     * 权限的拖拽排序
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:03
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="order")
+     */
+    public function orderPermissions()
+    {
+        $reqParam = $this->request->all();
+        $this->permissionsRepo->orderPermissions($reqParam['ids']);
+
+        return $this->success('ok');
+    }
+
+    /**
+     * destroy
+     * 删除权限
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:02
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="delete")
+     */
+    public function destroy()
+    {
+        $reqParam = $this->request->all();
+        $this->permissionsRepo->deleteInfo($reqParam['id']);
+
+        return $this->success('ok');
+    }
+
+
+
 }

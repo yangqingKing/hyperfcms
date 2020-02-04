@@ -85,4 +85,97 @@ class PermissionsService extends BaseService
     }
 
 
+    /**
+     * getPermissionsCount
+     * 根据条件获取权限的总数
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:18
+     * @param array $where
+     * @return mixed
+     */
+    public function getPermissionsCount($where = [])
+    {
+        $count = $this->systemPermissionModel->getPermissionsCount($where);
+
+        return $count;
+    }
+
+    /**
+     * savePermissions
+     * 保存权限，构造数据，防止注入
+     * 不接收数据库字段以外数据
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:13
+     * @param $inputData
+     * @return mixed
+     */
+    public function savePermissions($inputData)
+    {
+        $saveData = [];
+        if (isset($inputData['id']) && $inputData['id']){
+            $saveData['id'] = $inputData['id'];
+        }
+
+        if (isset($inputData['parent_id'])){
+            $saveData['parent_id'] = $inputData['parent_id'];
+        }
+
+        if (isset($inputData['display_name']) && $inputData['display_name']){
+            $saveData['display_name'] = $inputData['display_name'];
+        }
+
+        if (isset($inputData['name'])){
+            $saveData['name'] = $inputData['name'];
+        }
+
+        if (isset($inputData['order'])){
+            $saveData['order'] = $inputData['order'];
+        }
+
+        if (isset($inputData['description'])){
+            $saveData['description'] = $inputData['description'];
+        }
+
+        $id = $this->systemPermissionModel->saveInfo($saveData);
+        // 清除缓存
+        clearPrefixCache('admin_user_permission');
+        return $id;
+    }
+
+    /**
+     * getInfo
+     * 根据id获取信息
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午4:56
+     * @param $id
+     * @return \App\Models\BaseModel|\Hyperf\Database\Model\Model|null
+     */
+    public function getInfo($id)
+    {
+        $info = $this->systemPermissionModel->getInfo($id);
+
+        return $info;
+    }
+
+    /**
+     * deleteInfo
+     * 根据id删除信息
+     * User：YM
+     * Date：2020/2/3
+     * Time：下午7:34
+     * @param $id
+     * @return mixed
+     */
+    public function deleteInfo($id)
+    {
+        $info = $this->systemPermissionModel->deleteInfo($id);
+        // 清除缓存
+        clearPrefixCache('admin_user_permission');
+        return $info;
+    }
+
+
 }

@@ -62,4 +62,23 @@ class SystemPermission extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
+
+    /**
+     * getPermissionsCount
+     * 根据条件获取权限的个数
+     * User：YM
+     * Date：2020/2/4
+     * Time：下午9:20
+     * @param array $where
+     * @return int
+     */
+    public function getPermissionsCount($where = [])
+    {
+        $query = $this->query();
+        foreach ($where as $k => $v) {
+            $query = $query->where($k, $v);
+        }
+        $query = $query->count();
+        return $query > 0 ? $query : 0;
+    }
 }

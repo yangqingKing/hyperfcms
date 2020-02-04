@@ -25,13 +25,13 @@
               <el-button size="mini" icon="iconfont icon-zengjiazicaidan" v-if="userPermissions.indexOf('menu_create') != -1" @click="addButton(scope.row.id)"></el-button>
               <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('menu_edit') != -1" @click="editButton(scope.row.id)"></el-button>
               <el-popover
-                v-if="userPermissions.indexOf('menu_delete') != -1" 
+                v-if="userPermissions.indexOf('menu_delete') != -1"
+                :ref="'el-popover-'+scope.$index"
                 placement="top"
-                width="150"
-                v-model="scope.row.visible">
+                width="150">
                 <p>确定要删除记录吗？</p>
                 <div style="text-align: right; margin: 0;">
-                  <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                  <el-button type="text" size="mini" @click="$refs['el-popover-'+scope.$index].doClose()">取消</el-button>
                   <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
                 </div>
                 <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete" ></el-button>
@@ -46,13 +46,13 @@
               <el-button size="mini" icon="iconfont" v-if="userPermissions.indexOf('menu_create') != -1" @click="addButton(scope.row.id)">添加子菜单</el-button>
               <el-button size="mini" v-if="userPermissions.indexOf('menu_edit') != -1" @click="editButton(scope.row.id)">编辑</el-button>
               <el-popover
-                v-if="userPermissions.indexOf('menu_delete') != -1" 
+                v-if="userPermissions.indexOf('menu_delete') != -1"
+                :ref="'el-popover-'+scope.$index"
                 placement="top"
-                width="150"
-                v-model="scope.row.visible">
+                width="150">
                 <p>确定要删除记录吗？</p>
                 <div style="text-align: right; margin: 0;">
-                  <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                  <el-button type="text" size="mini" @click="$refs['el-popover-'+scope.$index].doClose()">取消</el-button>
                   <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
                 </div>
                 <el-button slot="reference" type="danger" size="mini">删除</el-button>
