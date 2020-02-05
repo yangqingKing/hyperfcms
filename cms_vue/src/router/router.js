@@ -4,6 +4,8 @@ import $vuex from '@/store'
 import MENU from './menu'
 import PERMISSIONS from './permissions'
 import ROLES from './roles'
+import USER from './user'
+import SETTING from './setting'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -23,15 +25,12 @@ const routes = [
       MENU,
       PERMISSIONS,
       ROLES,
+      USER,
+      SETTING,
       {
         path: 'category',
         component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),
         meta: {title:'分类管理'}
-      },
-      {
-        path: 'user',
-        component: () => import(/* webpackChunkName: "user-list" */ '@/pages/user/UserList'),
-        meta: {title:'用户管理'}
       },
       {
         path: 'carousel',
@@ -106,18 +105,6 @@ const routes = [
         path: 'authorization',
         component: () => import(/* webpackChunkName: "authorization-list" */ '@/pages/authorization/AuthorizationList'),
         meta: {title:'授权管理'}
-      },
-      {
-        path: 'setting',
-        component: () => import(/* webpackChunkName: "setting-base" */ '@/pages/setting/SettingBase'),
-        meta: {title:'系统配置'},
-        children: [
-          {
-            path: 'site',
-            component: () => import(/* webpackChunkName: "setting-site" */ '@/pages/setting/SettingSite'),
-            meta: {title:'站点设置'},
-          }
-        ]
       },
       {
         path: 'statistics_backup',

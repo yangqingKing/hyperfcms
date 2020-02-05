@@ -30,4 +30,45 @@ class Setting extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    /**
+     * getInfoByName
+     * 通过name值取列表
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午8:55
+     * @param $name
+     * @return array
+     */
+    public function getInfoByName($name)
+    {
+        $query = $this->query()->select(
+            $this->table.'.id', $this->table.'.name', $this->table.'.value', $this->table.'.created_at'
+        );
+        $query = $query->where($this->table.'.name', $name);
+        $query = $query->first();
+
+        return $query ? $query->toArray() : [];
+    }
+
+    /**
+     * getList
+     * 通过name集合，取的相关列表数据
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午8:55
+     * @param $nameArr
+     * @return array
+     */
+    public function getList($nameArr)
+    {
+        $query = $this->query()->select(
+            $this->table.'.id', $this->table.'.name', $this->table.'.value', $this->table.'.created_at'
+        );
+        $query = $query->whereIn($this->table.'.name', $nameArr);
+        $query = $query->get();
+
+        return $query ? $query->toArray() : [];
+
+    }
 }
