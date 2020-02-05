@@ -77,12 +77,12 @@ class SystemRolesPermission extends BaseModel
 
     /**
      * saveRolesPermissions
-     * 保存角色权限，可以出入多维数组
+     * 保存角色权限，可以处理多维数组
      * User：YM
      * Date：2020/2/5
      * Time：上午11:13
      * @param $data
-     * @return SystemRolesPermission
+     * @return mixed
      */
     public function saveRolesPermissions($data)
     {

@@ -64,7 +64,7 @@ export default {
    * @returns promise
    */
   getUserList(data) {
-    return request.get('/user/list',data)
+    return request.post('/user/list',data)
   },
   /**
    * @description 保存权限，新建、编辑的保存都走此方法，却别是有没有主键id

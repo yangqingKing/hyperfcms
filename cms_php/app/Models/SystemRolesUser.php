@@ -83,4 +83,20 @@ class SystemRolesUser extends BaseModel
 
         return $query;
     }
+
+    /**
+     * saveUserRoles
+     * 保存角色用户，可以处理多维数组
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午5:17
+     * @param $data
+     * @return mixed
+     */
+    public function saveUserRoles($data)
+    {
+        $query = $this->insert($data);
+
+        return $query;
+    }
 }

@@ -68,7 +68,7 @@ class PassportRepository extends BaseRepository
      */
     public function createUser($inputData)
     {
-        $id = $this->userService->saveInfo($inputData,true);
+        $id = $this->userService->saveUser($inputData,true);
 
         return $id;
     }
