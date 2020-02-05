@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Core\Repositories\Admin;
 
 
+use App\Constants\StatusCode;
+use App\Exception\BusinessException;
 use Core\Repositories\BaseRepository;
 
 /**
@@ -133,7 +135,7 @@ class RolesRepository extends BaseRepository
     public function getRolePermissions($id)
     {
         if (!$id) {
-            throw new  Exception('参数不正确！');
+            throw new BusinessException(StatusCode::ERR_EXCEPTION, '参数不正确！');
         }
         $list = $this->rolesService->getRolePermissions($id);
         $allList = $this->getAllPermissions();
@@ -164,16 +166,20 @@ class RolesRepository extends BaseRepository
         $saveData = [];
         $roleId = $data['role_id'];
         $tmp = $data['permissions_id'];
+        $time = date('Y-m-d H:i:s',time());
 
         $this->rolesService->deleteRolesPermissions($roleId);
         foreach ($tmp as $v) {
             foreach ($v as $v1) {
-                $saveData[] = ['system_role_id' => $roleId,'system_permission_id' => $v1];
+                $saveData[] = ['system_role_id' => $roleId,'system_permission_id' => $v1,'created_at' => $time,'updated_at' => $time];
             }
         }
         $status = $this->rolesService->saveRolesPermissions($saveData);
-        // 删除用户权限缓存
-        $this->app->adminPermission->clearAll($roleId);
+        // 删除用户组下对应用户的缓存权限
+        $ids = $this->rolesService->getRoleUsers($roleId);
+        if ($ids) {
+            flushAnnotationCache('admin-user-permission',$ids);
+        }
 
         return $status;
     }
@@ -267,7 +273,7 @@ class RolesRepository extends BaseRepository
             $saveData['user_id'] = $inputData['user_id'];
             $this->rolesService->saveRolesUser($saveData);
             // 删除用户权限缓存
-            $this->app->adminPermission->removeOne($inputData['user_id']);
+            flushAnnotationCache('admin-user-permission',$inputData['user_id']);
         }
 
         return true;
@@ -290,9 +296,9 @@ class RolesRepository extends BaseRepository
             $where['user_id'] = $inputData['user_id'];
             $this->rolesService->deleteRolesUser($where);
             // 删除用户权限缓存
-            $this->app->adminPermission->removeOne($inputData['user_id']);
+            flushAnnotationCache('admin-user-permission',$inputData['user_id']);
         } else {
-            throw new  Exception('请求参数错误');
+            throw new BusinessException(StatusCode::ERR_EXCEPTION, '请求参数错误！');
         }
 
         return true;

@@ -43,4 +43,44 @@ class User extends BaseModel
      * @var string
      */
     protected $keyType = 'string';
+
+    /**
+     * getSearchList
+     * 根据搜索条件返回list
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午2:28
+     * @param string $search
+     * @param array $userIds
+     * @param array $notIds
+     * @param int $limit
+     * @return array
+     */
+    public function getSearchList($search = '', $userIds = [], $notIds = [], $limit = 10)
+    {
+        $query = $this->query()->select(
+            $this->table.'.id', $this->table.'.username', $this->table.'.nickname',  $this->table.'.mobile', $this->table.'.email'
+        );
+
+        if ($search) {
+            $query = $query->where(function($queryS) use ($search){
+                $queryS->where('username', 'like', "%{$search}%")
+                    ->orWhere('mobile', 'like', "%{$search}%");
+            });
+        }
+        if ($userIds) {
+            $query = $query->whereIn('id', $userIds);
+        }
+        if ($notIds) {
+            $query = $query->whereNotIn('id', $notIds);
+        }
+        if ($limit) {
+            $query = $query->limit($limit);
+        }
+
+        $query = $query->get();
+
+        return $query && count($query) ? $query->toArray() : [];
+    }
+
 }

@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .mars-ape-layout-header .iconfont 
   display inline-block
   box-sizing border-box

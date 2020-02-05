@@ -25,8 +25,12 @@
           <span class="tree-ctrl"
             v-if="iconShow(scope.row)"
             @click="toggleExpanded(scope.row)">
-            <i v-if="!scope.row._expanded" class="el-icon-plus"/>
-            <i v-else class="el-icon-minus"/>
+            <el-tooltip effect="dark" content="展开" placement="top-start" v-if="!scope.row._expanded">
+              <i class="el-icon-plus"/>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="折叠" placement="top-start" v-else>
+              <i class="el-icon-minus"/>
+            </el-tooltip>
           </span>
           {{ scope.$index+1 }}
         </template>
@@ -48,8 +52,12 @@
             <span class="tree-ctrl"
               v-if="iconShow(scope.row)"
               @click="toggleExpanded(scope.row)">
-              <i v-if="!scope.row._expanded" class="el-icon-plus"/>
-              <i v-else class="el-icon-minus"/>
+              <el-tooltip effect="dark" content="展开" placement="top-start" v-if="!scope.row._expanded">
+                <i class="el-icon-plus"/>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="折叠" placement="top-start" v-else>
+                <i class="el-icon-minus"/>
+              </el-tooltip>
             </span>
           </span>
           <i v-if="v.type=='icon'" class="iconfont" :class="scope.row[v.value]"></i>

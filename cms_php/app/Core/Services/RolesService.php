@@ -25,6 +25,7 @@ namespace Core\Services;
  *
  * @property \App\Models\SystemRole $systemRoleModel
  * @property \App\Models\SystemRolesUser $systemRolesUserModel
+ * @property \App\Models\SystemRolesPermission $systemRolesPermissionModel
  */
 class RolesService extends BaseService
 {
@@ -128,6 +129,126 @@ class RolesService extends BaseService
         $info = $this->systemRoleModel->deleteInfo($id);
 
         return $info;
+    }
+
+    /**
+     * getRolePermissions
+     * 获取角色的权限集合
+     * User：YM
+     * Date：2020/2/5
+     * Time：上午11:07
+     * @param $ids
+     * @return array
+     */
+    public function getRolePermissions($ids)
+    {
+        $list = $this->systemRolesPermissionModel->getPermissionsByRolesIds($ids);
+        $list = $this->handelPermissionsGroup($list);
+        return $list;
+    }
+
+    /**
+     * handelPermissionsGroup
+     * 将角色权限列表，按着权限父级分组
+     * User：YM
+     * Date：2020/2/5
+     * Time：上午11:05
+     * @param array $list
+     * @return array
+     */
+    public function handelPermissionsGroup($list = [])
+    {
+        if (!$list) {
+            return [];
+        }
+
+        $tmp = [];
+        foreach ($list as $v) {
+            $tmp[$v['parent_id']][] = $v['system_permission_id'];
+        }
+
+        return $tmp;
+    }
+
+    /**
+     * deleteRolesPermissions
+     * 根据roleid删除对应的信息。
+     * 由于角色权限一对多，所以每一次角色权限修改后会先做删除操作
+     * User：YM
+     * Date：2020/2/5
+     * Time：上午11:12
+     * @param $id
+     * @return mixed
+     */
+    public function deleteRolesPermissions($id)
+    {
+        $info = $this->systemRolesPermissionModel->deleteRolesPermissions($id);
+
+        return $info;
+    }
+
+    /**
+     * saveRolesPermissions
+     * 保存角色权限
+     * User：YM
+     * Date：2020/2/5
+     * Time：上午11:13
+     * @param array $data
+     * @return mixed
+     */
+    public function saveRolesPermissions($data = [])
+    {
+        $info = $this->systemRolesPermissionModel->saveRolesPermissions($data);
+
+        return $info;
+    }
+
+    /**
+     * saveRolesUser
+     * 保存用户对应角色
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午2:47
+     * @param $data
+     * @return mixed
+     */
+    public function saveRolesUser($data)
+    {
+        $info = $this->systemRolesUserModel->saveInfo($data);
+
+        return $info;
+    }
+
+    /**
+     * deleteRolesUser
+     * 根据规则删除角色用户
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午2:41
+     * @param $where
+     * @return mixed
+     */
+    public function deleteRolesUser($where)
+    {
+        $info = $this->systemRolesUserModel->deleteRolesUser($where);
+
+        return $info;
+    }
+
+    /**
+     * getRolesUserPagesInfo
+     * 获取角色关联用户的分页信息
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午12:05
+     * @param array $where
+     * @return array
+     */
+    public function getRolesUserPagesInfo($where = [])
+    {
+        $pageInfo = $this->systemRolesUserModel->getPagesInfo($where);
+
+        return $pageInfo;
     }
 
     /**

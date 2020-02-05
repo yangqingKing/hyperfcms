@@ -5,9 +5,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-
-            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" v-if="userPermissions.indexOf('roles_create') != -1 && buttonType=='icon'" @click="addButton(0)"></el-button>
-            <el-button type="primary" size="medium" icon="iconfont" v-if="userPermissions.indexOf('roles_create') != -1 && buttonType=='text'" @click="addButton(0)">添加</el-button>
+            <el-tooltip effect="dark" content="添加角色" placement="top-start"  v-if="userPermissions.indexOf('roles_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont" v-if="userPermissions.indexOf('roles_create') != -1 && buttonType=='text'" @click="addButton(0)">添加角色</el-button>
           </el-col>
         </el-row>
         <ApeTable ref="apeTable" :data="rolesList" :columns="columns" :loading="loadingStaus" :pagingData="pagingData" @switchPaging="switchPaging" highlight-current-row>
@@ -16,28 +17,40 @@
           label="操作">
             <template slot-scope="scope">
               <span v-if="scope.row.id !== 1">
-                <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('roles_edit') != -1" @click="editButton(scope.row.id)"></el-button>
-                <el-button size="mini" icon="iconfont icon-access_give" v-if="userPermissions.indexOf('roles_permissions') != -1" @click="permissionsBinding(scope.row)"></el-button>
-                <el-button size="mini" icon="iconfont icon-chengyuanguanli4" v-if="userPermissions.indexOf('roles_users') != -1" @click="manageMembers(scope.row)"></el-button>
-                  <el-popover
-                    v-if="userPermissions.indexOf('roles_delete') != -1"
-                    placement="top"
-                    width="150"
-                    v-model="scope.row.visible">
-                    <p>确定要删除记录吗？</p>
-                    <div style="text-align: right; margin: 0;">
-                      <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
-                      <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
-                    </div>
-                    <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
-                  </el-popover>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('roles_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="权限绑定" placement="top-start"  v-if="userPermissions.indexOf('roles_permissions') != -1" >
+                  <el-button size="mini" icon="iconfont icon-access_give" @click="permissionsBinding(scope.row)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="成员管理" placement="top-start"  v-if="userPermissions.indexOf('roles_users') != -1" >
+                  <el-button size="mini" icon="iconfont icon-chengyuanguanli4" @click="manageMembers(scope.row)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('roles_delete') != -1"
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
               </span>
               <span v-else>
                 <el-tooltip placement="top" v-if="userPermissions.indexOf('roles_edit') != -1 || userPermissions.indexOf('roles_permissions') != -1" >
                   <div slot="content">系统内置禁止操作</div>
                   <el-button circle type="warning" size="mini" icon="iconfont icon-jinggao"></el-button>
                 </el-tooltip>
-                <el-button size="mini" icon="iconfont icon-chengyuanguanli4" v-if="userPermissions.indexOf('roles_users') != -1" @click="manageMembers(scope.row)"></el-button>
+                <el-tooltip effect="dark" content="成员管理" placement="top-start"  v-if="userPermissions.indexOf('roles_users') != -1" >
+                  <el-button size="mini" icon="iconfont icon-chengyuanguanli4" @click="manageMembers(scope.row)"></el-button>
+                </el-tooltip>
               </span>
             </template>
           </el-table-column>
@@ -347,6 +360,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

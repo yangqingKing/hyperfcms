@@ -99,5 +99,27 @@ class UserService extends BaseService
         return $res;
     }
 
+    /**
+     * searchUserList
+     * 根据搜索条件返回list
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午2:27
+     * @param $search
+     * @param array $userIds
+     * @param array $notIds
+     * @param int $limit
+     * @return mixed
+     */
+    public function searchUserList($search, $userIds=[], $notIds = [], $limit = 10)
+    {
+        $list = $this->userModel->getSearchList($search, $userIds, $notIds, $limit);
+
+        foreach ($list as $k => $v) {
+            $list[$k]['value'] = $v['nickname']?$v['mobile'].'('.$v['nickname'].')':$v['mobile'];
+        }
+
+        return $list;
+    }
 
 }

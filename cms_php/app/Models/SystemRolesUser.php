@@ -62,4 +62,25 @@ class SystemRolesUser extends BaseModel
 
         return $query ? $query->toArray() : [];
     }
+
+    /**
+     * deleteRolesUser
+     * 根据规则删除对应信息
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午2:43
+     * @param array $where
+     * @return \Hyperf\Database\Model\Builder|int|mixed
+     */
+    public function deleteRolesUser($where = [])
+    {
+        $query = $this->query();
+        foreach ($where as $k => $v) {
+            $query = $query->where($this->table.'.'.$k, $v);
+        }
+
+        $query = $query->delete();
+
+        return $query;
+    }
 }

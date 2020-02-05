@@ -4,9 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-
-            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" v-if="userPermissions.indexOf('menu_create') != -1 && buttonType=='icon'" @click="addButton(0)"></el-button>
-            <el-button type="primary" size="medium" icon="iconfont " v-if="userPermissions.indexOf('permissions_create') != -1 && buttonType=='text'" @click="addButton(0)">添加主权限</el-button>
+            <el-tooltip effect="dark" content="添加权限组" placement="top-start"  v-if="userPermissions.indexOf('permissions_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont " v-if="userPermissions.indexOf('permissions_create') != -1 && buttonType=='text'" @click="addButton(0)">添加权限组</el-button>
           </el-col>
         </el-row>
         <TreeTable :data="permissionsList" :columns="columns" :loading="loadingStaus" ref="treeTable" highlight-current-row >
@@ -16,27 +17,37 @@
           align="center"
           label="Drag">
             <template slot-scope="scope">
-              <span class="drag-handle" :data-id="scope.row.id" :data-parent_id="scope.row.parent_id" :data-depth="scope.row.depth"><i class="el-icon-rank"></i></span>
+              <el-tooltip effect="dark" content="拖动排序" placement="top-start">
+                <span class="drag-handle" :data-id="scope.row.id" :data-parent_id="scope.row.parent_id" :data-depth="scope.row.depth"><i class="el-icon-rank"></i></span>
+              </el-tooltip>
             </template>
           </el-table-column>
           <el-table-column
           v-if="buttonType=='icon'"
           label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" icon="iconfont icon-zengjiazicaidan" v-if="userPermissions.indexOf('permissions_create') != -1" @click="addButton(scope.row.id,scope.row.name)"></el-button>
-              <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('permissions_edit') != -1" @click="editButton(scope.row.id,scope.row.parent)"></el-button>
-              <el-popover
-                v-if="userPermissions.indexOf('permissions_delete') != -1"
-                :ref="'el-popover-'+scope.$index"
-                placement="top"
-                width="150">
-                <p>确定要删除记录吗？</p>
-                <div style="text-align: right; margin: 0;">
-                  <el-button type="text" size="mini" @click="$refs['el-popover-'+scope.$index].doClose()">取消</el-button>
-                  <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
-                </div>
-                <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
-              </el-popover>
+              <el-tooltip effect="dark" content="添加子权限" placement="top-start"  v-if="userPermissions.indexOf('permissions_create') != -1" >
+                <el-button size="mini" icon="iconfont icon-zengjiazicaidan" @click="addButton(scope.row.id,scope.row.name)"></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('permissions_edit') != -1" >
+                <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id,scope.row.parent)"></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="删除" placement="top-start">
+                <span>
+                  <el-popover
+                    v-if="userPermissions.indexOf('permissions_delete') != -1"
+                    :ref="'el-popover-'+scope.$index"
+                    placement="top"
+                    width="150">
+                    <p>确定要删除记录吗？</p>
+                    <div style="text-align: right; margin: 0;">
+                      <el-button type="text" size="mini" @click="$refs['el-popover-'+scope.$index].doClose()">取消</el-button>
+                      <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                    </div>
+                    <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  </el-popover>
+                </span>
+              </el-tooltip>
             </template>
           </el-table-column>
           <el-table-column
@@ -315,6 +326,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

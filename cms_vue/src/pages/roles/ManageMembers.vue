@@ -3,8 +3,17 @@
     <PageHeaderLayout>
       <div class="main-page-content">
         <el-row class="table-header">
-          <el-col>
-            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" v-if="userPermissions.indexOf('roles_users') != -1" @click="addButton(0)"></el-button>
+          <el-col v-if="buttonType=='icon'">
+            <el-tooltip effect="dark" content="添加成员" placement="top-start" v-if="userPermissions.indexOf('roles_users') != -1" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="返回" placement="top-start">
+              <el-button class="fanhui-button" type="primary" size="medium" icon="iconfont icon-fanhui4" @click="returnRolesList"></el-button>
+            </el-tooltip>
+          </el-col>
+          <el-col v-if="buttonType=='text'">
+            <el-button type="primary" size="medium" v-if="userPermissions.indexOf('roles_users') != -1" @click="addButton(0)">添加成员</el-button>
+            <el-button class="fanhui-button" type="primary" size="medium" @click="returnRolesList">返回</el-button>
           </el-col>
         </el-row>
         <ApeTable ref="apeTable" :data="userList" :columns="columns" :loading="loadingStaus" :pagingData="pagingData" @switchPaging="switchPaging" highlight-current-row>
@@ -17,6 +26,29 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
+            label="操作">
+            <template slot-scope="scope">
+              <el-tooltip effect="dark" content="移除成员" placement="top-start">
+                <span>
+                  <el-popover
+                    v-if="userPermissions.indexOf('roles_users') != -1"
+                    placement="top"
+                    width="150"
+                    v-model="scope.row.visible">
+                    <p>确定移除该用户吗？</p>
+                    <div style="text-align: right; margin: 0;">
+                      <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="danger" size="mini" @click="removeButton(scope.row)">确定</el-button>
+                    </div>
+                    <el-button slot="reference" type="danger" size="mini" icon="iconfont icon-yichu-"></el-button>
+                  </el-popover>
+                </span>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
             label="操作">
             <template slot-scope="scope">
               <span>
@@ -30,7 +62,7 @@
                     <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
                     <el-button type="danger" size="mini" @click="removeButton(scope.row)">确定</el-button>
                   </div>
-                  <el-button slot="reference" type="danger" size="mini" icon="iconfont icon-yichu-"></el-button>
+                  <el-button slot="reference" type="danger" size="mini">移除成员</el-button>
                 </el-popover>
               </span>
             </template>
@@ -112,7 +144,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 切换页码操作
@@ -215,6 +247,10 @@ export default {
         callback(new Error(rule.message))
       }
       callback()
+    },
+    // 返回角色列表
+    returnRolesList() {
+      this.$router.push(this.$route.matched[1].path)
     }
     
   },
@@ -243,4 +279,6 @@ export default {
     margin-right 12px
   .el-select > .el-input 
     width 300px
+  .fanhui-button
+    float right 
 </style>
