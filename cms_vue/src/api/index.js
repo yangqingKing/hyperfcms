@@ -28,16 +28,6 @@ export default {
 
   // --------------------------------------  通用功能接口 -------------------------------------------
   /**
-   * getOssToken
-   * @description 获取上传凭证
-   * @author YQ
-   * @date 2019-01-19
-   * @returns
-   */
-  getOssToken() {
-    return request.get('/upload/get_upload_token')
-  },
-  /**
    * editorUploadFile
    * @description 富文本上传文件
    * @author YQ

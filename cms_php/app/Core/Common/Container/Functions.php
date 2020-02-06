@@ -29,6 +29,7 @@ use Hyperf\Utils\Arr;
 use Hyperf\Cache\Listener\DeleteListenerEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Core\Common\Driver\CacheDriver;
+use Core\Common\Container\Auth;
 
 
 if (! function_exists('requestEntry')) {
@@ -401,6 +402,8 @@ if (! function_exists('getLogArguments')) {
         if (isset($arguments['password'])) {
             unset($arguments['password']);
         }
+        $auth = ApplicationContext::getContainer()->get(Auth::class);
+        $userInfo = $auth->check();
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
@@ -419,7 +422,7 @@ if (! function_exists('getLogArguments')) {
             'execution_time' => $executionTime,
             'request_body_size' => $requestHeaders['content-length'][0]??'',
             'response_body_size' => $rbs,
-            'user_id' => getSession('user_id')??'',
+            'user_id' => $userInfo['id']??'',
             'referer' => $requestHeaders['referer']??'',
             'unix_time' => $serverParams['request_time']??'',
             'time_day' => isset($serverParams['request_time'])?date('Y-m-d',$serverParams['request_time']):'',

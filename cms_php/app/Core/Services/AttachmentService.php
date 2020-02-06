@@ -76,4 +76,49 @@ class AttachmentService extends BaseService
         return $fullUrl;
     }
 
+    /**
+     * newFileName
+     * 生成一个文件名
+     * User：YM
+     * Date：2020/2/6
+     * Time：下午8:54
+     * @return mixed|null|string|string[]
+     */
+    public function newFileName()
+    {
+        //替换日期事件
+        $t = date('YmdHis');
+        $format = config('upload.file_name_format');
+        $format = str_replace("{time}", $t, $format);
+
+        //过滤文件名的非法字符,并替换文件名
+//        $oriName = substr($oldName, 0, strrpos($oldName, '.'));
+//        $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
+//        $format = str_replace("{filename}", $oriName, $format);
+
+        //替换随机字符串
+        $randNum = rand(1, 10000000000) . rand(1, 10000000000);
+        if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
+            $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, (int)$matches[1]), $format);
+        }
+
+        return $format;
+    }
+
+    /**
+     * addAttachment
+     * 添加附件
+     * @param mixed $userId
+     * @access public
+     * @return void
+     */
+    public function addAttachment($userId)
+    {
+        $saveData = [
+            'title' => time(),
+            'user_id' => $userId
+        ];
+        return $this->attachmentModel->saveInfo($saveData);
+    }
+
 }
