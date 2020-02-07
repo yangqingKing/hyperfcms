@@ -15,12 +15,13 @@ use Hyperf\Server\SwooleEvent;
 
 return [
     'mode' => SWOOLE_PROCESS,
+    // 运行服务
     'servers' => [
         [
             'name' => 'http',
             'type' => Server::SERVER_HTTP,
             'host' => '0.0.0.0',
-            'port' => 9502,
+            'port' => env('HTTP_PORT', 9501),
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
                 SwooleEvent::ON_REQUEST => [Hyperf\HttpServer\Server::class, 'onRequest'],
