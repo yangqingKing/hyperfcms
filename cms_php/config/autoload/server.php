@@ -40,6 +40,8 @@ return [
         'document_root' => BASE_PATH . '/public',
         'static_handler_locations' => ['/'],
         'enable_static_handler' => true,
+        // 是否后台运行
+        'daemonize' => env('DAEMONIZE', 0),
     ],
     'callbacks' => [
         SwooleEvent::ON_BEFORE_START => [Hyperf\Framework\Bootstrap\ServerStartCallback::class, 'beforeStart'],
