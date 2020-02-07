@@ -65,7 +65,7 @@ class AttachmentService extends BaseService
         }
         $isOss = config('upload.oss');
         if ($isOss) {
-            $host = '';
+            $host = config('aliyun_oss.bucket.data.host');
         } else {
             $domain = config('app_domain');
             $attachments = config('upload.attachments');
@@ -118,6 +118,43 @@ class AttachmentService extends BaseService
             'title' => time(),
             'user_id' => $userId
         ];
+        return $this->attachmentModel->saveInfo($saveData);
+    }
+
+    /**
+     * saveAttachment
+     * 保存附件信息
+     * User：YM
+     * Date：2020/2/7
+     * Time：下午8:11
+     * @param $inputData
+     * @return null
+     */
+    public function saveAttachment($inputData)
+    {
+        $saveData = [];
+        if (isset($inputData['id']) && $inputData['id']){
+            $saveData['id'] = $inputData['id'];
+        }
+        if (isset($inputData['title'])){
+            $saveData['title'] = $inputData['title'];
+        }
+        if (isset($inputData['filename'])){
+            $saveData['filename'] = $inputData['filename'];
+        }
+        if (isset($inputData['path'])){
+            $saveData['path'] = $inputData['path'];
+        }
+        if (isset($inputData['type'])){
+            $saveData['type'] = $inputData['type'];
+        }
+        if (isset($inputData['size'])){
+            $saveData['size'] = $inputData['size'];
+        }
+        if (isset($inputData['user_id'])){
+            $saveData['user_id'] = $inputData['user_id'];
+        }
+
         return $this->attachmentModel->saveInfo($saveData);
     }
 
