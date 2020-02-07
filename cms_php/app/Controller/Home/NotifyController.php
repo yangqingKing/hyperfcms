@@ -19,6 +19,7 @@ use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use App\Middleware\OssCallbackMiddleware;
 
 /**
  * NotifyController
@@ -45,7 +46,7 @@ class NotifyController extends BaseController
      *
      * @PostMapping(path="oss_callback")
      *
-     * @Middleware()
+     * @Middleware(OssCallbackMiddleware::class)
      */
     public function ossCallback()
     {
