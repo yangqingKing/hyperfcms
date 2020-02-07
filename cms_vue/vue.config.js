@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/admin_api': {
-        target: 'http://localhost:9501',
+        target: 'http://localhost:9502',
         changeOrigin: true,
         pathRewrite: {
           // '^/admin_api': 'admin_api'
