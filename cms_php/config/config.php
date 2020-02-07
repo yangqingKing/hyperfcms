@@ -15,6 +15,8 @@ use Psr\Log\LogLevel;
 
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
+    // 应用域名(静态资源访问使用)
+    'app_domain' => env('APP_DOMAIN', ''),
     // 是否允许跨域资源访问
     'cors_access' => env('CORS_ACCESS', false),
     //用户id的前缀，作用在用户id的生成规则,最多使用3位

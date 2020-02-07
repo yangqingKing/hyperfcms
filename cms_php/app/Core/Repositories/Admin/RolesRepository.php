@@ -272,8 +272,6 @@ class RolesRepository extends BaseRepository
             $saveData['system_role_id'] = $inputData['role_id'];
             $saveData['user_id'] = $inputData['user_id'];
             $this->rolesService->saveRolesUser($saveData);
-            // 删除用户权限缓存
-            flushAnnotationCache('admin-user-permission',$inputData['user_id']);
         }
 
         return true;
@@ -295,8 +293,6 @@ class RolesRepository extends BaseRepository
             $where['system_role_id'] = $inputData['role_id'];
             $where['user_id'] = $inputData['user_id'];
             $this->rolesService->deleteRolesUser($where);
-            // 删除用户权限缓存
-            flushAnnotationCache('admin-user-permission',$inputData['user_id']);
         } else {
             throw new BusinessException(StatusCode::ERR_EXCEPTION, '请求参数错误！');
         }

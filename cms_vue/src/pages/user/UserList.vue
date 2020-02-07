@@ -4,8 +4,24 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium"  v-if="userPermissions.indexOf('user_create') != -1" @click="addButton(0)">添加</el-button>
+            <el-tooltip effect="dark" content="添加用户" placement="top-start"  v-if="userPermissions.indexOf('user_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium"  v-if="userPermissions.indexOf('user_create') != -1 && buttonType=='text'" @click="addButton(0)">添加</el-button>
           </el-col>
+        </el-row>
+        <el-row class="table-search">
+          <el-form size="medium" :inline="true" :model="searchCondition" class="demo-form-inline">
+            <el-form-item label="用户名">
+              <el-input v-model="searchCondition.username" placeholder="输入用户名" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="手机号">
+              <el-input v-model="searchCondition.mobile" placeholder="输入手机号" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="searchButton">查询</el-button>
+            </el-form-item>
+          </el-form>
         </el-row>
         <ApeTable ref="apeTable" :data="userList" :columns="columns" :loading="loadingStaus" :pagingData="pagingData" @switchPaging="switchPaging" highlight-current-row>
           <el-table-column
@@ -17,6 +33,32 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
+            label="操作">
+            <template slot-scope="scope">
+              <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('user_edit') != -1" >
+                <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="删除" placement="top-start">
+                <span>
+                  <el-popover
+                    v-if="userPermissions.indexOf('user_delete') != -1"
+                    placement="top"
+                    width="150"
+                    v-model="scope.row.visible">
+                    <p>确定要删除记录吗？</p>
+                    <div style="text-align: right; margin: 0;">
+                      <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                    </div>
+                    <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  </el-popover>
+                </span>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
             label="操作">
             <template slot-scope="scope">
               <span>
@@ -119,6 +161,8 @@ export default {
   },
   data() {
     return {
+      // 搜索条件
+      searchCondition:{},
       loadingStaus: true,
       columns: [
         {
@@ -186,9 +230,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
+    // 搜索
+    searchButton() {
+      this.initUserList()
+    },
     // 切换页码操作
     async switchPaging() {
       this.initUserList()
@@ -275,7 +323,10 @@ export default {
     async initUserList(type) {
       this.loadingStaus=true
       let pagingInfo = this.$refs['apeTable'].getPagingInfo(type)
-      let {list,pages}= await this.$api.getUserList(pagingInfo)
+      let searchCondition = this.searchCondition
+      // 合并
+      Object.assign(searchCondition,pagingInfo)
+      let {list,pages}= await this.$api.getUserList(searchCondition)
       this.userList=list
       this.pagingData.total = pages.total
       this.offset = pages.offset

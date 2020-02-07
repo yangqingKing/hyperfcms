@@ -19,4 +19,14 @@ export default {
   getUserPermissionsList() {
     return request.post('/permissions/user_permissions')
   },
+  /**
+   * getOssToken
+   * @description 获取上传凭证
+   * @author YQ
+   * @date 2019-01-19
+   * @returns
+   */
+  getOssToken() {
+    return request.post('/upload/get_upload_token')
+  },
 }

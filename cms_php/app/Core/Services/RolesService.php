@@ -215,8 +215,23 @@ class RolesService extends BaseService
     public function saveRolesUser($data)
     {
         $info = $this->systemRolesUserModel->saveInfo($data);
-
+        // 删除用户权限缓存
+        flushAnnotationCache('admin-user-permission',$data['user_id']);
         return $info;
+    }
+
+    /**
+     * saveUserRoles
+     * 保存用户对应的角色，一对多
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午5:22
+     * @param $data
+     * @return mixed
+     */
+    public function saveUserRoles($data)
+    {
+        return $this->systemRolesUserModel->saveUserRoles($data);
     }
 
     /**
@@ -231,7 +246,8 @@ class RolesService extends BaseService
     public function deleteRolesUser($where)
     {
         $info = $this->systemRolesUserModel->deleteRolesUser($where);
-
+        // 删除用户权限缓存
+        flushAnnotationCache('admin-user-permission',$where['user_id']);
         return $info;
     }
 
@@ -284,6 +300,25 @@ class RolesService extends BaseService
 
         $list = $this->getRolesUserList($where);
         $ids = array_pluck($list,'user_id');
+        return $ids;
+    }
+
+
+    /**
+     * getUserRoles
+     * 获取用户对应的角色的id集合
+     * User：YM
+     * Date：2020/2/5
+     * Time：下午4:35
+     * @param $userId
+     * @return array
+     */
+    public function getUserRoles($userId)
+    {
+        $where = ['user_id' => $userId];
+
+        $list = $this->getRolesUserList($where);
+        $ids = array_pluck($list,'system_role_id');
         return $ids;
     }
 }
