@@ -138,24 +138,30 @@ class Auth
     /**
      * check
      * 检测用户登录状态，登录返回用户信息
+     * 根据返回类型，判断是否返回用户信息，还是返回用户id
      * User：YM
-     * Date：2020/1/10
-     * Time：下午2:50
-     * @return array|bool
+     * Date：2020/2/8
+     * Time：下午12:20
+     * @param bool $type
+     * @return \App\Models\BaseModel|bool|\Hyperf\Database\Model\Model|null|void
      */
-    public function check()
+    public function check($type = true)
     {
         $loginTag = getSession(self::LOGIN_TAG);
         if (!$loginTag) {
             return false;
         }
         $uid = $this->decodeUid($loginTag);
-        $user = $this->userService->getInfo($uid);
-        if(!$user){
-            throw new BusinessException(StatusCode::ERR_USER_ABSENT);
+        if ($type === true) {
+            $user = $this->userService->getInfo($uid);
+            if (!$user) {
+                throw new BusinessException(StatusCode::ERR_USER_ABSENT);
+            }
+
+            return $user;
         }
 
-        return $user;
+        return $uid;
     }
 
     /**

@@ -403,7 +403,7 @@ if (! function_exists('getLogArguments')) {
             unset($arguments['password']);
         }
         $auth = ApplicationContext::getContainer()->get(Auth::class);
-        $userInfo = $auth->check();
+        $userInfo = $auth->check(false);
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
