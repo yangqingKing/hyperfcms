@@ -138,7 +138,8 @@ class OssCallbackMiddleware implements MiddlewareInterface
      */
     public function getPubKey($pubKeyUrl)
     {
-        $pubKey = $this->client->request('GET',$pubKeyUrl);
+        $response = $this->client->request('GET',$pubKeyUrl);
+        $pubKey = $response->getBody()->getContents();
         if ($pubKey == "") {
             return false;
         } else {
