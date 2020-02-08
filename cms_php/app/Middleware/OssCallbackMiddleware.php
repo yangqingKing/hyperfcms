@@ -157,7 +157,7 @@ class OssCallbackMiddleware implements MiddlewareInterface
      */
     public function getAuthStr()
     {
-        $body = $this->request->rawContent();
+        $body = $this->request->getBody();
         $serverParams = $this->request->getServerParams();
         $path = $serverParams['request_uri'];
         $pos = strpos($path, '?');
