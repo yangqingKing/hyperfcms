@@ -138,7 +138,6 @@ class UserService extends BaseService
             $saveData['job_number'] = $inputData['job_number'];
         }
         $id = $this->userModel->saveInfo($saveData,$type);
-
         return $id;
     }
 
