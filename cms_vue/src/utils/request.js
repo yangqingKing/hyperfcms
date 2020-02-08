@@ -41,7 +41,7 @@ service.interceptors.request.use(
     //   config.headers['X-Token'] = getToken()
     // }
     // 为所有请求增加HYPERF_SESSION_ID，实现后端的验证逻辑
-    config.headers['HYPERF_SESSION_ID'] = localStorage.getItem("HYPERF_SESSION_ID");
+    config.headers['HYPERF-SESSION-ID'] = localStorage.getItem("HYPERF_SESSION_ID");
     return config;
   },
   error => {

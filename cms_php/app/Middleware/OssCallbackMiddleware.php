@@ -101,9 +101,9 @@ class OssCallbackMiddleware implements MiddlewareInterface
      */
     private function getAuthorization()
     {
-        $authorizationBase64 = $this->request->getHeader('HTTP_AUTHORIZATION');
-        if($authorizationBase64){
-            return base64_decode($authorizationBase64);
+        $authorizationBase64 = $this->request->getHeader('authorization');
+        if(isset($authorizationBase64[0]) && $authorizationBase64[0]){
+            return base64_decode($authorizationBase64[0]);
         }else{
             return '';
         }
@@ -119,9 +119,9 @@ class OssCallbackMiddleware implements MiddlewareInterface
      */
     private function getPubKeyUrl()
     {
-        $pubKeyUrlBase64 = $this->request->getHeader('HTTP_X_OSS_PUB_KEY_URL');;
-        if($pubKeyUrlBase64){
-            return base64_decode($pubKeyUrlBase64);
+        $pubKeyUrlBase64 = $this->request->getHeader('x-oss-pub-key-url');;
+        if(isset($pubKeyUrlBase64[0]) && $pubKeyUrlBase64[0]){
+            return base64_decode($pubKeyUrlBase64[0]);
         }else{
             return '';
         }

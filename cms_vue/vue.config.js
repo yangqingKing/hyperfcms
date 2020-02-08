@@ -16,8 +16,8 @@ module.exports = {
   devServer: {
     proxy: {
       '/admin_api': {
-        target: 'http://localhost:9501',
-        // target: 'http://demo.hyperfcms.com',
+        // target: 'http://localhost:9501',
+        target: 'http://demo.hyperfcms.com',
         changeOrigin: true,
         pathRewrite: {
           // '^/admin_api': 'admin_api'
