@@ -7,6 +7,7 @@ import PERMISSIONS from './permissions'
 import ROLES from './roles'
 import USER from './user'
 import SETTING from './setting'
+import CAROUSEL from './carousel'
 
 export default {
   // 通行证
@@ -25,6 +26,8 @@ export default {
   ...USER,
   // 基础配置
   ...SETTING,
+  // 轮播图
+  ...CAROUSEL,
 
   // --------------------------------------  通用功能接口 -------------------------------------------
   /**
@@ -108,70 +111,7 @@ export default {
     let data = {ids:ids}
     return request.post('/category/order',data)
   },
-  // --------------------------------------  轮播图管理 -------------------------------------------
-  /**
-   * @description 获取轮播图列表
-   * @author YM
-   * @date 2019-02-01
-   * @param {*} data
-   * @returns 
-   */
-  getCarouselList(data) {
-    return request.get('/carousel/list', data)
-  },
-  /**
-   * @description 轮播图保存
-   * @author YM
-   * @date 2019-02-06
-   * @param {*} data
-   * @returns 
-   */
-  saveCarousel(data) {
-    return request.post('/carousel/store', data)
-  },
-  /**
-   * @description 获取轮播图详情
-   * @author YM
-   * @date 2019-02-11
-   * @param {*} id
-   * @returns 
-   */
-  getCarouselInfo(id) {
-    let data = {id:id}
-    return request.post('/carousel/get_info', data)
-  },
-  /**
-   * @description 根据id删除单条信息
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  deleteCarousel(id) {
-    let data = {id:id}
-    return request.post('/carousel/delete',data)
-  },
-  /**
-   * @description 轮播图排序
-   * @author YM
-   * @date 2019-01-19
-   * @param {*} data
-   * @returns
-   */
-  orderCarousel(ids) {
-    let data = {ids:ids}
-    return request.post('/carousel/order',data)
-  },
-  /**
-   * @description 获取轮播的类型列表
-   * @author YM
-   * @date 2019-12-03
-   * @returns 
-   */
-  getCarouselTypeList() {
-    return request.get('/carousel/type_list')
-  },
-
+  
   // --------------------------------------  广告位管理 -------------------------------------------
   /**
    * @description 获取广告位列表

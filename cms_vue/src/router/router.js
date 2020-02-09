@@ -6,6 +6,7 @@ import PERMISSIONS from './permissions'
 import ROLES from './roles'
 import USER from './user'
 import SETTING from './setting'
+import CAROUSEL from './carousel'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -22,20 +23,16 @@ const routes = [
     component: () => import('@/layouts/BasicLayout'),
     meta: {title:'首页'},
     children: [
-      MENU,
-      PERMISSIONS,
-      ROLES,
-      USER,
-      SETTING,
+      MENU, // 菜单
+      PERMISSIONS, // 权限
+      ROLES, // 角色
+      USER, // 用户
+      SETTING, // 基础设置
+      CAROUSEL, // 轮播图
       {
         path: 'category',
         component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),
         meta: {title:'分类管理'}
-      },
-      {
-        path: 'carousel',
-        component: () => import(/* webpackChunkName: "carousel-list" */ '@/pages/carousel/CarouselList'),
-        meta: {title:'轮播图管理'}
       },
       {
         path: 'ad-position',

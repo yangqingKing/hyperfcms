@@ -48,7 +48,7 @@ if (! function_exists('requestEntry')) {
         $moduleName = 'hyperf';
 
         foreach ($backTrace as $v) {
-            if (stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
+            if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
                 $tmp = array_reverse(explode('\\',trim($v['class'])));
                 $module = str_replace('controller','',strtolower($tmp[1]));
                 $class = str_replace('controller','',strtolower($tmp[0]));
