@@ -31,7 +31,6 @@ class SystemRole extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * getList
      * 函数的含义说明
@@ -46,20 +45,17 @@ class SystemRole extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.id',$this->table.'.name', $this->table.'.display_name', $this->table.'.description'
-        );
+        $query = $this->query()->select($this->table . '.id', $this->table . '.name', $this->table . '.display_name', $this->table . '.description');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
-            if ($v || $v!=null) {
-                $query = $query->where($this->table.'.'.$k, $v);
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
             }
         }
-
         // 追加排序
         if ($order && is_array($order)) {
             foreach ($order as $k => $v) {
-                $query = $query->orderBy($this->table.'.'.$k, $v);
+                $query = $query->orderBy($this->table . '.' . $k, $v);
             }
         }
         // 是否分页
@@ -67,8 +63,6 @@ class SystemRole extends BaseModel
             $query = $query->offset($offset)->limit($limit);
         }
         $query = $query->get();
-
         return $query ? $query->toArray() : [];
     }
-
 }

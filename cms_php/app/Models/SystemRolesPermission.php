@@ -29,7 +29,6 @@ class SystemRolesPermission extends BaseModel
      * @var array
      */
     protected $casts = ['system_role_id' => 'integer', 'system_permission_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * getPermissionsByRolesIds
      * 获取角色对应的权限集合
@@ -42,22 +41,16 @@ class SystemRolesPermission extends BaseModel
      */
     public function getPermissionsByRolesIds($ids = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.system_role_id', $this->table.'.system_permission_id','system_permissions.parent_id'
-        );
-
-        $query = $query->leftjoin('system_permissions', 'system_permissions.id', '=', $this->table.'.system_permission_id');
+        $query = $this->query()->select($this->table . '.system_role_id', $this->table . '.system_permission_id', 'system_permissions.parent_id');
+        $query = $query->leftjoin('system_permissions', 'system_permissions.id', '=', $this->table . '.system_permission_id');
         if (is_array($ids)) {
-            $query = $query->whereIn('system_role_id',$ids);
+            $query = $query->whereIn('system_role_id', $ids);
         } else {
-            $query = $query->where('system_role_id',$ids);
+            $query = $query->where('system_role_id', $ids);
         }
-
         $query = $query->get();
-
         return $query ? $query->toArray() : [];
     }
-
     /**
      * deleteRolesPermissions
      * 根据roleid删除对应的信息。
@@ -69,12 +62,10 @@ class SystemRolesPermission extends BaseModel
      */
     public function deleteRolesPermissions($id)
     {
-        $query = $this->query()->where('system_role_id',$id);
+        $query = $this->query()->where('system_role_id', $id);
         $query = $query->delete();
-
         return $query;
     }
-
     /**
      * saveRolesPermissions
      * 保存角色权限，可以处理多维数组
@@ -87,7 +78,6 @@ class SystemRolesPermission extends BaseModel
     public function saveRolesPermissions($data)
     {
         $query = $this->insert($data);
-
         return $query;
     }
 }

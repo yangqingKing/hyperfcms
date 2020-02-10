@@ -11,6 +11,7 @@ namespace App\Models;
  * @property int $order 
  * @property int $is_show 
  * @property string $target 
+ * @property string $additional 
  * @property string $description 
  * @property \Carbon\Carbon $created_at 
  * @property \Carbon\Carbon $updated_at 
@@ -28,7 +29,7 @@ class AdLink extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'title', 'image', 'url', 'order', 'is_show', 'target', 'description', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'title', 'image', 'url', 'order', 'is_show', 'target', 'additional', 'description', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *

@@ -33,7 +33,6 @@ class SystemPermission extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'parent_id' => 'integer', 'order' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * getList
      * 获取系统权限列表
@@ -62,7 +61,6 @@ class SystemPermission extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
-
     /**
      * getPermissionsCount
      * 根据条件获取权限的个数

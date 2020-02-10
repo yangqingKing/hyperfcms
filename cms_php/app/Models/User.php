@@ -43,7 +43,6 @@ class User extends BaseModel
      * @var string
      */
     protected $keyType = 'string';
-
     /**
      * getList
      * 获取系统用户列表
@@ -60,21 +59,17 @@ class User extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.id',$this->table.'.mobile', $this->table.'.username', $this->table.'.email', $this->table.'.nickname',
-            $this->table.'.job_number', $this->table.'.created_at'
-        );
+        $query = $this->query()->select($this->table . '.id', $this->table . '.mobile', $this->table . '.username', $this->table . '.email', $this->table . '.nickname', $this->table . '.job_number', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
-            if ($v || $v!=null) {
-                $query = $query->where($this->table.'.'.$k, $v);
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
             }
         }
-
         // 追加排序
         if ($order && is_array($order)) {
             foreach ($order as $k => $v) {
-                $query = $query->orderBy($this->table.'.'.$k, $v);
+                $query = $query->orderBy($this->table . '.' . $k, $v);
             }
         }
         // 是否分页
@@ -84,7 +79,6 @@ class User extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
-
     /**
      * getSearchList
      * 根据搜索条件返回list
@@ -99,14 +93,10 @@ class User extends BaseModel
      */
     public function getSearchList($search = '', $userIds = [], $notIds = [], $limit = 10)
     {
-        $query = $this->query()->select(
-            $this->table.'.id', $this->table.'.username', $this->table.'.nickname',  $this->table.'.mobile', $this->table.'.email'
-        );
-
+        $query = $this->query()->select($this->table . '.id', $this->table . '.username', $this->table . '.nickname', $this->table . '.mobile', $this->table . '.email');
         if ($search) {
-            $query = $query->where(function($queryS) use ($search){
-                $queryS->where('username', 'like', "%{$search}%")
-                    ->orWhere('mobile', 'like', "%{$search}%");
+            $query = $query->where(function ($queryS) use($search) {
+                $queryS->where('username', 'like', "%{$search}%")->orWhere('mobile', 'like', "%{$search}%");
             });
         }
         if ($userIds) {
@@ -118,10 +108,7 @@ class User extends BaseModel
         if ($limit) {
             $query = $query->limit($limit);
         }
-
         $query = $query->get();
-
         return $query && count($query) ? $query->toArray() : [];
     }
-
 }

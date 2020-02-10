@@ -7,6 +7,7 @@ import ROLES from './roles'
 import USER from './user'
 import SETTING from './setting'
 import CAROUSEL from './carousel'
+import ADPOSITION from './ad_position'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -29,15 +30,11 @@ const routes = [
       USER, // 用户
       SETTING, // 基础设置
       CAROUSEL, // 轮播图
+      ADPOSITION, // 广告位
       {
         path: 'category',
         component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),
         meta: {title:'分类管理'}
-      },
-      {
-        path: 'ad-position',
-        component: () => import(/* webpackChunkName: "ad-position-list" */ '@/pages/ad_position/AdPositionList'),
-        meta: {title:'广告位管理'}
       },
       {
         path: 'link',

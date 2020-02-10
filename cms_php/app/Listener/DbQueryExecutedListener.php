@@ -57,8 +57,8 @@ class DbQueryExecutedListener implements ListenerInterface
             }
 
             $msg = sprintf('[%s] %s', $event->time, $sql);
-            // 当监听出发为脚本执行时
-            if (strpos($sql,'information_schema') !== false) {
+            // 当监听触发此脚本执行时
+            if (strpos($sql,'information_schema') !== false || strpos($sql,'table_type') !== false) {
                 $output = new ConsoleOutput();
                 $output->writeln($msg);
                 return ;

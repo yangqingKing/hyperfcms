@@ -29,7 +29,6 @@ class SystemRolesUser extends BaseModel
      * @var array
      */
     protected $casts = ['system_role_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * getList
      * 获取列表
@@ -43,26 +42,20 @@ class SystemRolesUser extends BaseModel
      */
     public function getList($where = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.system_role_id',$this->table.'.user_id', $this->table.'.created_at'
-        );
+        $query = $this->query()->select($this->table . '.system_role_id', $this->table . '.user_id', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
-            if ($v || $v!=null) {
-                $query = $query->where($this->table.'.'.$k, $v);
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
             }
         }
-
         // 是否分页
         if ($limit) {
             $query = $query->offset($offset)->limit($limit);
         }
-
         $query = $query->get();
-
         return $query ? $query->toArray() : [];
     }
-
     /**
      * deleteRolesUser
      * 根据规则删除对应信息
@@ -76,14 +69,11 @@ class SystemRolesUser extends BaseModel
     {
         $query = $this->query();
         foreach ($where as $k => $v) {
-            $query = $query->where($this->table.'.'.$k, $v);
+            $query = $query->where($this->table . '.' . $k, $v);
         }
-
         $query = $query->delete();
-
         return $query;
     }
-
     /**
      * saveUserRoles
      * 保存角色用户，可以处理多维数组
@@ -96,7 +86,6 @@ class SystemRolesUser extends BaseModel
     public function saveUserRoles($data)
     {
         $query = $this->insert($data);
-
         return $query;
     }
 }

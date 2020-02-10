@@ -140,7 +140,7 @@ abstract class BaseModel extends Model implements CacheableInterface
      * @param $where
      * @return array
      */
-    public function getPagesInfo($where)
+    public function getPagesInfo($where = [])
     {
         $pageSize = 10;
         $currentPage = 1;
