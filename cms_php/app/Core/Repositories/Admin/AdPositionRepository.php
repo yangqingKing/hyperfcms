@@ -45,7 +45,7 @@ class AdPositionRepository extends BaseRepository
     {
         $pagesInfo = $this->adPositionService->getPagesInfo($inputData);
         $order = ['order'=>'ASC'];
-        $list = $this->adPositionService->getList([],$order,0,0);
+        $list = $this->adPositionService->getList([],$order,$pagesInfo['offset'],$pagesInfo['page_size']);
         foreach ($list as $k => $v) {
             $info = $this->attachmentService->getInfo($v['image']);
             $list[$k]['image_url'] = $info['full_path'];

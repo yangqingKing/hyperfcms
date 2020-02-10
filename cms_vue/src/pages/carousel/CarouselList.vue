@@ -208,7 +208,7 @@ export default {
       carouselList:[],
       // 分页信息
       pagingData:{
-        is_show: false,
+        is_show: true,
         layout: 'total, sizes, prev, pager, next, jumper',
         total: 0
       },

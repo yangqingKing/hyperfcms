@@ -42,7 +42,7 @@
                         <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
                         <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
                       </div>
-                      <el-button slot="reference" type="danger" size="mini">删除</el-button>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
                     </el-popover>
                   </span>
                 </el-tooltip>
@@ -93,8 +93,8 @@
           </el-row>
           <el-row>
             <el-col :span="22">
-              <el-form-item label="类别" prop="type">
-                <el-select v-model="formData.type" filterable clearable placeholder="请选择">
+              <el-form-item label="类别" prop="c_type">
+                <el-select v-model="formData.c_type" filterable clearable placeholder="请选择">
                   <el-option
                     v-for="item in typeList"
                     :key="item.id"
@@ -209,7 +209,7 @@ export default {
       adPositionList:[],
       // 分页信息
       pagingData:{
-        is_show: false,
+        is_show: true,
         layout: 'total, sizes, prev, pager, next, jumper',
         total: 0
       },

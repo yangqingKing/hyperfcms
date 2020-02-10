@@ -4,11 +4,11 @@ declare(strict_types=1);
 /**
  * Created by PhpStorm.
  *​
- * AdPositionService.php
+ * LinkService.php
  *
  * User：YM
  * Date：2020/2/10
- * Time：下午5:15
+ * Time：下午10:34
  */
 
 
@@ -16,25 +16,24 @@ namespace Core\Services;
 
 
 /**
- * AdPositionService
- * 广告位服务
+ * LinkService
+ * 友情链接服务
  * @package Core\Services
  * User：YM
  * Date：2020/2/10
- * Time：下午5:15
+ * Time：下午10:34
  *
- * @property \App\Models\AdPosition $adPositionModel
+ * @property \App\Models\AdLink $adLinkModel
  * @property \Core\Services\AttachmentService $attachmentService
- * @property \Core\Services\VideoService $videoService
  */
-class AdPositionService extends BaseService
+class LinkService extends BaseService
 {
     /**
      * getList
-     * 条件获取广告位列表
+     * 条件获取友情链接列表
      * User：YM
      * Date：2020/2/10
-     * Time：下午5:16
+     * Time：下午10:34
      * @param array $where 查询条件
      * @param array $order 排序条件
      * @param int $offset 偏移
@@ -43,7 +42,8 @@ class AdPositionService extends BaseService
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $list = $this->adPositionModel->getList($where,$order,$offset,$limit);
+
+        $list = $this->adLinkModel->getList($where,$order,$offset,$limit);
         foreach ($list as &$v) {
             $v['show_alias'] = $v['is_show']?'显示':'隐藏';
         }
@@ -57,28 +57,28 @@ class AdPositionService extends BaseService
      * 获取分页信息
      * User：YM
      * Date：2020/2/10
-     * Time：下午5:16
+     * Time：下午10:35
      * @param array $where
      * @return mixed
      */
     public function getPagesInfo($where = [])
     {
-        $pageInfo = $this->adPositionModel->getPagesInfo($where);
+        $pageInfo = $this->adLinkModel->getPagesInfo($where);
 
         return $pageInfo;
     }
 
     /**
-     * saveAdPosition
-     * 保存广告位，构造数据，防止注入
+     * saveLink
+     * 保存友情链接，构造数据，防止注入
      * 不接收数据库字段以外数据
      * User：YM
      * Date：2020/2/10
-     * Time：下午5:16
+     * Time：下午10:35
      * @param $inputData
      * @return mixed
      */
-    public function saveAdPosition($inputData)
+    public function saveLink($inputData)
     {
         $saveData = [];
         if (isset($inputData['id']) && $inputData['id']){
@@ -87,16 +87,14 @@ class AdPositionService extends BaseService
         if (isset($inputData['title']) && $inputData['title']){
             $saveData['title'] = $inputData['title'];
         }
-        if (isset($inputData['unique_identify']) && $inputData['unique_identify']){
-            $saveData['unique_identify'] = $inputData['unique_identify'];
-        } else {
-            $saveData['unique_identify'] = null;
-        }
         if (isset($inputData['image']) && $inputData['image']){
             $saveData['image'] = $inputData['image'];
         }
-        if (isset($inputData['video_id'])){
-            $saveData['video_id'] = $inputData['video_id'];
+        if (isset($inputData['target']) && $inputData['target']){
+            $saveData['target'] = $inputData['target'];
+        }
+        if (isset($inputData['is_show'])){
+            $saveData['is_show'] = $inputData['is_show'];
         }
         if (isset($inputData['c_type'])){
             $saveData['c_type'] = $inputData['c_type']?:null;
@@ -104,8 +102,8 @@ class AdPositionService extends BaseService
         if (isset($inputData['url'])){
             $saveData['url'] = $inputData['url'];
         }
-        if (isset($inputData['is_show'])){
-            $saveData['is_show'] = $inputData['is_show'];
+        if (isset($inputData['order'])){
+            $saveData['order'] = $inputData['order'];
         }
         if (isset($inputData['additional'])){
             $saveData['additional'] = $inputData['additional'];
@@ -113,7 +111,7 @@ class AdPositionService extends BaseService
         if (isset($inputData['description'])){
             $saveData['description'] = $inputData['description'];
         }
-        $id = $this->adPositionModel->saveInfo($saveData);
+        $id = $this->adLinkModel->saveInfo($saveData);
 
         return $id;
     }
@@ -123,18 +121,15 @@ class AdPositionService extends BaseService
      * 根据id获取信息
      * User：YM
      * Date：2020/2/10
-     * Time：下午5:17
+     * Time：下午10:35
      * @param $id
      * @return mixed
      */
     public function getInfo($id)
     {
-        $info = $this->adPositionModel->getInfo($id);
-        $info['is_show'] = (string)$info['is_show'];
+        $info = $this->adLinkModel->getInfo($id);
         $info['image_info'] = $this->attachmentService->getInfo($info['image']);
-        if ($info['video_id']) {
-            $info['video_info'] = $this->videoService->getInfo($info['video_id']);
-        }
+        $info['is_show'] = (string)$info['is_show'];
         return $info;
     }
 
@@ -143,53 +138,14 @@ class AdPositionService extends BaseService
      * 根据id删除信息
      * User：YM
      * Date：2020/2/10
-     * Time：下午5:25
+     * Time：下午10:35
      * @param $id
      * @return mixed
      */
     public function deleteInfo($id)
     {
-        $info = $this->adPositionModel->deleteInfo($id);
+        $info = $this->adLinkModel->deleteInfo($id);
 
-        return $info;
-    }
-
-    /**
-     * getListByIdentify
-     * 模糊匹配唯一标识获取list
-     * 协定只模糊匹配内容后半段
-     * User：YM
-     * Date：2020/2/10
-     * Time：下午5:25
-     * @param string $identify
-     * @return mixed
-     */
-    public function getListByIdentify($identify = '')
-    {
-        $list = $this->adPositionModel->getListByIdentify($identify);
-        foreach ($list as $k => $v) {
-            $info = $this->attachmentService->getInfo($v['image']);
-            $list[$k]['image_url'] = $info['full_path'];
-        }
-        return $list;
-    }
-
-    /**
-     * getInfoByWhere
-     * 根据条件获取信息
-     * User：YM
-     * Date：2020/2/10
-     * Time：下午5:26
-     * @param array $where
-     * @return mixed
-     */
-    public function getInfoByWhere($where = [])
-    {
-        $info = $this->adPositionModel->getInfoByWhere($where);
-        if ($info) {
-            $tmp = $this->attachmentService->getInfo($info['image']);
-            $info['image_url'] = $tmp['full_path'];
-        }
         return $info;
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 /**
  * Created by PhpStorm.
  *​
- * CarouselRepository.php
+ * LinkRepository.php
  *
  * User：YM
- * Date：2020/2/9
- * Time：下午5:39
+ * Date：2020/2/10
+ * Time：下午10:32
  */
 
 
@@ -18,33 +18,37 @@ namespace Core\Repositories\Admin;
 use Core\Repositories\BaseRepository;
 
 /**
- * CarouselRepository
- * 轮播图管理仓库
+ * LinkRepository
+ * 友情链接管理仓库
  * @package Core\Repositories\Admin
  * User：YM
- * Date：2020/2/9
- * Time：下午5:39
+ * Date：2020/2/10
+ * Time：下午10:32
  *
- * @property \Core\Services\CarouselService $carouselService
+ * @property \Core\Services\LinkService $linkService
  * @property \Core\Services\AttachmentService $attachmentService
  * @property \Core\Services\CategoryService $categoryService
  */
-class CarouselRepository extends BaseRepository
+class LinkRepository extends BaseRepository
 {
     /**
-     * getCarouselList
+     * getLinkList
      * 获取列表
      * User：YM
-     * Date：2020/2/9
-     * Time：下午5:49
+     * Date：2020/2/10
+     * Time：下午10:38
      * @param $inputData
      * @return array
      */
-    public function getCarouselList($inputData)
+    public function getLinkList($inputData)
     {
-        $pagesInfo = $this->carouselService->getPagesInfo($inputData);
-        $order = ['order'=>'ASC'];
-        $list = $this->carouselService->getList([],$order,$pagesInfo['offset'],$pagesInfo['page_size']);
+        $pagesInfo = $this->linkService->getPagesInfo($inputData);
+        $order = ['order'=>'ASC','id'=>'DESC'];
+        $list = $this->linkService->getList([],$order,$pagesInfo['offset'],$pagesInfo['page_size']);
+        foreach ($list as $k => $v) {
+            $info = $this->attachmentService->getInfo($v['image']);
+            $list[$k]['image_url'] = $info['full_path'];
+        }
         $data = [
             'pages' => $pagesInfo,
             'data' => $list
@@ -54,34 +58,31 @@ class CarouselRepository extends BaseRepository
     }
 
     /**
-     * saveCarousel
+     * saveLink
      * 保存
      * User：YM
-     * Date：2020/2/9
-     * Time：下午5:49
+     * Date：2020/2/10
+     * Time：下午10:38
      * @param $data
      * @return mixed
      */
-    public function saveCarousel($data)
+    public function saveLink($data)
     {
-        if ( !(isset($data['id']) && $data['id']) ) {
-            $data['order'] = $this->carouselService->getCarouselCount();
-        }
-        return $this->carouselService->saveCarousel($data);
+        return $this->linkService->saveLink($data);
     }
 
     /**
      * getInfo
      * 根据id获取信息
      * User：YM
-     * Date：2020/2/9
-     * Time：下午5:49
+     * Date：2020/2/10
+     * Time：下午10:38
      * @param $id
      * @return mixed
      */
     public function getInfo($id)
     {
-        $info = $this->carouselService->getInfo($id);
+        $info = $this->linkService->getInfo($id);
         return $info;
     }
 
@@ -89,27 +90,27 @@ class CarouselRepository extends BaseRepository
      * deleteInfo
      * 删除信息
      * User：YM
-     * Date：2020/2/9
-     * Time：下午5:49
+     * Date：2020/2/10
+     * Time：下午10:38
      * @param $id
      * @return mixed
      */
     public function deleteInfo($id)
     {
-        $info = $this->carouselService->deleteInfo($id);
+        $info = $this->linkService->deleteInfo($id);
         return $info;
     }
 
     /**
-     * orderCarousel
-     * 轮播图排序
+     * orderLink
+     * 友情链接排序
      * User：YM
-     * Date：2020/2/9
-     * Time：下午5:49
+     * Date：2020/2/10
+     * Time：下午10:38
      * @param array $ids
      * @return bool
      */
-    public function orderCarousel($ids = [])
+    public function orderLink($ids = [])
     {
         if (count($ids) <= 1) {
             return true;
@@ -121,7 +122,7 @@ class CarouselRepository extends BaseRepository
                 'id' => $v,
                 'order' => $order
             ];
-            $this->carouselService->saveCarousel($saveData);
+            $this->linkService->saveLink($saveData);
             $order++;
         }
 
@@ -132,15 +133,14 @@ class CarouselRepository extends BaseRepository
      * typeList
      * 获取类别
      * User：YM
-     * Date：2020/2/9
-     * Time：下午9:40
+     * Date：2020/2/10
+     * Time：下午10:39
      * @return mixed
      */
     public function typeList()
     {
-        $list = $this->categoryService->getListByIdentify('carousel-category');
+        $list = $this->categoryService->getListByIdentify('link-category');
 
         return $list;
     }
-
 }

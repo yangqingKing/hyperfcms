@@ -8,6 +8,7 @@ import USER from './user'
 import SETTING from './setting'
 import CAROUSEL from './carousel'
 import ADPOSITION from './ad_position'
+import LINK from './link'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -31,15 +32,11 @@ const routes = [
       SETTING, // 基础设置
       CAROUSEL, // 轮播图
       ADPOSITION, // 广告位
+      LINK, // 友情链接
       {
         path: 'category',
         component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),
         meta: {title:'分类管理'}
-      },
-      {
-        path: 'link',
-        component: () => import(/* webpackChunkName: "link-list" */ '@/pages/link/LinkList'),
-        meta: {title:'友情链接'}
       },
       {
         path: 'course',

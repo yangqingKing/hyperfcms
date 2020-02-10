@@ -6,10 +6,12 @@ namespace App\Models;
 /**
  * @property int $id 
  * @property string $title 
+ * @property int $c_type 
  * @property string $unique_identify 
  * @property string $image 
  * @property int $video_id 
  * @property string $url 
+ * @property int $order 
  * @property int $is_show 
  * @property string $additional 
  * @property string $description 
@@ -29,14 +31,13 @@ class AdPosition extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'title', 'unique_identify', 'image', 'video_id', 'url', 'is_show', 'additional', 'description', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'title', 'c_type', 'unique_identify', 'image', 'video_id', 'url', 'order', 'is_show', 'additional', 'description', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'video_id' => 'integer', 'is_show' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
+    protected $casts = ['id' => 'integer', 'c_type' => 'integer', 'video_id' => 'integer', 'order' => 'integer', 'is_show' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
     /**
      * getList
      * 获取列表
@@ -52,21 +53,17 @@ class AdPosition extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.id',$this->table.'.title', $this->table.'.unique_identify', $this->table.'.image', $this->table.'.video_id',
-            $this->table.'.c_type', $this->table.'.url', $this->table.'.is_show', $this->table.'.description', $this->table.'.created_at'
-        );
+        $query = $this->query()->select($this->table . '.id', $this->table . '.title', $this->table . '.unique_identify', $this->table . '.image', $this->table . '.video_id', $this->table . '.c_type', $this->table . '.url', $this->table . '.is_show', $this->table . '.description', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
-            if ($v || $v!=null) {
-                $query = $query->where($this->table.'.'.$k, $v);
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
             }
         }
-
         // 追加排序
         if ($order && is_array($order)) {
             foreach ($order as $k => $v) {
-                $query = $query->orderBy($this->table.'.'.$k, $v);
+                $query = $query->orderBy($this->table . '.' . $k, $v);
             }
         }
         // 是否分页
@@ -76,7 +73,6 @@ class AdPosition extends BaseModel
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
-
     /**
      * getListByIdentify
      * 模糊匹配唯一标识获取list
@@ -89,17 +85,11 @@ class AdPosition extends BaseModel
      */
     public function getListByIdentify($identify = '')
     {
-        $query = $this->query()->select(
-            $this->table.'.id',$this->table.'.title', $this->table.'.unique_identify', $this->table.'.image', $this->table.'.video_id', $this->table.'.c_type',
-            $this->table.'.url', $this->table.'.is_show', $this->table.'.additional_field', $this->table.'.description', $this->table.'.created_at'
-        );
+        $query = $this->query()->select($this->table . '.id', $this->table . '.title', $this->table . '.unique_identify', $this->table . '.image', $this->table . '.video_id', $this->table . '.c_type', $this->table . '.url', $this->table . '.is_show', $this->table . '.additional_field', $this->table . '.description', $this->table . '.created_at');
         if ($identify) {
-            $query = $query->where($this->table.'.unique_identify','like', "{$identify}%");
+            $query = $query->where($this->table . '.unique_identify', 'like', "{$identify}%");
         }
-
-
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
-
 }
