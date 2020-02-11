@@ -4,7 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont" @click="addButton(0)">添加主分类</el-button>
+            <el-tooltip effect="dark" content="添加主分类" placement="top-start"  v-if="userPermissions.indexOf('category_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont" v-if="userPermissions.indexOf('category_create') != -1 && buttonType=='text'" @click="addButton(0)">添加主分类</el-button>
           </el-col>
         </el-row>
         <TreeTable :data="categoryList" :columns="columns" :loading="loadingStaus" ref="treeTable" highlight-current-row >
@@ -14,10 +17,41 @@
           align="center"
           label="Drag">
             <template slot-scope="scope">
-              <span class="drag-handle" :data-id="scope.row.id" :data-parent_id="scope.row.parent_id" :data-depth="scope.row.depth"><i class="el-icon-rank"></i></span>
+              <el-tooltip effect="dark" content="拖动排序" placement="top-start">
+                <span class="drag-handle" :data-id="scope.row.id" :data-parent_id="scope.row.parent_id" :data-depth="scope.row.depth"><i class="el-icon-rank"></i></span>
+              </el-tooltip>
             </template>
           </el-table-column>
           <el-table-column
+          v-if="buttonType=='icon'"
+          label="操作">
+            <template slot-scope="scope">
+              <el-tooltip effect="dark" content="添加子分类" placement="top-start"  v-if="userPermissions.indexOf('category_create') != -1" >
+                <el-button size="mini" icon="iconfont icon-zengjiazicaidan"  @click="addButton(scope.row.id)"></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('category_edit') != -1" >
+                <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="删除" placement="top-start" >
+                <span>
+                  <el-popover
+                    v-if="userPermissions.indexOf('category_delete') != -1"
+                    placement="top"
+                    width="150"
+                    v-model="scope.row.visible">
+                    <p>确定要删除记录吗？</p>
+                    <div style="text-align: right; margin: 0;">
+                      <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                    </div>
+                    <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  </el-popover>
+                </span>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column
+          v-if="buttonType=='text'"
           label="操作">
             <template slot-scope="scope">
               <el-button size="mini" icon="iconfont" @click="addButton(scope.row.id)">添加子类</el-button>
@@ -51,8 +85,14 @@
           <el-form-item label="跳转链接" prop="url">
             <el-input v-model="formData.url"></el-input>
           </el-form-item>
+          <el-form-item label="附加内容" prop="additional">
+            <el-input type="textarea" v-model="formData.additional"></el-input>
+          </el-form-item>
           <el-form-item label="备注" prop="description">
             <el-input type="textarea" v-model="formData.description"></el-input>
+          </el-form-item>
+          <el-form-item label="图片" prop="image"  ref="imageItem">
+            <ApeUploader :limit="1" @handleUploadSuccess="handleUploadSuccess" @handleUploadRemove="handleUploadRemove" :upload-file-list="uploadFileList"></ApeUploader>
           </el-form-item>
         </el-form>
       </template>
@@ -65,13 +105,16 @@ import PageHeaderLayout from '@/layouts/PageHeaderLayout'
 import TreeTable from '@/components/TreeTable'
 import Sortable from 'sortablejs'
 import ModalDialog from '@/components/ModalDialog'
+import { mapGetters } from 'vuex'
+import ApeUploader from '@/components/ApeUploader'
 
 
 export default {
   components: {
     PageHeaderLayout,
     TreeTable,
-    ModalDialog
+    ModalDialog,
+    ApeUploader
   },
   data() {
     return {
@@ -88,13 +131,19 @@ export default {
         {
           title: 'ID',
           value: 'id',
-          width: 80
+          width: 40
+        },
+        {
+          title: '图片',
+          type: 'image',
+          value: 'image_url',
+          width: 60
         },
         {
           title: '分类名称',
           operation:true, // 作为展开操作列
           value: 'display_name',
-          width: 240
+          width: 180
         },
         {
           title: '分类标识',
@@ -114,12 +163,17 @@ export default {
       },
       // 表单结构
       formData: {},
+      // 已上传文件列表
+      uploadFileList:[],
       // 表单验证
       rules: {
         display_name: [{required: true, message: '输入分类名称', trigger: 'blur' }],
         name: [{required: true, message: '输入分类标识', trigger: 'blur' }],
       }
     }
+  },
+  computed: {
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 响应添加按钮
@@ -145,6 +199,7 @@ export default {
         this.rules.name[0].required = true
       }
       this.formData = info
+      this.uploadFileList = info.image_info.id?[{id:info.image_info.id,name:info.image_info.title,url:info.image_info.full_path}]:[]
       this.dialogData.loading = false
     },
     // 相应删除按钮
@@ -187,6 +242,16 @@ export default {
         }
       })
     },
+    // 图片上传成功回调
+    handleUploadSuccess(file, fileList) {
+      this.formData.image = file.id
+      this.uploadFileList = fileList
+    },
+    // 图片删除回调
+    handleUploadRemove(file, fileList) {
+      this.formData.image = 0
+      this.uploadFileList = fileList
+    },
     // 处理模态框，关闭事件
     dialogClose() {
       this.initData()
@@ -199,6 +264,7 @@ export default {
         this.dialogData.loading = true
         this.formData = this.defaultFormData
         this.$refs['categoryForm'].resetFields()
+        this.uploadFileList = []
       })
     },
     // 拖拽排序数据提交，请求接口
@@ -263,6 +329,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

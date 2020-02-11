@@ -9,6 +9,7 @@ import SETTING from './setting'
 import CAROUSEL from './carousel'
 import ADPOSITION from './ad_position'
 import LINK from './link'
+import CATEGORY from './category';
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -33,11 +34,7 @@ const routes = [
       CAROUSEL, // 轮播图
       ADPOSITION, // 广告位
       LINK, // 友情链接
-      {
-        path: 'category',
-        component: () => import(/* webpackChunkName: "category-list" */ '@/pages/category/CategoryList'),
-        meta: {title:'分类管理'}
-      },
+      CATEGORY, // 分类管理
       {
         path: 'course',
         component: () => import(/* webpackChunkName: "course-list" */ '@/pages/course/CourseList'),

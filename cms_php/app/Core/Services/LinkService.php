@@ -87,7 +87,7 @@ class LinkService extends BaseService
         if (isset($inputData['title']) && $inputData['title']){
             $saveData['title'] = $inputData['title'];
         }
-        if (isset($inputData['image']) && $inputData['image']){
+        if (isset($inputData['image'])){
             $saveData['image'] = $inputData['image'];
         }
         if (isset($inputData['target']) && $inputData['target']){

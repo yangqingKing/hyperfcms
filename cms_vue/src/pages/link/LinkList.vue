@@ -415,6 +415,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

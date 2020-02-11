@@ -10,7 +10,7 @@ namespace App\Models;
  * @property int $parent_id 
  * @property string $url 
  * @property int $order 
- * @property string $cover 
+ * @property string $image 
  * @property string $additional 
  * @property string $description 
  * @property \Carbon\Carbon $created_at 
@@ -29,7 +29,7 @@ class Category extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'display_name', 'name', 'parent_id', 'url', 'order', 'cover', 'additional', 'description', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'display_name', 'name', 'parent_id', 'url', 'order', 'image', 'additional', 'description', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -50,7 +50,7 @@ class Category extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select($this->table . '.id', $this->table . '.name', $this->table . '.url', $this->table . '.display_name', $this->table . '.parent_id', $this->table . '.order', $this->table . '.description', $this->table . '.created_at');
+        $query = $this->query()->select($this->table . '.id', $this->table . '.name', $this->table . '.image', $this->table . '.url', $this->table . '.display_name', $this->table . '.parent_id', $this->table . '.order', $this->table . '.description', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
             if ($v || $v != null) {

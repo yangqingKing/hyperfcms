@@ -24,6 +24,7 @@ namespace Core\Services;
  * Time：下午9:41
  *
  * @property \App\Models\Category $categoryModel
+ * @property \Core\Services\AttachmentService $attachmentService
  */
 class CategoryService extends BaseService
 {
@@ -42,7 +43,10 @@ class CategoryService extends BaseService
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
         $list = $this->categoryModel->getList($where, $order, $offset, $limit);
-
+        foreach ($list as $k => $v) {
+            $info = $this->attachmentService->getInfo($v['image']);
+            $list[$k]['image_url'] = isset($info['full_path'])?$info['full_path']:'';
+        }
         return $list;
     }
 
@@ -92,8 +96,14 @@ class CategoryService extends BaseService
         if (isset($inputData['order'])){
             $saveData['order'] = $inputData['order'];
         }
+        if (isset($inputData['image'])){
+            $saveData['image'] = $inputData['image'];
+        }
         if (isset($inputData['description'])){
             $saveData['description'] = $inputData['description'];
+        }
+        if (isset($inputData['additional'])){
+            $saveData['additional'] = $inputData['additional'];
         }
 
         $id = $this->categoryModel->saveInfo($saveData);
@@ -113,7 +123,7 @@ class CategoryService extends BaseService
     public function getInfo($id)
     {
         $info = $this->categoryModel->getInfo($id);
-
+        $info['image_info'] = $this->attachmentService->getInfo($info['image']);
         return $info;
     }
 
@@ -129,7 +139,6 @@ class CategoryService extends BaseService
     public function deleteInfo($id)
     {
         $info = $this->categoryModel->deleteInfo($id);
-
         return $info;
     }
 
@@ -191,5 +200,21 @@ class CategoryService extends BaseService
         $tree = handleTreeList($list,$pid);
 
         return $tree;
+    }
+
+    /**
+     * getCategoryCount
+     * 获取总数
+     * User：YM
+     * Date：2020/2/11
+     * Time：下午5:51
+     * @param array $where
+     * @return int
+     */
+    public function getCategoryCount($where = [])
+    {
+        $count = $this->categoryModel->getCount($where);
+
+        return $count;
     }
 }
