@@ -13,6 +13,7 @@ namespace App\Models;
  * @property string $category_2_ids 
  * @property string $source 
  * @property string $excerpt 
+ * @property string $additional 
  * @property string $content 
  * @property int $attachment 
  * @property int $cover 
@@ -43,7 +44,7 @@ class Article extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'title', 'category_id', 'category_ids', 'category_2_id', 'category_2_ids', 'source', 'excerpt', 'content', 'attachment', 'cover', 'published_time', 'is_published', 'is_top', 'is_recommend', 'order', 'hits', 'comment', 'seo_title', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'user_id', 'title', 'category_id', 'category_ids', 'category_2_id', 'category_2_ids', 'source', 'excerpt', 'additional', 'content', 'attachment', 'cover', 'published_time', 'is_published', 'is_top', 'is_recommend', 'order', 'hits', 'comment', 'seo_title', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'deleted_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -98,7 +99,7 @@ class Article extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select($this->table . '.id', $this->table . '.user_id', $this->table . '.title', $this->table . '.category_id', $this->table . '.category_ids', $this->table . '.source', $this->table . '.excerpt', $this->table . '.content', $this->table . '.cover', $this->table . '.published_time', $this->table . '.is_published', $this->table . '.is_top', $this->table . '.is_recommend', $this->table . '.hits', $this->table . '.comment', $this->table . '.seo_title', $this->table . '.seo_keywords', $this->table . '.seo_description', $this->table . '.created_at');
+        $query = $this->query()->select($this->table . '.id', $this->table . '.user_id', $this->table . '.title', $this->table . '.category_id', $this->table . '.category_ids', $this->table . '.source', $this->table . '.additional', $this->table . '.excerpt', $this->table . '.content', $this->table . '.cover', $this->table . '.published_time', $this->table . '.is_published', $this->table . '.is_top', $this->table . '.is_recommend', $this->table . '.hits', $this->table . '.comment', $this->table . '.seo_title', $this->table . '.seo_keywords', $this->table . '.seo_description', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
             if ($k === 'title') {

@@ -58,7 +58,7 @@ class ArticleService extends BaseService
             $v['recommend_alias'] = $v['is_recommend']?'已推荐':'未推荐';
             $v['top_alias'] = $v['is_top']?'已置顶':'未置顶';
             $v['title_alias'] = mb_strlen($v['title']) > 32?mb_substr($v['title'],0,32).'...':'';
-
+            unset($v['content']);
         }
         unset($v);
 
@@ -120,6 +120,9 @@ class ArticleService extends BaseService
         }
         if (isset($inputData['excerpt'])){
             $saveData['excerpt'] = $inputData['excerpt'];
+        }
+        if (isset($inputData['additional'])){
+            $saveData['additional'] = $inputData['additional'];
         }
         if (isset($inputData['order'])){
             $saveData['order'] = $inputData['order'];
