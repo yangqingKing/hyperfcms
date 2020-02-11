@@ -14,7 +14,6 @@
                   :options="categoryList"
                   v-model="selectedList"
                   @change="cascaderChange"
-                  change-on-select
                   show-all-levels
                   clearable
                   filterable>
@@ -27,7 +26,6 @@
                   :options="categoryLabelList"
                   v-model="selectedLabelList"
                   @change="cascaderLabelChange"
-                  change-on-select
                   show-all-levels
                   clearable
                   filterable>

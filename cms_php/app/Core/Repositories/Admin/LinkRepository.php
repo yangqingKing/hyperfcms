@@ -47,7 +47,7 @@ class LinkRepository extends BaseRepository
         $list = $this->linkService->getList([],$order,$pagesInfo['offset'],$pagesInfo['page_size']);
         foreach ($list as $k => $v) {
             $info = $this->attachmentService->getInfo($v['image']);
-            $list[$k]['image_url'] = $info['full_path'];
+            $list[$k]['image_url'] = $info['full_path']??'';
         }
         $data = [
             'pages' => $pagesInfo,

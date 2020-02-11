@@ -5,7 +5,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('article_create') != -1"  @click="addButton(0)">添加</el-button>
+            <el-tooltip effect="dark" content="添加文章" placement="top-start"  v-if="userPermissions.indexOf('article_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('article_create') != -1 && buttonType=='text'"  @click="addButton(0)">添加文章</el-button>
           </el-col>
         </el-row>
         <el-row class="table-search">
@@ -16,7 +19,6 @@
                 :props="cascaderProps"
                 :options="searchCategory"
                 v-model="searchCondition.selected_category"
-                change-on-select
                 show-all-levels
                 clearable
                 filterabl
@@ -52,11 +54,43 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
             width="160"
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-button size="mini" v-if="userPermissions.indexOf('article_attachment') != -1"  @click="articleAttachment(scope.row)">附件</el-button>
+                <el-tooltip effect="dark" content="附件集" placement="top-start"  v-if="userPermissions.indexOf('article_attachment') != -1" >
+                  <el-button size="mini" icon="iconfont icon-fujian2" @click="articleAttachment(scope.row)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('article_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('article_delete') != -1" 
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
+            width="160"
+            label="操作">
+            <template slot-scope="scope">
+              <span>
+                <el-button size="mini" v-if="userPermissions.indexOf('article_attachment') != -1"  @click="articleAttachment(scope.row)">附件集</el-button>
                 <el-button size="mini" v-if="userPermissions.indexOf('article_edit') != -1"  @click="editButton(scope.row.id)">编辑</el-button>
                 <el-popover
                   v-if="userPermissions.indexOf('article_delete') != -1" 
@@ -86,7 +120,7 @@
         <ApeTable :data="attachmentList" :columns="attachmentColumns" :loading="loadingStaus" highlight-current-row border>
           <el-table-column
             slot="second-column"
-            width="64"
+            width="60"
             label="序号">
             <template slot-scope="scope">
               <span>{{offset+scope.$index+1}}</span>
@@ -163,29 +197,23 @@ export default {
           title: '封面',
           type: 'image',
           value: 'cover_pc_url',
-          width: 120
+          width: 60
         },
         {
           title: '标题',
           value: [
             {lable:'ID号：',value:'id'},
-            {lable:'标题：',value:'title'},
+            {lable:'标题：',value:'title_alias',value_alias:'title'},
           ]
         },
         {
-          title: '分类',
-          value: 'category_alias',
-          width: 120
-        },
-        {
-          title: '作者',
-          value: 'author_name',
-          width: 120
-        },
-        {
-          title: '发布时间',
-          value: 'published_time',
-          width: 160
+          title: '信息',
+          value: [
+            {lable:'分类：',value:'category_alias'},
+            {lable:'作者：',value:'author_name'},
+            {lable:'发布时间：',value:'published_time'},
+          ],
+          width: 240
         },
         {
           title: '状态',
@@ -274,10 +302,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   watch: {
     "$route.matched" : function(n,o) {
+      console.log(o)
       if (n.length === 2) {
         this.initArticleList()
       }
@@ -417,7 +446,7 @@ export default {
       this.attachmentUploadFileList = []
     },
     // 响应添加附件按钮
-    async addAttachment(pid) {
+    async addAttachment() {
       this.dialogData.visible = true
       this.dialogData.loading = false
       this.dialogData.title = '添加附件'

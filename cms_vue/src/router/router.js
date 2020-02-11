@@ -9,7 +9,8 @@ import SETTING from './setting'
 import CAROUSEL from './carousel'
 import ADPOSITION from './ad_position'
 import LINK from './link'
-import CATEGORY from './category';
+import CATEGORY from './category'
+import ARTICLE from './article'
 
 // 解决vue报错vue-router.esm.js
 const routerPush = Router.prototype.push
@@ -35,6 +36,7 @@ const routes = [
       ADPOSITION, // 广告位
       LINK, // 友情链接
       CATEGORY, // 分类管理
+      ARTICLE, // 文章管理
       {
         path: 'course',
         component: () => import(/* webpackChunkName: "course-list" */ '@/pages/course/CourseList'),
@@ -49,23 +51,6 @@ const routes = [
             path: ':course_id/edit',
             component: () => import(/* webpackChunkName: "course-edit" */ '@/pages/course/CreateEdit'),
             meta: {title:'编辑课程'},
-          }
-        ]
-      },
-      {
-        path: 'article',
-        component: () => import(/* webpackChunkName: "article-list" */ '@/pages/article/ArticleList'),
-        meta: {title:'文章管理'},
-        children: [
-          {
-            path: 'create',
-            component: () => import(/* webpackChunkName: "article-create" */ '@/pages/article/CreateEdit'),
-            meta: {title:'添加文章'},
-          },
-          {
-            path: ':article_id/edit',
-            component: () => import(/* webpackChunkName: "article-edit" */ '@/pages/article/CreateEdit'),
-            meta: {title:'编辑文章'},
           }
         ]
       },

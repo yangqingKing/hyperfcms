@@ -196,7 +196,7 @@ export default {
           value: [
             {lable:'标题：',value:'title'},
             // {lable:'类型：',value:'type'},
-            {lable:'跳转链接：',value:'url'},
+            {lable:'链接：',value:'url'},
           ]
         },
         {

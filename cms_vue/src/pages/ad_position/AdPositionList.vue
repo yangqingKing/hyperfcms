@@ -200,7 +200,7 @@ export default {
         {
           title: '信息',
           value: [
-            {lable:'跳转链接：',value:'url'},
+            {lable:'链接：',value:'url'},
             {lable:'简介：',value:'description'},
           ]
         },

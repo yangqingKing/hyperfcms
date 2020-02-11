@@ -22,7 +22,7 @@
             <span v-if="typeof(v.value)=='string'">
               <span v-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
               <span v-else-if="v.value_alias">
-                <el-tooltip effect="dark" :content="scope.row[v.value_alias]" placement="top-end" popper-class="ape-table-tooltip">
+                <el-tooltip effect="dark" :content="scope.row[v.value_alias]" placement="top-start" popper-class="ape-table-tooltip">
                   <span v-html="scope.row[v.value]"></span>
                 </el-tooltip>
               </span>
@@ -32,24 +32,25 @@
               <span v-for="(v1,k1) in v.value" :key="k1">
                 <template v-if="v.key">
                   <template v-for="(item, idx) in scope.row[v.key]">
-                    <el-tooltip :key="idx" effect="dark" placement="top-end">
+                    <el-tooltip :key="idx" effect="dark" placement="top-start">
                       <div slot="content" v-html="item[v1.value_alias]"></div>
                       <p class="is-value">{{ item[v1.value] }}</p>
                     </el-tooltip>
                   </template>
                 </template>
-                <span class="more-info-display" v-if="scope.row[v1.value] || scope.row[v1]" >
+                <span class="more-info-display" v-if="scope.row[v1.value] || scope.row[v1.value_alias] || scope.row[v1]" >
                   <span class="is-value" v-if="typeof(v1)=='string'" v-html="scope.row[v1]"></span>
-                  <span class="is-lable" :style="{width:v1.width?parseInt(v1.width)+'px':'72px'}"  v-if="typeof(v1)=='object' && v1.lable" v-html="v1.lable"></span>
-                  <span v-if="v1.value_alias && v1.value">
-                    <el-tooltip effect="dark" placement="top-end" popper-class="ape-table-tooltip">
+                  <span class="is-lable" v-if="typeof(v1)=='object' && v1.lable" :style="{width:v1.width?parseInt(v1.width)+'px':'72px'}" v-html="v1.lable"></span>
+                  <template v-if="v1.value_alias && v1.value">
+                    <el-tooltip effect="dark" placement="top-start" popper-class="ape-table-tooltip" v-if="scope.row[v1.value]">
                       <div slot="content" v-html="scope.row[v1.value_alias]"></div>
                       <span class="is-value" v-if="typeof(v1)=='object'" v-html="scope.row[v1.value]"></span>
                     </el-tooltip>
-                  </span>
-                  <span v-else>
+                    <span class="is-value" v-else v-html="scope.row[v1.value_alias]"></span>
+                  </template>
+                  <template v-else>
                     <span class="is-value" v-if="typeof(v1)=='object'" v-html="scope.row[v1.value]"></span>
-                  </span>
+                  </template>
                 </span>
               </span>
             </span>

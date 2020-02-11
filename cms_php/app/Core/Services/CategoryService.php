@@ -123,7 +123,7 @@ class CategoryService extends BaseService
     public function getInfo($id)
     {
         $info = $this->categoryModel->getInfo($id);
-        $info['image_info'] = $this->attachmentService->getInfo($info['image']);
+        $info['image_info'] = isset($info['image'])?$this->attachmentService->getInfo($info['image']):[];
         return $info;
     }
 
