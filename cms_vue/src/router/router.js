@@ -70,11 +70,6 @@ const routes = [
         ]
       },
       {
-        path: 'atlas',
-        component: () => import(/* webpackChunkName: "atlas-list" */ '@/pages/atlas/AtlasList'),
-        meta: {title:'图集管理'},
-      },
-      {
         path: 'videos',
         component: () => import(/* webpackChunkName: "videos-list" */ '@/pages/videos/VideosList'),
         meta: {title:'视频管理'},
