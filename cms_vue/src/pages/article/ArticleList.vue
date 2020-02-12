@@ -114,7 +114,10 @@
       <template slot="ape-drawer">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('article_attachment') != -1"  @click="addAttachment()">添加附件</el-button>
+            <el-tooltip effect="dark" content="添加附件" placement="top-start"  v-if="userPermissions.indexOf('article_attachment') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addAttachment()"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('article_attachment') != -1 && buttonType=='text'"  @click="addAttachment()">添加附件</el-button>
           </el-col>
         </el-row>
         <ApeTable :data="attachmentList" :columns="attachmentColumns" :loading="loadingStaus" highlight-current-row border>
@@ -126,7 +129,33 @@
               <span>{{offset+scope.$index+1}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="80">
+          <el-table-column
+            v-if="buttonType=='icon'"
+            label="操作"
+            width="80">
+            <template slot-scope="scope">
+              <el-tooltip effect="dark" content="删除" placement="top-start">
+                <span>
+                  <el-popover
+                    v-if="userPermissions.indexOf('article_attachment') != -1" 
+                    placement="top"
+                    width="150"
+                    v-model="scope.row.visible">
+                    <p>确定要删除记录吗？</p>
+                    <div style="text-align: right; margin: 0;">
+                      <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                      <el-button type="danger" size="mini" @click="deleteArticleAttachmentButton(scope.row.id)">确定</el-button>
+                    </div>
+                    <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  </el-popover>
+                </span>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
+            label="操作"
+            width="80">
             <template slot-scope="scope">
               <el-popover
                 v-if="userPermissions.indexOf('article_attachment') != -1" 
@@ -138,7 +167,7 @@
                   <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
                   <el-button type="danger" size="mini" @click="deleteArticleAttachmentButton(scope.row.id)">确定</el-button>
                 </div>
-                <el-button slot="reference" type="danger" size="mini">删除</el-button>
+                <el-button slot="reference" type="danger" size="mini" v-if="buttonType=='text'">删除</el-button>
               </el-popover>
             </template>
           </el-table-column>
@@ -148,7 +177,7 @@
     <ModalDialog :dialogData="dialogData" @dialogConfirm="handleConfirm" @dialogClose="dialogClose">
       <template slot="content">
         <el-form :model="formData" :rules="dialogRules" ref="articleAttacmentForm" label-position="right" label-width="96px">
-          <el-form-item label="菜单名称" prop="title">
+          <el-form-item label="名称" prop="title">
             <el-input v-model="formData.title"></el-input>
           </el-form-item>
           <el-form-item label="附件" prop="attachment">

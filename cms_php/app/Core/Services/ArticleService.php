@@ -24,7 +24,7 @@ namespace Core\Services;
  * Time：下午9:13
  *
  * @property \App\Models\Article $articleModel
- * @property \Core\Models\ArticleAttachmentModel $articleAttachmentModel
+ * @property \App\Models\ArticleAttachment $articleAttachmentModel
  * @property \Core\Services\AttachmentService $attachmentService
  * @property \Core\Services\CategoryService $categoryService
  * @property \Core\Services\UserService $userService
@@ -122,7 +122,7 @@ class ArticleService extends BaseService
             $saveData['excerpt'] = $inputData['excerpt'];
         }
         if (isset($inputData['additional'])){
-            $saveData['additional'] = $inputData['additional'];
+            $saveData['additional'] = $inputData['additional '];
         }
         if (isset($inputData['order'])){
             $saveData['order'] = $inputData['order'];
