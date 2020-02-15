@@ -46,25 +46,21 @@ class ArticleAttachment extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select(
-            $this->table.'.id', $this->table.'.title', $this->table.'.article_id', $this->table.'.attachment_id', $this->table.'.created_at'
-
-        );
+        $query = $this->query()->select($this->table . '.id', $this->table . '.title', $this->table . '.article_id', $this->table . '.attachment_id', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
             if ($k === 'title') {
-                $query = $query->where($this->table.'.'.$k,'LIKE','%'.$v.'%');
+                $query = $query->where($this->table . '.' . $k, 'LIKE', '%' . $v . '%');
                 continue;
             }
-            if ($v || $v!=null) {
-                $query = $query->where($this->table.'.'.$k, $v);
+            if ($v || $v != null) {
+                $query = $query->where($this->table . '.' . $k, $v);
             }
         }
-
         // 追加排序
         if ($order && is_array($order)) {
             foreach ($order as $k => $v) {
-                $query = $query->orderBy($this->table.'.'.$k, $v);
+                $query = $query->orderBy($this->table . '.' . $k, $v);
             }
         }
         // 是否分页

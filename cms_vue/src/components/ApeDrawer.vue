@@ -229,5 +229,6 @@ export default {
     line-height 1.5
     word-wrap break-word
     min-height 120px
+    max-height 800px
     overflow auto 
 </style>

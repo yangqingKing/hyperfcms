@@ -276,6 +276,4 @@ export default {
       margin-left 0px !important
       .el-checkbox-group
         margin-top -12px
-
-
 </style>

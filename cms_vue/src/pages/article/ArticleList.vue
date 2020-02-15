@@ -231,25 +231,25 @@ export default {
         {
           title: '标题',
           value: [
-            {lable:'ID号：',value:'id'},
-            {lable:'标题：',value:'title_alias',value_alias:'title'},
+            {label:'ID号：',value:'id'},
+            {label:'标题：',value:'title_alias',value_alias:'title'},
           ]
         },
         {
           title: '信息',
           value: [
-            {lable:'分类：',value:'category_alias'},
-            {lable:'作者：',value:'author_name'},
-            {lable:'发布时间：',value:'published_time'},
+            {label:'分类：',value:'category_alias'},
+            {label:'作者：',value:'author_name'},
+            {label:'发布时间：',value:'published_time'},
           ],
           width: 240
         },
         {
           title: '状态',
           value: [
-            {lable:'发布：',value:'published_alias'},
-            {lable:'置顶：',value:'top_alias'},
-            {lable:'推荐：',value:'recommend_alias'},
+            {label:'发布：',value:'published_alias'},
+            {label:'置顶：',value:'top_alias'},
+            {label:'推荐：',value:'recommend_alias'},
           ],
           width:160
         }
@@ -504,6 +504,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .el-input-group__prepend, .el-input-group__append

@@ -28,6 +28,48 @@ namespace Core\Services;
 class AttachmentService extends BaseService
 {
     /**
+     * getList
+     * 条件获取友情链接列表
+     * User：YM
+     * Date：2020/2/10
+     * Time：下午10:34
+     * @param array $where 查询条件
+     * @param array $order 排序条件
+     * @param int $offset 偏移
+     * @param int $limit 条数
+     * @return mixed
+     */
+    public function getList($where = [], $order = [], $offset = 0, $limit = 0)
+    {
+
+        $list = $this->attachmentModel->getList($where,$order,$offset,$limit);
+        foreach ($list as &$v) {
+            $v['size_alias'] = formatBytes($v['size']);
+            $v['path_alias'] =  mb_strlen($v['path']) > 32?mb_substr($v['path'],0,32).'...':'';
+            $v['title_alias'] =  mb_strlen($v['title']) > 16?mb_substr($v['title'],0,16).'...':'';
+        }
+        unset($v);
+
+        return $list;
+    }
+
+    /**
+     * getPagesInfo
+     * 获取分页信息
+     * User：YM
+     * Date：2020/2/10
+     * Time：下午10:35
+     * @param array $where
+     * @return mixed
+     */
+    public function getPagesInfo($where = [])
+    {
+        $pageInfo = $this->attachmentModel->getPagesInfo($where);
+
+        return $pageInfo;
+    }
+
+    /**
      * getInfo
      * 获取附件信息
      * User：YM
@@ -159,4 +201,19 @@ class AttachmentService extends BaseService
         return $this->attachmentModel->saveInfo($saveData);
     }
 
+    /**
+     * deleteInfo
+     * 根据id删除信息
+     * User：YM
+     * Date：2020/2/10
+     * Time：下午10:35
+     * @param $id
+     * @return mixed
+     */
+    public function deleteInfo($id)
+    {
+        $info = $this->attachmentModel->deleteInfo($id);
+
+        return $info;
+    }
 }

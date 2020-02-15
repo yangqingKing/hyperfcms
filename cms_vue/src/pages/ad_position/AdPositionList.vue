@@ -192,16 +192,16 @@ export default {
         {
           title: '信息',
           value: [
-            {lable:'标题：',value:'title'},
-            {lable:'标识：',value:'unique_identify'},
-            {lable:'状态：',value:'show_alias'},
+            {label:'标题：',value:'title'},
+            {label:'标识：',value:'unique_identify'},
+            {label:'状态：',value:'show_alias'},
           ]
         },
         {
           title: '信息',
           value: [
-            {lable:'链接：',value:'url'},
-            {lable:'简介：',value:'description'},
+            {label:'链接：',value:'url'},
+            {label:'简介：',value:'description'},
           ]
         },
       ],

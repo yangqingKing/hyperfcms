@@ -17,7 +17,9 @@
           v-for="(v,k) in columns"
           :key="k"
           :label="v.title"
-          :width="v.width">
+          :width="v.width"
+          :header-align="v.header_align?v.header_align:'left'"
+          :align="v.align?v.align:'left'">
           <template slot-scope="scope">
             <span v-if="typeof(v.value)=='string'">
               <span v-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
@@ -40,7 +42,7 @@
                 </template>
                 <span class="more-info-display" v-if="scope.row[v1.value] || scope.row[v1.value_alias] || scope.row[v1]" >
                   <span class="is-value" v-if="typeof(v1)=='string'" v-html="scope.row[v1]"></span>
-                  <span class="is-lable" v-if="typeof(v1)=='object' && v1.lable" :style="{width:v1.width?parseInt(v1.width)+'px':'72px'}" v-html="v1.lable"></span>
+                  <span class="is-label" v-if="typeof(v1)=='object' && v1.label" :style="{width:v1.width?parseInt(v1.width)+'px':'72px'}" v-html="v1.label"></span>
                   <template v-if="v1.value_alias && v1.value">
                     <el-tooltip effect="dark" placement="top-start" popper-class="ape-table-tooltip" v-if="scope.row[v1.value]">
                       <div slot="content" v-html="scope.row[v1.value_alias]"></div>
@@ -272,7 +274,7 @@ export default {
   .more-info-display
     line-height 28px
     display block
-    .is-lable
+    .is-label
       display inline-block
       text-align right 
     .is-value

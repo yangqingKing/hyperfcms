@@ -764,6 +764,63 @@ if (! function_exists('getMultipleCache')) {
     }
 }
 
+if (!function_exists('formatBytes')) {
+    /**
+     * formatBytes
+     * 字节->兆转换
+     * 字节格式化
+     * User：YM
+     * Date：2020/2/15
+     * Time：下午7:29
+     * @param $bytes
+     * @return string
+     */
+    function formatBytes($bytes)
+    {
+        if($bytes >= 1073741824) {
+            $bytes = round($bytes / 1073741824 * 100) / 100 . 'GB';
+        } elseif($bytes >= 1048576) {
+            $bytes = round($bytes / 1048576 * 100) / 100 . 'MB';
+        } elseif($bytes >= 1024) {
+            $bytes = round($bytes / 1024 * 100) / 100 . 'KB';
+        } else {
+            $bytes = $bytes . 'Bytes';
+        }
+        return $bytes;
+    }
+}
+
+if (!function_exists('durationFormat')) {
+    /**
+     * durationFormat
+     * 时间格式化，格式化秒
+     * User：YM
+     * Date：2020/2/15
+     * Time：下午10:33
+     * @param $number
+     * @return string
+     */
+    function durationFormat($number)
+    {
+        if (! $number) {
+            return '0分钟';
+        }
+        $newTime = '';
+        if (floor($number/3600) > 0) {
+            $newTime .= floor($number/3600).'小时';
+            $number = $number%3600;
+        }
+        if ($number/60 > 0) {
+            $newTime .= floor($number/60).'分钟';
+            $number = $number%60;
+        }
+        if ($number < 60) {
+            $newTime .= $number.'秒';
+        }
+        return $newTime;
+    }
+}
+
 
 
 

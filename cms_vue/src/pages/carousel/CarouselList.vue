@@ -194,9 +194,9 @@ export default {
         {
           title: '信息',
           value: [
-            {lable:'标题：',value:'title'},
-            // {lable:'类型：',value:'type'},
-            {lable:'链接：',value:'url'},
+            {label:'标题：',value:'title'},
+            // {label:'类型：',value:'type'},
+            {label:'链接：',value:'url'},
           ]
         },
         {
