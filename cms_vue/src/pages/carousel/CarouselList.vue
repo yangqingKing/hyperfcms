@@ -23,14 +23,6 @@
             </template>
           </el-table-column>
           <el-table-column
-            slot="second-column"
-            width="64"
-            label="序号">
-            <template slot-scope="scope">
-              <span>{{offset+scope.$index+1}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
             v-if="buttonType=='icon'"
             label="操作">
             <template slot-scope="scope">
@@ -210,10 +202,9 @@ export default {
       pagingData:{
         is_show: true,
         layout: 'total, sizes, prev, pager, next, jumper',
-        total: 0
+        total: 0,
+        offset:0, // 分页的offset,序号列使用
       },
-      // 分页的offset,序号列使用
-      offset:0,
       // 表单结构
       formData: {
         type: 'web',
@@ -354,7 +345,7 @@ export default {
         this.carouselList=list
       })
       this.pagingData.total = pages.total
-      this.offset = pages.offset
+      this.pagingData.offset = pages.offset
       this.loadingStaus=false
     },
     // 图片上传成功回调

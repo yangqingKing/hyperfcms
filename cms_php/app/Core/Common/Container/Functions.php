@@ -403,14 +403,14 @@ if (! function_exists('getLogArguments')) {
             unset($arguments['password']);
         }
         $auth = ApplicationContext::getContainer()->get(Auth::class);
-        $userInfo = $auth->check(false);
+        $userId = $auth->check(false);
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
             'server_addr' => getServerLocalIp()??'',
             'remote_addr' => $serverParams['remote_addr']??'',
             'forwarded_for' => $requestHeaders['x-forwarded-for'][0]??'',
-            'real_ip' => isset($requestHeaders['x-forwarded-for'])?$requestHeaders['x-forwarded-for'][0]:getServerLocalIp(),
+            'real_ip' => $requestHeaders['x-real-ip'][0]??$requestHeaders['x-forwarded-for'][0]??'',
             'user_agent' => $requestHeaders['user-agent'][0]??'',
             'platform' => $agent->platform()??'',
             'device' => $agent->device()??'',
@@ -422,8 +422,8 @@ if (! function_exists('getLogArguments')) {
             'execution_time' => $executionTime,
             'request_body_size' => $requestHeaders['content-length'][0]??'',
             'response_body_size' => $rbs,
-            'user_id' => $userInfo['id']??'',
-            'referer' => $requestHeaders['referer']??'',
+            'user_id' => $userId??'',
+            'referer' => $requestHeaders['referer'][0]??'',
             'unix_time' => $serverParams['request_time']??'',
             'time_day' => isset($serverParams['request_time'])?date('Y-m-d',$serverParams['request_time']):'',
             'time_hour' => isset($serverParams['request_time'])?date('Y-m-d H:00:00',$serverParams['request_time']):'',

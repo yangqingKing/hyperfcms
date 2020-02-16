@@ -14,6 +14,14 @@
         <slot name="first-column"></slot>
         <slot name="second-column"></slot>
         <el-table-column
+          v-if="typeof(pagingData.offset)!='undefined'"
+          width="64"
+          label="序号">
+          <template slot-scope="scope">
+            <span>{{dataOffset+scope.$index+1}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           v-for="(v,k) in columns"
           :key="k"
           :label="v.title"
@@ -149,6 +157,10 @@ export default {
     // 数组总数
     dataTotal() {
       return this.pagingData.total
+    },
+    // 数据偏移量，分页序号使用
+    dataOffset() {
+      return typeof(this.pagingData.offset) == 'undefined'?0:this.pagingData.offset
     },
     // 默认分页结构
     defaultLayout() {

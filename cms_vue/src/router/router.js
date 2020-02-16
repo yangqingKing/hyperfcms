@@ -8,7 +8,7 @@ import roles from './roles'
 import user from './user'
 import setting from './setting'
 import carousel from './carousel'
-import adposition from './ad_position'
+import adPosition from './ad_position'
 import link from './link'
 import category from './category'
 import article from './article'
@@ -18,6 +18,7 @@ import lecturer from './lecturer'
 import authorization from './authorization'
 import statistics from './statistics'
 import attachment from './attachment'
+import sysLog from './sys_log'
 
 
 // 解决vue报错vue-router.esm.js
@@ -41,7 +42,7 @@ const routes = [
       user, // 用户
       setting, // 基础设置
       carousel, // 轮播图
-      adposition, // 广告位
+      adPosition, // 广告位
       link, // 友情链接
       category, // 分类管理
       article, // 文章管理
@@ -51,6 +52,7 @@ const routes = [
       authorization, // 授权管理
       statistics, // 统计管理
       attachment, // 附件管理
+      sysLog, // 系统日志
       {
         path: 'exception/404',
         component: () => import(/* webpackChunkName: "exception-404" */ '@/pages/exception/404')

@@ -7,7 +7,7 @@ import roles from './roles'
 import user from './user'
 import setting from './setting'
 import carousel from './carousel'
-import adposition from './ad_position'
+import adPosition from './ad_position'
 import link from './link'
 import category from './category'
 import article from './article'
@@ -16,6 +16,7 @@ import lecturer from './lecturer'
 import course from './course';
 import authorization from './authorization'
 import attachment from './attachment'
+import sysLog from './sys_log'
 
 
 export default {
@@ -38,7 +39,7 @@ export default {
   // 轮播图
   ...carousel,
   // 广告位
-  ...adposition,
+  ...adPosition,
   // 友情链接
   ...link,
   // 分类管理
@@ -54,5 +55,7 @@ export default {
   // 授权管理
   ...authorization,
   // 附件管理
-  ...attachment
+  ...attachment,
+  // 系统日志管理
+  ...sysLog
 }
