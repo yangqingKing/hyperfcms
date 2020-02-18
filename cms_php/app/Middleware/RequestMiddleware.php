@@ -44,7 +44,21 @@ class RequestMiddleware implements MiddlewareInterface
             $request = $request->withAddedHeader('qid', $this->getRequestId());
             return $request;
         });
-
+        // 统一会话保持用session解决
+        $tmp1 = getCookie('HYPERF_SESSION_ID');
+        $tmp2 = $request->getHeader('HYPERF_SESSION_ID');
+        $tmp3 = $request->getHeader('HYPERF-SESSION-ID');
+        if (!$tmp1 && isset($tmp2[0]) && $tmp2[0]) {
+            $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) use ($tmp2) {
+                $request = $request->withCookieParams(['HYPERF_SESSION_ID'=>$tmp2[0]]);
+                return $request;
+            });
+        } elseif (!$tmp1 && isset($tmp3[0]) && $tmp3[0]) {
+            $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) use ($tmp3) {
+                $request = $request->withCookieParams(['HYPERF_SESSION_ID'=>$tmp3[0]]);
+                return $request;
+            });
+        }
         // 利用协程上下文存储请求开始的时间，用来计算程序执行时间
         Context::set('request_start_time',microtime(true));
 

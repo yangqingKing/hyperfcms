@@ -404,6 +404,7 @@ if (! function_exists('getLogArguments')) {
         }
         $auth = ApplicationContext::getContainer()->get(Auth::class);
         $userId = $auth->check(false);
+        $uuid = getCookie('HYPERF_SESSION_ID');
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
@@ -422,6 +423,7 @@ if (! function_exists('getLogArguments')) {
             'execution_time' => $executionTime,
             'request_body_size' => $requestHeaders['content-length'][0]??'',
             'response_body_size' => $rbs,
+            'uuid' => $uuid,
             'user_id' => $userId??'',
             'referer' => $requestHeaders['referer'][0]??'',
             'unix_time' => $serverParams['request_time']??'',

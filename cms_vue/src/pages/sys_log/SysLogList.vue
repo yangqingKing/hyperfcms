@@ -4,6 +4,9 @@
       <div class="main-page-content">
         <el-row class="table-search">
           <el-form size="medium" :inline="true" :model="searchCondition" class="demo-form-inline">
+            <el-form-item label="用户">
+              <el-input v-model="searchCondition.user_id" placeholder="输入用户id" clearable></el-input>
+            </el-form-item>
             <el-form-item label="QID">
               <el-input v-model="searchCondition.qid" placeholder="输入qid" clearable></el-input>
             </el-form-item>
@@ -149,6 +152,9 @@ export default {
       }
       if (this.searchCondition.channel) {
         condition.channel = this.searchCondition.channel
+      }
+      if (this.searchCondition.user_id) {
+        condition.user_id = this.searchCondition.user_id
       }
       if (this.searchCondition.time_value) {
         condition.start_time = this.searchCondition.time_value[0]
