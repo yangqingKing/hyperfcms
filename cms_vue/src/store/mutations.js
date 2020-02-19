@@ -61,7 +61,17 @@ const mutations = {
    */
   changeRespErrMsgBoxMark (state,data) {
     state.responseErrorMessageBoxMark = data
-  }
+  },
+  /**
+   * @description 全局loading状态控制
+   * @author YM
+   * @date 2020-02-19
+   * @param {*} state
+   * @param {*} data  true|false
+   */
+  changeLoadingStatus (state,data) {
+    state.loadingStatus = data
+  },
 }
 
 export default mutations

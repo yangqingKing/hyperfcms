@@ -48,6 +48,9 @@ class StatisticsRepository extends BaseRepository
         if(!isset($inputData['end_time']) || empty($inputData['end_time'])){
             throw new BusinessException(StatusCode::ERR_EXCEPTION,'结束时间为空');
         }
+        if ( (strtotime($inputData['end_time'])-strtotime($inputData['start_time']))/86400 > 30 ) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'最大查询30天');
+        }
         if($inputData['start_time'] == $inputData['end_time']){
             $inputData['start_time'] = strtotime($inputData['start_time'].' 00:00:00');
             $inputData['end_time'] = strtotime($inputData['end_time']. '23:59:59');

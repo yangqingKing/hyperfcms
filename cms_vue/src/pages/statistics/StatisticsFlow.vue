@@ -2,9 +2,9 @@
   <div class="statistics-flow">
     <el-row class="table-search">
       <el-col class="kuaijieriqi">
-        <el-radio-group v-model="checkedRadio" size="medium">
-          <el-radio-button label="1">今天</el-radio-button>
-          <el-radio-button label="2">昨天</el-radio-button>
+        <el-radio-group v-model="checkedRadio" @change="radioChange" size="medium">
+          <el-radio-button label="0">今天</el-radio-button>
+          <el-radio-button label="1">昨天</el-radio-button>
           <el-radio-button label="7">近7日</el-radio-button>
           <el-radio-button label="30">近30日</el-radio-button>
         </el-radio-group>
@@ -38,6 +38,7 @@
 <script>
 import echarts from 'echarts'
 import elementResizeDetector from 'element-resize-detector'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -46,23 +47,27 @@ export default {
   },
   data() {
     return {
+      // 日期单选
       checkedRadio:7,
       chartFlow: null,
-      loadingStatus: false,
       searchCondition: {
         time_value: null
       },
     }
   },
   computed: {
+    ...mapGetters(['loadingStatus'])
   },
   watch: {
   },
   methods: {
+    radioChange() {
+      this.initChart()
+    },
     initChart() {
       this.chartFlow = echarts.init(document.getElementById('main'))
       let nowTime = new Date()
-      let startTime = new Date(nowTime.getTime() - (1000 * 86400 * 7))
+      let startTime = new Date(nowTime.getTime() - (1000 * 86400 * this.checkedRadio))
       let start = startTime.getFullYear() + '-' + (startTime.getMonth() + 1) + '-' + startTime.getDate()
       let end = nowTime.getFullYear() + '-' + (nowTime.getMonth() + 1) + '-' + nowTime.getDate()
       this.searchCondition.time_value = [start, end]
@@ -70,6 +75,7 @@ export default {
       this.loadChartData(condition)
     },
     async searchButton() {
+      this.checkedRadio = -1
       this.$refs['searchForm'].validate((valid) => {
         if (valid) {
           let condition = this.handleCondition()
@@ -86,9 +92,9 @@ export default {
     },
     async loadChartData(condition) {
       this.chartFlow.clear()
-      this.loadingStatus = true
+      this.$store.commit('changeLoadingStatus',true)
       let info = await this.$api.getStatisticsFlowData(condition)
-      this.loadingStatus = false
+      this.$store.commit('changeLoadingStatus',false)
       let option = {
         title: {
           text: '流量统计',
