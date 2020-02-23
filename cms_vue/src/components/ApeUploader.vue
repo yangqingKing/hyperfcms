@@ -50,7 +50,7 @@ export default {
       allowTypeList:{
         type: Array,
         default: function(){
-          return ['image/jpeg', 'image/png']
+          return ['image/jpeg', 'image/png','application/zip','application/rar']
         }
       },
       allowSize:{
@@ -147,10 +147,10 @@ export default {
       let checkType = this.allowTypeList.indexOf(file.type)
       let checkSize = file.size > this.allowSize
 
-      // if (checkType<0) {
-      //   this.$message.error('文件类型不合法')
-      //   throw '文件类型不合法'
-      // }
+      if (checkType<0) {
+        this.$message.error('文件类型不合法')
+        throw '文件类型不合法'
+      }
       if (checkSize) {
         this.$message.error('文件大小超过限制')
         throw '文件大小超过限制'

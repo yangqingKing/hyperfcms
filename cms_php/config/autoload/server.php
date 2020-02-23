@@ -36,7 +36,8 @@ return [
         'max_coroutine' => 100000,
         'open_http2_protocol' => true,
         'max_request' => 100000,
-        'socket_buffer_size' => 2 * 1024 * 1024,
+        'socket_buffer_size' => 4 * 1024 * 1024,
+        'buffer_output_size' => 4 * 1024 * 1024,
         // 静态资源
         'document_root' => BASE_PATH . '/public',
         'static_handler_locations' => ['/'],

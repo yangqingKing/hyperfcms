@@ -68,11 +68,13 @@ service.interceptors.response.use(
       return res.data
     } else {
       Message.error(res.msg)
-      if (res.code === 401 || res.code === 402) {
+      if (res.code === 401 || res.code === 402 || res.code === 2001) {
         localStorage.removeItem('user_info')
         localStorage.removeItem('HYPERF_SESSION_ID')
         router.push('/login')
       }
+      // 改变全局loading状态，解决业务错误引起按钮不可用
+      store.commit('changeLoadingStatus',false)
       return Promise.reject(res)
     }
   },

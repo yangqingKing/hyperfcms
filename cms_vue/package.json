@@ -11,6 +11,7 @@
     "@tinymce/tinymce-vue": "^3.0.1",
     "axios": "^0.19.0",
     "echarts": "^4.5.0",
+    "element-resize-detector": "^1.2.1",
     "element-ui": "^2.13.0",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
@@ -41,7 +42,10 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-undef": 1,
+      "vue/no-unused-components": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

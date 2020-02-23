@@ -3,7 +3,7 @@
     <div class="mars-ape-layout-footer-link">
     </div>
     <div class="mars-ape-layout-footer-copyright">
-      Copyright <i class="iconfont icon-ic_copyright"></i> 2019 攸米互联
+      Copyright <i class="iconfont icon-ic_copyright"></i> 2018 - 2020 攸米互联 | 备案号：<a href="http://www.beian.miit.gov.cn/">冀ICP备14022344号</a>
     </div>
   </div>
 </template>
@@ -17,4 +17,8 @@
   color rgba(0,0,0,.45)
 .mars-ape-layout-footer-link
   margin-bottom 8px
+.mars-ape-layout-footer-copyright
+  a
+    color #1890ff
+    text-decoration none
 </style>

@@ -4,7 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2"  v-if="userPermissions.indexOf('live_create') != -1"  @click="addButton(0)"></el-button>
+            <el-tooltip effect="dark" content="添加友链" placement="top-start"  v-if="userPermissions.indexOf('live_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('live_create') != -1 && buttonType=='text'"  @click="addButton(0)">添加直播</el-button>
           </el-col>
         </el-row>
         <el-row class="table-search">
@@ -27,11 +30,42 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-button size="mini" type="primary" icon="iconfont icon-zhibo2" @click="getLiveStreamInfo(scope.row.id)" plain></el-button>
-                <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('live_edit') != -1"  @click="editButton(scope.row.id)"></el-button>
+                <el-tooltip effect="dark" content="直播信息" placement="top-start">
+                  <el-button size="mini" type="primary" icon="iconfont icon-zhibo2" @click="getLiveStreamInfo(scope.row.id)" plain></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('live_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('live_delete') != -1" 
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
+            label="操作">
+            <template slot-scope="scope">
+              <span>
+                <el-button size="mini" type="primary" icon="iconfont" @click="getLiveStreamInfo(scope.row.id)" plain>直播信息</el-button>
+                <el-button size="mini" v-if="userPermissions.indexOf('live_edit') != -1"  @click="editButton(scope.row.id)">编辑</el-button>
                 <el-popover
                   v-if="userPermissions.indexOf('live_delete') != -1" 
                   placement="top"
@@ -42,7 +76,7 @@
                     <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
                     <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
                   </div>
-                  <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  <el-button slot="reference" type="danger" size="mini">删除</el-button>
                 </el-popover>
               </span>
             </template>
@@ -165,8 +199,8 @@ export default {
         {
           title: '直播时间',
           value: [
-            {lable:'开始时间：',value:'start_time'},
-            {lable:'结束时间：',value:'end_time'},
+            {label:'开始时间：',value:'start_time'},
+            {label:'结束时间：',value:'end_time'},
           ],
           width: 320
         }
@@ -225,7 +259,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 搜索
@@ -398,9 +432,10 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle
@@ -421,7 +456,7 @@ export default {
     width 100px
   .el-color-picker
     position absolute
-  .search-user input,.live-datetimerang-1
+  .search-user,.live-datetimerang-1
     width 410px !important
   .live-stream
     margin-bottom 24px

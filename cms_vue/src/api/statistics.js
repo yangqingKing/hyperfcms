@@ -2,14 +2,14 @@ import * as request from '@/utils/request'
 
 export default {
   /**
-   * getFlowDataForDay
+   * getStatisticsFlowData
    * @description 流量统计
    * @author YQ
    * @date 2019-12-19
    * @returns
    */
-  getFlowDataForDay(data) {
-    return request.get('/statistics/flow', data)
+  getStatisticsFlowData(data) {
+    return request.post('/statistics/flow_data', data)
   },
   /**
    * getRefererDataForDay

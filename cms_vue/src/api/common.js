@@ -29,4 +29,27 @@ export default {
   getOssToken() {
     return request.post('/upload/get_upload_token')
   },
+  /**
+   * editorUploadFile
+   * @description 富文本上传文件
+   * @author YQ
+   * @date 2019-01-31
+   * @returns
+   */
+  editorUploadFile(data, ossUrl) {
+    if(ossUrl){
+      return request.post(ossUrl, data)
+    }else{
+      return request.post('/upload/editor', data)
+    }
+  },
+  /**
+   * @description 获取阿里云vod视频上传令牌信息
+   * @author YM
+   * @date 2019-02-25
+   * @returns 
+   */
+  getVodToken(data) {
+    return request.post('/upload/get_aliyun_vod_token',data)
+  }
 }

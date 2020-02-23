@@ -61,6 +61,7 @@
             </span>
           </span>
           <i v-if="v.type=='icon'" class="iconfont" :class="scope.row[v.value]"></i>
+          <span v-else-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
           <span v-else>{{ scope.row[v.value] }}</span>
         </template>
       </el-table-column>

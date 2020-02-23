@@ -30,7 +30,6 @@ class Setting extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
-
     /**
      * getInfoByName
      * 通过name值取列表
@@ -42,15 +41,11 @@ class Setting extends BaseModel
      */
     public function getInfoByName($name)
     {
-        $query = $this->query()->select(
-            $this->table.'.id', $this->table.'.name', $this->table.'.value', $this->table.'.created_at'
-        );
-        $query = $query->where($this->table.'.name', $name);
+        $query = $this->query()->select($this->table . '.id', $this->table . '.name', $this->table . '.value', $this->table . '.created_at');
+        $query = $query->where($this->table . '.name', $name);
         $query = $query->first();
-
         return $query ? $query->toArray() : [];
     }
-
     /**
      * getList
      * 通过name集合，取的相关列表数据
@@ -62,13 +57,9 @@ class Setting extends BaseModel
      */
     public function getList($nameArr)
     {
-        $query = $this->query()->select(
-            $this->table.'.id', $this->table.'.name', $this->table.'.value', $this->table.'.created_at'
-        );
-        $query = $query->whereIn($this->table.'.name', $nameArr);
+        $query = $this->query()->select($this->table . '.id', $this->table . '.name', $this->table . '.value', $this->table . '.created_at');
+        $query = $query->whereIn($this->table . '.name', $nameArr);
         $query = $query->get();
-
         return $query ? $query->toArray() : [];
-
     }
 }

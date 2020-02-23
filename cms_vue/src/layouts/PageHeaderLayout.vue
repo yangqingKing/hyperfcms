@@ -6,7 +6,7 @@
         <slot name="page-header-detail"></slot>
       </div>
     </div>
-    <div class="page-content">
+    <div id="page-content" class="page-content">
         <slot />
     </div>
   </div>

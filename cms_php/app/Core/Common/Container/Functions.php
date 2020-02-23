@@ -30,6 +30,7 @@ use Hyperf\Cache\Listener\DeleteListenerEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Core\Common\Driver\CacheDriver;
 use Core\Common\Container\Auth;
+use Core\Common\Container\Ip2Region;
 
 
 if (! function_exists('requestEntry')) {
@@ -48,7 +49,7 @@ if (! function_exists('requestEntry')) {
         $moduleName = 'hyperf';
 
         foreach ($backTrace as $v) {
-            if (stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
+            if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
                 $tmp = array_reverse(explode('\\',trim($v['class'])));
                 $module = str_replace('controller','',strtolower($tmp[1]));
                 $class = str_replace('controller','',strtolower($tmp[0]));
@@ -403,14 +404,24 @@ if (! function_exists('getLogArguments')) {
             unset($arguments['password']);
         }
         $auth = ApplicationContext::getContainer()->get(Auth::class);
-        $userInfo = $auth->check(false);
+        $userId = $auth->check(false);
+        $uuid = getCookie('HYPERF_SESSION_ID');
+        $ip = $requestHeaders['x-real-ip'][0]??$requestHeaders['x-forwarded-for'][0]??'';
+        // ip转换地域
+        if($ip && ip2long($ip) != false){
+            $location = getIpLocation($ip);
+            $cityId = $location['city_id']??0;
+        }else{
+            $cityId = 0;
+        }
         return [
             'qid' => $requestHeaders['qid'][0]??'',
             'server_name' => $requestHeaders['host'][0]??'',
             'server_addr' => getServerLocalIp()??'',
             'remote_addr' => $serverParams['remote_addr']??'',
             'forwarded_for' => $requestHeaders['x-forwarded-for'][0]??'',
-            'real_ip' => isset($requestHeaders['x-forwarded-for'])?$requestHeaders['x-forwarded-for'][0]:getServerLocalIp(),
+            'real_ip' => $ip,
+            'city_id' => $cityId,
             'user_agent' => $requestHeaders['user-agent'][0]??'',
             'platform' => $agent->platform()??'',
             'device' => $agent->device()??'',
@@ -422,8 +433,9 @@ if (! function_exists('getLogArguments')) {
             'execution_time' => $executionTime,
             'request_body_size' => $requestHeaders['content-length'][0]??'',
             'response_body_size' => $rbs,
-            'user_id' => $userInfo['id']??'',
-            'referer' => $requestHeaders['referer']??'',
+            'uuid' => $uuid,
+            'user_id' => $userId??'',
+            'referer' => $requestHeaders['referer'][0]??'',
             'unix_time' => $serverParams['request_time']??'',
             'time_day' => isset($serverParams['request_time'])?date('Y-m-d',$serverParams['request_time']):'',
             'time_hour' => isset($serverParams['request_time'])?date('Y-m-d H:00:00',$serverParams['request_time']):'',
@@ -431,6 +443,24 @@ if (! function_exists('getLogArguments')) {
     }
 }
 
+if (! function_exists('getIpLocation')) {
+    /**
+     * getIpLocation
+     * 获取ip对应的城市信息
+     * User：YM
+     * Date：2020/2/19
+     * Time：下午8:42
+     * @param $ip
+     * @return mixed
+     */
+    function getIpLocation($ip)
+    {
+        $dbFile = BASE_PATH . '/app/Core/Common/Container/ip2region.db';
+        $ip2regionObj = new Ip2Region($dbFile);
+        $ret = $ip2regionObj->binarySearch($ip);
+        return $ret;
+    }
+}
 
 if (! function_exists('isStdoutLog')) {
     /**
@@ -761,6 +791,63 @@ if (! function_exists('getMultipleCache')) {
         $config = config('cache.default');
         $cache = make(CacheDriver::class,['config'=>$config]);
         return $cache->getMultiple($keys, $default);
+    }
+}
+
+if (!function_exists('formatBytes')) {
+    /**
+     * formatBytes
+     * 字节->兆转换
+     * 字节格式化
+     * User：YM
+     * Date：2020/2/15
+     * Time：下午7:29
+     * @param $bytes
+     * @return string
+     */
+    function formatBytes($bytes)
+    {
+        if($bytes >= 1073741824) {
+            $bytes = round($bytes / 1073741824 * 100) / 100 . 'GB';
+        } elseif($bytes >= 1048576) {
+            $bytes = round($bytes / 1048576 * 100) / 100 . 'MB';
+        } elseif($bytes >= 1024) {
+            $bytes = round($bytes / 1024 * 100) / 100 . 'KB';
+        } else {
+            $bytes = $bytes . 'Bytes';
+        }
+        return $bytes;
+    }
+}
+
+if (!function_exists('durationFormat')) {
+    /**
+     * durationFormat
+     * 时间格式化，格式化秒
+     * User：YM
+     * Date：2020/2/15
+     * Time：下午10:33
+     * @param $number
+     * @return string
+     */
+    function durationFormat($number)
+    {
+        if (! $number) {
+            return '0分钟';
+        }
+        $newTime = '';
+        if (floor($number/3600) > 0) {
+            $newTime .= floor($number/3600).'小时';
+            $number = $number%3600;
+        }
+        if ($number/60 > 0) {
+            $newTime .= floor($number/60).'分钟';
+            $number = $number%60;
+        }
+        if ($number < 60) {
+            $newTime .= $number.'秒';
+        }
+        return $newTime;
     }
 }
 

@@ -6,7 +6,8 @@ const getters = {
   userInfo: state => state.userInfo,
   userPermissions: state => state.userPermissions,
   respErrMsgBoxMark: state => state.responseErrorMessageBoxMark,
-  buttonType: state => state.buttonType
+  buttonType: state => state.buttonType,
+  loadingStatus: state => state.loadingStatus,
 }
 
 export default getters

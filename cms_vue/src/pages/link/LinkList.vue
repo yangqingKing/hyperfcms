@@ -4,7 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('link_create') != -1"  @click="addButton(0)">添加</el-button>
+            <el-tooltip effect="dark" content="添加友链" placement="top-start"  v-if="userPermissions.indexOf('link_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('link_create') != -1  && buttonType=='text'"  @click="addButton(0)">添加</el-button>
           </el-col>
         </el-row>
         <ApeTable ref="apeTable" :data="linkList" :columns="columns" :loading="loadingStaus" :pagingData="pagingData" @switchPaging="switchPaging" highlight-current-row>
@@ -14,7 +17,9 @@
             align="center"
             label="Drag">
             <template slot-scope="scope">
-              <span class="drag-handle" :data-id="scope.row.id"><i class="el-icon-rank"></i></span>
+              <el-tooltip effect="dark" content="拖动排序" placement="top-start">
+                <span class="drag-handle" :data-id="scope.row.id"><i class="el-icon-rank"></i></span>
+              </el-tooltip>
             </template>
           </el-table-column>
           <el-table-column
@@ -26,6 +31,34 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
+            label="操作">
+            <template slot-scope="scope">
+              <span>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('link_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('link_delete') != -1" 
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
             label="操作">
             <template slot-scope="scope">
               <span>
@@ -68,8 +101,8 @@
           </el-row>
           <el-row>
             <el-col :span="22">
-              <el-form-item label="类别" prop="type">
-                <el-select v-model="formData.type" filterable clearable placeholder="请选择">
+              <el-form-item label="类别" prop="c_type">
+                <el-select v-model="formData.c_type" filterable clearable placeholder="请选择">
                   <el-option
                     v-for="item in typeList"
                     :key="item.id"
@@ -104,6 +137,13 @@
                   <el-radio label="1" border>显示</el-radio>
                   <el-radio label="0" border>隐藏</el-radio>  
                 </el-radio-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="22">
+              <el-form-item label="附加内容" prop="additional">
+                <el-input type="textarea" :rows="4" v-model="formData.additional"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -211,7 +251,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 切换页码操作
@@ -375,6 +415,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

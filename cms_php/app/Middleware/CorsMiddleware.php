@@ -55,21 +55,12 @@ class CorsMiddleware implements MiddlewareInterface
                 $response = Context::get(ResponseInterface::class);
                 $response = $response->withHeader('Access-Control-Allow-Origin', "{$origin}");
                 $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
-                $response = $response->withHeader('Access-Control-Allow-Headers', 'DNT,Keep-Alive,User-Agent,Cache-Control,Content-Type,HYPERF_SESSION_ID');
+                $response = $response->withHeader('Access-Control-Allow-Headers', 'DNT,Keep-Alive,User-Agent,Cache-Control,Content-Type');
                 Context::set(ResponseInterface::class, $response);
                 // 非简单跨域请求的"预检"请求处理
                 if ($request->getMethod() == 'OPTIONS') {
                     return $response;
                 }
-            }
-            // 统一会话保持用session解决
-            $tmp1 = getCookie('HYPERF_SESSION_ID');
-            $tmp2 = $request->getHeader('HYPERF_SESSION_ID');
-            if (!$tmp1 && isset($tmp2[0]) && $tmp2[0]) {
-                $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) use ($tmp2) {
-                    $request = $request->withCookieParams(['HYPERF_SESSION_ID'=>$tmp2[0]]);
-                    return $request;
-                });
             }
         }
         $response = $handler->handle($request);

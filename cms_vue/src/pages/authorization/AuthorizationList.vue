@@ -127,30 +127,30 @@ export default {
         {
           title: '用户信息',
           value: [
-            {lable:'账号：',value:'user_mobile'},
-            {lable:'昵称：',value:'user_nickname'},
+            {label:'账号：',value:'user_mobile'},
+            {label:'昵称：',value:'user_nickname'},
           ],
           width: 240
         },
         {
           title: '商品信息',
           value: [
-            {lable:'类型：',value:'goods_type'},
-            {lable:'名称：',value:'goods_name'},
+            {label:'类型：',value:'goods_type'},
+            {label:'名称：',value:'goods_name'},
           ]
         },
         {
           title: '授权信息',
           value: [
-            {lable:'类型：',value:'authorization_type_alias'},
-            {lable:'状态：',value:'authorization_staus_alias'},
+            {label:'类型：',value:'authorization_type_alias'},
+            {label:'状态：',value:'authorization_staus_alias'},
           ]
         },
         {
           title: '操作人',
           value: [
-            {lable:'操作人：',value:'handle_user'},
-            {lable:'',value:'handle_time'},
+            {label:'操作人：',value:'handle_user'},
+            {label:'',value:'handle_time'},
           ],
           width: 240
         }

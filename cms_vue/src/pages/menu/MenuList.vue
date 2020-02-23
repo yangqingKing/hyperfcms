@@ -26,7 +26,7 @@
           v-if="buttonType=='icon'"
           label="操作">
             <template slot-scope="scope">
-              <el-tooltip effect="dark" content="添加菜单组" placement="top-start"  v-if="userPermissions.indexOf('menu_create') != -1" >
+              <el-tooltip effect="dark" content="添加子菜单" placement="top-start"  v-if="userPermissions.indexOf('menu_create') != -1" >
                 <el-button size="mini" icon="iconfont icon-zengjiazicaidan" @click="addButton(scope.row.id)"></el-button>
               </el-tooltip>
               <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('menu_edit') != -1" >

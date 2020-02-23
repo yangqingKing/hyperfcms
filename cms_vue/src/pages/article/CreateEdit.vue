@@ -14,7 +14,6 @@
                   :options="categoryList"
                   v-model="selectedList"
                   @change="cascaderChange"
-                  change-on-select
                   show-all-levels
                   clearable
                   filterable>
@@ -27,7 +26,6 @@
                   :options="categoryLabelList"
                   v-model="selectedLabelList"
                   @change="cascaderLabelChange"
-                  change-on-select
                   show-all-levels
                   clearable
                   filterable>
@@ -41,6 +39,9 @@
               </el-form-item>
               <el-form-item label="摘要" prop="excerpt">
                 <el-input type="textarea" v-model="formData.excerpt"></el-input>
+              </el-form-item>
+              <el-form-item label="附加内容" prop="additional">
+                <el-input type="textarea" v-model="formData.additional"></el-input>
               </el-form-item>
               <el-form-item label="内容" prop="content">
                 <ApeEditor :init-html="formData.content" :editorHeight="480" @handleTinymceInput="handleTinymceInput"></ApeEditor>
@@ -275,6 +276,4 @@ export default {
       margin-left 0px !important
       .el-checkbox-group
         margin-top -12px
-
-
 </style>

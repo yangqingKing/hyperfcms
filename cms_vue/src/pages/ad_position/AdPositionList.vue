@@ -4,7 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont "  v-if="userPermissions.indexOf('ad_position_create') != -1"  @click="addButton(0)">添加</el-button>
+            <el-tooltip effect="dark" content="添加广告位" placement="top-start"  v-if="userPermissions.indexOf('ad_position_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont "  v-if="userPermissions.indexOf('ad_position_create') != -1 && buttonType=='text'"  @click="addButton(0)">添加广告位</el-button>
           </el-col>
         </el-row>
         <ApeTable ref="apeTable" :data="adPositionList" :columns="columns" :loading="loadingStaus" :pagingData="pagingData" @switchPaging="switchPaging" highlight-current-row>
@@ -17,6 +20,37 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="buttonType=='icon'"
+            label="操作">
+            <template slot-scope="scope">
+              <span>
+                <el-tooltip effect="dark" content="预览" placement="top-start">
+                  <el-button v-if="scope.row.video_status" size="mini" class="view-video" icon="iconfont icon-shipin2" @click="videoPreview(scope.row)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('ad_position_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('ad_position_delete') != -1" 
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
             label="操作">
             <template slot-scope="scope">
               <span>
@@ -59,8 +93,8 @@
           </el-row>
           <el-row>
             <el-col :span="22">
-              <el-form-item label="类别" prop="type">
-                <el-select v-model="formData.type" filterable clearable placeholder="请选择">
+              <el-form-item label="类别" prop="c_type">
+                <el-select v-model="formData.c_type" filterable clearable placeholder="请选择">
                   <el-option
                     v-for="item in typeList"
                     :key="item.id"
@@ -109,13 +143,13 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <!-- <el-row>
+          <el-row>
             <el-col :span="22">
               <el-form-item label="视频" prop="aliyun_video_id" ref="aliyunVodUload">
                 <ApeAliyunVodUpload :is-start-upload="isStartUpload" :upload-file-list="uploadVodList" @handleUploadChange="handleVodUploadChange" @handleUploadRemove="handleVodUploadRemove" @handleUploadSuccess="handleVodUploadSuccess"></ApeAliyunVodUpload>
               </el-form-item>
             </el-col>
-          </el-row> -->
+          </el-row>
         </el-form>     
       </template>
     </ApeDrawer>
@@ -158,16 +192,16 @@ export default {
         {
           title: '信息',
           value: [
-            {lable:'标题：',value:'title'},
-            {lable:'标识：',value:'unique_identify'},
-            {lable:'状态：',value:'show_alias'},
+            {label:'标题：',value:'title'},
+            {label:'标识：',value:'unique_identify'},
+            {label:'状态：',value:'show_alias'},
           ]
         },
         {
           title: '信息',
           value: [
-            {lable:'跳转链接：',value:'url'},
-            {lable:'简介：',value:'description'},
+            {label:'链接：',value:'url'},
+            {label:'简介：',value:'description'},
           ]
         },
       ],
@@ -175,7 +209,7 @@ export default {
       adPositionList:[],
       // 分页信息
       pagingData:{
-        is_show: false,
+        is_show: true,
         layout: 'total, sizes, prev, pager, next, jumper',
         total: 0
       },
@@ -226,7 +260,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 切换页码操作
@@ -394,6 +428,7 @@ export default {
 <style lang="stylus">
   .el-button
     margin-right 4px
+    margin-bottom 4px
   .table-header
     margin-bottom 12px
   .drag-handle

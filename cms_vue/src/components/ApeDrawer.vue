@@ -213,12 +213,12 @@ export default {
     line-height 72px
     text-align right 
     position absolute
+    background #fff
     bottom 0
     width 100%
     padding-right 4px
     border-top 1px solid #e8e8e8
     box-sizing border-box
-  .ape-drawer-content-footer
     .el-button
       margin-right 12px
     .el-button:nth-child(2)
@@ -229,4 +229,6 @@ export default {
     line-height 1.5
     word-wrap break-word
     min-height 120px
+    max-height 800px
+    overflow auto 
 </style>

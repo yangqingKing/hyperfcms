@@ -89,21 +89,21 @@ export default {
         {
           title: '课程信息',
           value: [
-            {lable:'ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：',value:'id'},
-            {lable:'标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：',value:'title'},
-            {lable:'课程类型：',value:'type_alias'},
-            {lable:'连载状态：',value:'serial_alias'},
-            {lable:'创建时间：',value:'created_at'},
+            {label:'ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：',value:'id'},
+            {label:'标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：',value:'title'},
+            {label:'课程类型：',value:'type_alias'},
+            {label:'连载状态：',value:'serial_alias'},
+            {label:'创建时间：',value:'created_at'},
           ]
         },
         {
           title: '课程信息',
           value: [
-            {lable:'价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：',value:'price'},
-            {lable:'课程状态：',value:'status_alias'},
-            {lable:'课程时长：',value:'duration_alias'},
-            {lable:'学习人数：',value:'learning_nums'},
-            {lable:'点播次数：',value:'play_nums'},
+            {label:'价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：',value:'price'},
+            {label:'课程状态：',value:'status_alias'},
+            {label:'课程时长：',value:'duration_alias'},
+            {label:'学习人数：',value:'learning_nums'},
+            {label:'点播次数：',value:'play_nums'},
           ]
         }
       ],
@@ -154,6 +154,7 @@ export default {
   },
   watch: {
     "$route.matched" : function(n,o) {
+      console.log(o)
       if (n.length === 2) {
         this.initCourseList()
       }

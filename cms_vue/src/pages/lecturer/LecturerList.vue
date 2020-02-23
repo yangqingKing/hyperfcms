@@ -4,7 +4,10 @@
       <div class="main-page-content">
         <el-row class="table-header">
           <el-col>
-            <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2"  v-if="userPermissions.indexOf('lecturer_create') != -1"  @click="addButton(0)"></el-button>
+            <el-tooltip effect="dark" content="添加讲师" placement="top-start"  v-if="userPermissions.indexOf('lecturer_create') != -1 && buttonType=='icon'" >
+              <el-button type="primary" size="medium" icon="iconfont icon-tianjiacaidan2" @click="addButton(0)"></el-button>
+            </el-tooltip>
+            <el-button type="primary" size="medium" icon="iconfont"  v-if="userPermissions.indexOf('lecturer_create') != -1 && buttonType=='text'"  @click="addButton(0)">添加讲师</el-button>
           </el-col>
         </el-row>
         <el-row class="table-search">
@@ -27,10 +30,40 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="操作">
+            v-if="buttonType=='icon'"
+            label="操作"
+            width="240">
             <template slot-scope="scope">
               <span>
-                <el-button size="mini" icon="el-icon-edit" v-if="userPermissions.indexOf('lecturer_edit') != -1"  @click="editButton(scope.row.id)"></el-button>
+                <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('lecturer_edit') != -1" >
+                  <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除" placement="top-start">
+                  <span>
+                    <el-popover
+                      v-if="userPermissions.indexOf('lecturer_delete') != -1" 
+                      placement="top"
+                      width="150"
+                      v-model="scope.row.visible">
+                      <p>确定要删除记录吗？</p>
+                      <div style="text-align: right; margin: 0;">
+                        <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
+                        <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
+                      </div>
+                      <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    </el-popover>
+                  </span>
+                </el-tooltip>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="buttonType=='text'"
+            label="操作"
+            width="240">
+            <template slot-scope="scope">
+              <span>
+                <el-button size="mini" v-if="userPermissions.indexOf('lecturer_edit') != -1"  @click="editButton(scope.row.id)">编辑</el-button>
                 <el-popover
                   v-if="userPermissions.indexOf('lecturer_delete') != -1" 
                   placement="top"
@@ -41,7 +74,7 @@
                     <el-button type="text" size="mini" @click="scope.row.visible=false">取消</el-button>
                     <el-button type="danger" size="mini" @click="deleteButton(scope.row.id)">确定</el-button>
                   </div>
-                  <el-button slot="reference" type="danger" size="mini" icon="el-icon-delete"></el-button>
+                  <el-button slot="reference" type="danger" size="mini">删除</el-button>
                 </el-popover>
               </span>
             </template>
@@ -75,20 +108,6 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="22">
-              <el-form-item label="类型" prop="type">
-                <el-select class="lecturer-talent-type" v-model="formData.type" clearable placeholder="请选择">
-                  <el-option
-                    v-for="item in talentType"
-                    :key="item.id"
-                    :label="item.display_name"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
             <el-col>
               <el-form-item label="形象照" prop="image"  ref="imageItem">
                 <ApeUploader :limit="1" @handleUploadSuccess="handleUploadSuccess" @handleUploadRemove="handleUploadRemove" :upload-file-list="uploadFileList"></ApeUploader>
@@ -97,8 +116,8 @@
           </el-row>
           <el-row>
             <el-col :span="22">
-              <el-form-item label="附加字段" prop="additional_field">
-                <el-input type="textarea" :rows="2" v-model="formData.additional_field"></el-input>
+              <el-form-item label="附加字段" prop="additional">
+                <el-input type="textarea" :rows="2" v-model="formData.additional"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -151,16 +170,16 @@ export default {
           width: 120
         },
         {
-          title: '关联用户',
-          value: 'relation_user'
-        },
-        {
-          title: '知名昵称',
-          value: 'famous_nickname'
+          title: '信息',
+          value: [
+            {label:'关联用户：',value:'relation_user'},
+            {label:'知名昵称：',value:'famous_nickname'}
+          ]
         },
         {
           title: '介绍',
-          value: 'intro'
+          value: 'intro_alias',
+          value_alias: 'intro'
         },
       ],
       // 表格列表数据
@@ -211,12 +230,10 @@ export default {
         // close_name: '关 闭',
         // confirm_name: '打 印',
       },
-      // 人才类型
-      talentType: [],
     }
   },
   computed: {
-    ...mapGetters(['userPermissions'])
+    ...mapGetters(['userPermissions','buttonType'])
   },
   methods: {
     // 搜索
@@ -233,8 +250,6 @@ export default {
       this.drawerData.visible = true
       this.drawerData.title = '添加讲师'
       this.uploadVodList =[]
-      let list = await this.$api.getLecturerTalentType()
-      this.talentType = list
       this.$nextTick(() => {
         this.drawerData.loading = false
       })
@@ -244,8 +259,6 @@ export default {
       this.drawerData.loading_text = '玩命加载中……'
       this.drawerData.visible = true
       this.drawerData.title = '编辑讲师(ID：'+id+')'
-      let list = await this.$api.getLecturerTalentType()
-      this.talentType = list
       let {info} = await this.$api.getLecturerInfo(id)
       this.formData = info
       this.uploadFileList = [{id:info.image_info.id,name:info.image_info.title,url:info.image_info.full_path}]
@@ -316,7 +329,6 @@ export default {
         this.formData = {}
         this.$refs['lecturerForm'].resetFields()
         this.uploadFileList = []
-        this.talentType = []
       })
     },
     // 初始化讲师列表
@@ -387,7 +399,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .el-button
     margin-right 4px
   .table-header
@@ -410,7 +422,7 @@ export default {
     width 100px
   .el-color-picker
     position absolute
-  .search-user input,.lecturer-talent-type .el-input,.lecturer-talent-type input
-    width 520px !important
+  .search-user
+    width 520px
 </style>
 
