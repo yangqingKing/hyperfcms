@@ -113,4 +113,26 @@ class StatisticsService extends BaseService
         }
         return $result;
     }
+
+    /**
+     * getRegionData
+     * 请求地域
+     * User：YM
+     * Date：2020/2/19
+     * Time：下午9:09
+     * @param $inputData
+     * @return array
+     */
+    public function getRegionData($inputData)
+    {
+        $list = $this->logModel->getRegionData($inputData);
+        $res = [];
+        foreach ($list as $v) {
+            $res[] = [
+                'name' => $v['name'],
+                'value' => [$v['value'],$v['uv'],$v['ip']]
+            ];
+        }
+        return $res;
+    }
 }

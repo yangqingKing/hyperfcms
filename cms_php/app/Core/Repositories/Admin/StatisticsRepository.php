@@ -107,4 +107,31 @@ class StatisticsRepository extends BaseRepository
         }
         return $result;
     }
+
+    /**
+     * getRegionData
+     * 请求地域
+     * User：YM
+     * Date：2020/2/19
+     * Time：下午9:11
+     * @param $inputData
+     * @return array
+     */
+    public function getRegionData($inputData)
+    {
+        if(!isset($inputData['start_time']) || empty($inputData['start_time'])){
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'开始时间为空');
+        }
+        if(!isset($inputData['end_time']) || empty($inputData['end_time'])){
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'结束时间为空');
+        }
+        if ( (strtotime($inputData['end_time'])-strtotime($inputData['start_time']))/86400 > 30 ) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'最大查询30天');
+        }
+        $inputData['start_time'] = strtotime($inputData['start_time'].' 00:00:00');
+        $inputData['end_time'] = strtotime($inputData['end_time']. '23:59:59');
+        $data = $this->statisticsService->getRegionData($inputData);
+
+        return $data;
+    }
 }

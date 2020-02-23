@@ -50,4 +50,22 @@ class StatisticsController extends BaseController
 
         return $this->success($list);
     }
+
+    /**
+     * regionData
+     * 地域统计
+     * User：YM
+     * Date：2020/2/19
+     * Time：下午9:12
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="region_data")
+     */
+    public function regionData()
+    {
+        $reqParam = $this->request->all();
+        $list = $this->statisticsRepo->getRegionData($reqParam);
+
+        return $this->success($list);
+    }
 }

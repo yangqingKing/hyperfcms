@@ -12,6 +12,7 @@ use Hyperf\DbConnection\Db;
  * @property string $remote_addr 
  * @property string $forwarded_for 
  * @property string $real_ip 
+ * @property int $city_id 
  * @property string $user_agent 
  * @property string $platform 
  * @property string $device 
@@ -48,13 +49,13 @@ class Log extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'qid', 'server_name', 'server_addr', 'remote_addr', 'forwarded_for', 'real_ip', 'user_agent', 'platform', 'device', 'browser', 'url', 'uri', 'arguments', 'method', 'execution_time', 'request_body_size', 'response_body_size', 'channel', 'level_name', 'message', 'uuid', 'user_id', 'referer', 'unix_time', 'time_day', 'time_hour', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'qid', 'server_name', 'server_addr', 'remote_addr', 'forwarded_for', 'real_ip', 'city_id', 'user_agent', 'platform', 'device', 'browser', 'url', 'uri', 'arguments', 'method', 'execution_time', 'request_body_size', 'response_body_size', 'channel', 'level_name', 'message', 'uuid', 'user_id', 'referer', 'unix_time', 'time_day', 'time_hour', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'execution_time' => 'float', 'request_body_size' => 'integer', 'response_body_size' => 'integer', 'unix_time' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+    protected $casts = ['id' => 'integer', 'city_id' => 'integer', 'execution_time' => 'float', 'request_body_size' => 'integer', 'response_body_size' => 'integer', 'unix_time' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
     /**
      * getList
      * 获取列表
@@ -135,13 +136,30 @@ class Log extends BaseModel
      */
     public function getFlowData($where, $groupField = '')
     {
-        $query = $this->query()->select($this->table . '.'.$groupField, Db::raw('count(*) AS num'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.remote_addr) AS ip'));
+        $query = $this->query()->select($this->table . '.' . $groupField, Db::raw('count(*) AS num'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.real_ip) AS ip'));
         $query = $query->whereBetween($this->table . '.unix_time', [$where['start_time'], $where['end_time']]);
-        $query = $query->where($this->table . '.level_name','INFO')
-            ->where($this->table . '.channel','<>','SQL');
+        $query = $query->where($this->table . '.level_name', 'INFO')->where($this->table . '.channel', '<>', 'SQL');
         if ($groupField) {
             $query = $query->groupBy($this->table . '.' . $groupField);
         }
+        $query = $query->get();
+        return $query ? $query->toArray() : [];
+    }
+    /**
+     * getRegionData
+     * 请求地域
+     * User：YM
+     * Date：2020/2/19
+     * Time：下午9:08
+     * @param $where
+     * @return array
+     */
+    public function getRegionData($where)
+    {
+        $query = $this->query()->select('ip_region.name AS name', Db::raw('count(*) AS value'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.real_ip) AS ip'));
+        $query = $query->whereBetween($this->table . '.unix_time', [$where['start_time'], $where['end_time']])->where($this->table . '.city_id', '>', '0');
+        $query = $query->join('ip_region', $this->table . '.city_id', '=', 'ip_region.id');
+        $query = $query->groupBy($this->table . '.city_id');
         $query = $query->get();
         return $query ? $query->toArray() : [];
     }
