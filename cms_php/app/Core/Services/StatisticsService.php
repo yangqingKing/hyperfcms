@@ -24,6 +24,7 @@ namespace Core\Services;
  * Time：下午5:14
  *
  * @property \App\Models\Log $logModel
+ * @property \App\Models\IpRegion $ipRegionModel
  */
 class StatisticsService extends BaseService
 {
@@ -128,9 +129,13 @@ class StatisticsService extends BaseService
         $list = $this->logModel->getRegionData($inputData);
         $res = [];
         foreach ($list as $v) {
+            $tmp = $this->ipRegionModel->getInfo($v['city_id']);
+            if ( !(isset($tmp['lng']) && $tmp['lng'] && isset($tmp['lat']) && $tmp['lat']) ) {
+                continue;
+            }
             $res[] = [
-                'name' => $v['name'],
-                'value' => [$v['value'],$v['uv'],$v['ip']]
+                'name' => $tmp['name'],
+                'value' => [$tmp['lng'],$tmp['lat'],$v['value'],$v['uv'],$v['ip']]
             ];
         }
         return $res;

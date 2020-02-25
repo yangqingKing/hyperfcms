@@ -138,7 +138,8 @@ class Log extends BaseModel
     {
         $query = $this->query()->select($this->table . '.' . $groupField, Db::raw('count(*) AS num'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.real_ip) AS ip'));
         $query = $query->whereBetween($this->table . '.unix_time', [$where['start_time'], $where['end_time']]);
-        $query = $query->where($this->table . '.level_name', 'INFO')->where($this->table . '.channel', '<>', 'SQL');
+        $query = $query->where($this->table . '.level_name', 'INFO')
+            ->where($this->table . '.channel', '<>', 'SQL');
         if ($groupField) {
             $query = $query->groupBy($this->table . '.' . $groupField);
         }
@@ -156,9 +157,10 @@ class Log extends BaseModel
      */
     public function getRegionData($where)
     {
-        $query = $this->query()->select('ip_region.name AS name', Db::raw('count(*) AS value'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.real_ip) AS ip'));
-        $query = $query->whereBetween($this->table . '.unix_time', [$where['start_time'], $where['end_time']])->where($this->table . '.city_id', '>', '0');
-        $query = $query->join('ip_region', $this->table . '.city_id', '=', 'ip_region.id');
+        $query = $this->query()->select($this->table .'.city_id', Db::raw('count(*) AS value'), Db::raw('count(distinct ymkj_logs.uuid) AS uv'), Db::raw('count(distinct ymkj_logs.real_ip) AS ip'));
+        $query = $query->whereBetween($this->table . '.unix_time', [$where['start_time'], $where['end_time']])
+            ->where($this->table . '.city_id', '>', '0')
+            ->where($this->table . '.channel', '<>', 'SQL');
         $query = $query->groupBy($this->table . '.city_id');
         $query = $query->get();
         return $query ? $query->toArray() : [];
