@@ -132,6 +132,8 @@ class StatisticsRepository extends BaseRepository
         $inputData['end_time'] = strtotime($inputData['end_time']. '23:59:59');
         $data = $this->statisticsService->getRegionData($inputData);
 
-        return $data;
+        return [
+            'all_data' => $data
+        ];
     }
 }
