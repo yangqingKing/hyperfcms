@@ -1,5 +1,6 @@
 # cms_php相关
 /cms_php/runtime/*
+/cms_php/public/attachments/
 /cms_php/.idea/
 /cms_php/vendor/
 /cms_php/.env*
