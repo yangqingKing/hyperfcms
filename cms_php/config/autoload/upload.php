@@ -14,9 +14,8 @@ declare(strict_types=1);
  */
 
 return [
-
-    //是否上传到oss
-    'oss' => true,
+    // 上传文件保存配置，本地local，阿里云oss
+    'upload_save' => env('UPLOAD_SAVE', 'local'),
 
     // 文件上传允许类型
     'file_allow_files' => [

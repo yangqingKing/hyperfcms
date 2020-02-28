@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 
+use App\Constants\StatusCode;
 use App\Controller\BaseController;
+use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
 
@@ -48,5 +50,27 @@ class UploadController extends BaseController
         $tokenInfo = $this->uploadRepo->getUploadToken();
 
         return $this->success($tokenInfo);
+    }
+
+    /**
+     * uploadFile
+     * 函数的含义说明
+     * User：YM
+     * Date：2020/2/25
+     * Time：下午11:56
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="file")
+     */
+    public function uploadFile()
+    {
+        $reqParam = $this->request->all();
+        $files = $this->request->getUploadedFiles();
+        if(empty($files)){
+            throw new BusinessException(StatusCode::ERR_EXCEPTION,'上传文件为空');
+        }
+        $res = $this->uploadRepo->uploadFiles($files,$reqParam);
+
+        return $this->success($res);
     }
 }

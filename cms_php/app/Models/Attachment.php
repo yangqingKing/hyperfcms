@@ -6,6 +6,7 @@ namespace App\Models;
 /**
  * @property int $id 
  * @property string $title 
+ * @property string $original_name 
  * @property string $filename 
  * @property string $path 
  * @property string $type 
@@ -27,7 +28,7 @@ class Attachment extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'title', 'filename', 'path', 'type', 'size', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'title', 'original_name', 'filename', 'path', 'type', 'size', 'user_id', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -48,7 +49,7 @@ class Attachment extends BaseModel
      */
     public function getList($where = [], $order = [], $offset = 0, $limit = 0)
     {
-        $query = $this->query()->select($this->table . '.id', $this->table . '.title', $this->table . '.filename', $this->table . '.path', $this->table . '.type', $this->table . '.size', $this->table . '.user_id', $this->table . '.created_at');
+        $query = $this->query()->select($this->table . '.id', $this->table . '.title', $this->table . '.original_name', $this->table . '.filename', $this->table . '.path', $this->table . '.type', $this->table . '.size', $this->table . '.user_id', $this->table . '.created_at');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
             if ($v || $v != null) {

@@ -101,7 +101,11 @@ export default {
     // ------ 分页相关 ---------
     pagingData: {
       type: Object,
-      default: () => {},
+      default: () => {
+        return {
+          offset:0
+        }
+      },
       // required: true
     },
     // 其它参数

@@ -81,5 +81,11 @@ class StatusCode extends AbstractConstants
      */
     const ERR_EXCEPTION_USER = 3002;
 
+    /**
+     * 文件上传
+     * @Message("文件上传异常！")
+     */
+    const ERR_EXCEPTION_UPLOAD = 3003;
+
 
 }

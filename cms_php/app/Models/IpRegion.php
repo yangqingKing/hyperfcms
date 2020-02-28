@@ -32,7 +32,6 @@ class IpRegion extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'pid' => 'integer', 'level' => 'integer'];
-
     /**
      * getList
      * 获取列表

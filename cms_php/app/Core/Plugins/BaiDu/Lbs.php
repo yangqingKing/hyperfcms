@@ -6,8 +6,6 @@ declare(strict_types=1);
  *​
  * Lbs.php
  *
- * 文件描述
- *
  * User：YM
  * Date：2020/2/21
  * Time：下午11:00

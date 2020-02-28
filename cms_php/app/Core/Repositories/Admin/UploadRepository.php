@@ -15,7 +15,10 @@ declare(strict_types=1);
 namespace Core\Repositories\Admin;
 
 
+use App\Constants\StatusCode;
+use App\Exception\BusinessException;
 use Core\Repositories\BaseRepository;
+use Core\Plugins\FileUpload;
 
 /**
  * UploadRepository
@@ -40,14 +43,17 @@ class UploadRepository extends BaseRepository
      */
     public function getUploadToken()
     {
-        $isOss = config('upload.oss');
-        if($isOss == true){
+        $uploadSave = config('upload.upload_save');
+        if($uploadSave == 'oss'){
             return $this->getOssToken();
         }else{
             $host = config('app_domain').'/admin_api/upload/file';
+            $host = substr($host,0,3) == 'http'?$host:'http://'.$host;
+            $dir = trim(config('upload.attachments'),'/').'/'.date('Ymd').'/';
             $result = [
                 'host' => $host,
-                'filename' => $this->attachmentService->newFileName()
+                'dir' => $dir,
+                'upload_save' => 'local'
             ];
 
             return $result;
@@ -103,6 +109,7 @@ class UploadRepository extends BaseRepository
         $response['signature'] = $signature;
         $response['expire'] = $expire;
         $response['callback'] = $base64CallbackBody;
+        $response['upload_save'] = 'oss';
         //这个参数是设置用户上传指定的前缀
         $response['dir'] = $dir;
         $response['filename'] = $this->attachmentService->newFilename();
@@ -138,6 +145,39 @@ class UploadRepository extends BaseRepository
         $pos = strpos($dtStr, '+');
         $expiration = substr($dtStr, 0, $pos);
         return $expiration."Z";
+    }
+
+    /**
+     * uploadFiles
+     * 上传文件
+     * User：YM
+     * Date：2020/2/28
+     * Time：下午10:45
+     * @param $files
+     * @param $data
+     * @return array
+     */
+    public function uploadFiles($files, $data)
+    {
+        if (isset($files['file'])) {
+            $upFiles = $files['file'];
+        } else {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION_UPLOAD,'上传文件不存在！');
+        }
+        $fileList = [];
+        if (is_array($upFiles)) {
+            foreach ($upFiles as $k => $v) {
+                $instance = make(FileUpload::class,[$v,$data]);
+                $instance->uploadFile();
+                $fileList[] = $instance->getFileInfo();
+            }
+        } else {
+            $instance = make(FileUpload::class,[$upFiles,$data]);
+            $instance->uploadFile();
+            $fileList[] = $instance->getFileInfo();
+        }
+
+        return $fileList;
     }
 
 }

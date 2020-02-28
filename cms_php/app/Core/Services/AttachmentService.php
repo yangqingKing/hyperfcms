@@ -85,34 +85,34 @@ class AttachmentService extends BaseService
         }
         $info = $this->attachmentModel->getInfo($id);
         if ($info && $info['path']) {
-            $info['full_path'] = $this->getImageFullUrl($info['path']);
+            $info['full_path'] = $this->getAttachmentFullUrl($info['path']);
         }
 
         return $info;
     }
 
     /**
-     * getImageFullUrl
-     * 获取图片的全路径
+     * getAttachmentFullUrl
+     * 获取附件全路径
      * User：YM
      * Date：2020/2/5
      * Time：下午9:21
-     * @param $path
+     * @param $path 相对路径包含文件名
      * @return string
      */
-    public function getImageFullUrl($path)
+    public function getAttachmentFullUrl($path)
     {
         if (!$path) {
             return '';
         }
-        $isOss = config('upload.oss');
-        if ($isOss) {
+        $uploadSave = config('upload.upload_save');
+        if ($uploadSave == 'oss') {
             $host = config('aliyun_oss.bucket.data.host');
             $host = substr($host,0,4) == 'http'?$host:'http://'.$host;
         } else {
             $domain = config('app_domain');
             $domain = substr($domain,0,4) == 'http'?$domain:'http://'.$domain;
-            $attachments = config('upload.attachments');
+            $attachments = ltrim(config('upload.attachments'),'/');
             $host = $domain.'/'.$attachments;
         }
         $fullUrl = rtrim($host,'/').'/'.ltrim($path,'/');
@@ -121,7 +121,7 @@ class AttachmentService extends BaseService
 
     /**
      * newFileName
-     * 生成一个文件名
+     * 生成一个文件名，不包含后缀
      * User：YM
      * Date：2020/2/6
      * Time：下午8:54
@@ -133,18 +133,11 @@ class AttachmentService extends BaseService
         $t = date('YmdHis');
         $format = config('upload.file_name_format');
         $format = str_replace("{time}", $t, $format);
-
-        //过滤文件名的非法字符,并替换文件名
-//        $oriName = substr($oldName, 0, strrpos($oldName, '.'));
-//        $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
-//        $format = str_replace("{filename}", $oriName, $format);
-
         //替换随机字符串
         $randNum = rand(1, 10000000000) . rand(1, 10000000000);
         if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, (int)$matches[1]), $format);
         }
-
         return $format;
     }
 
@@ -185,6 +178,9 @@ class AttachmentService extends BaseService
         if (isset($inputData['filename'])){
             $saveData['filename'] = $inputData['filename'];
         }
+        if (isset($inputData['original_name'])){
+            $saveData['original_name'] = $inputData['original_name'];
+        }
         if (isset($inputData['path'])){
             $saveData['path'] = $inputData['path'];
         }
@@ -197,7 +193,6 @@ class AttachmentService extends BaseService
         if (isset($inputData['user_id'])){
             $saveData['user_id'] = $inputData['user_id'];
         }
-
         return $this->attachmentModel->saveInfo($saveData);
     }
 

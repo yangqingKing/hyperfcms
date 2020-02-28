@@ -62,6 +62,8 @@ class LogDbHandler extends AbstractProcessingHandler
         if ($saveData['channel'] == 'hyperf') {
             return;
         }
-        Log::create($saveData);
+        $log = make(Log::class);
+        $log->saveInfo($saveData);
+//        Log::create($saveData);
     }
 }

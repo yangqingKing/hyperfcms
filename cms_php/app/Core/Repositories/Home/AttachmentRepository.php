@@ -69,7 +69,7 @@ class AttachmentRepository extends BaseRepository
             $result['title'] = $fileInfo['filename'];
             $result['size'] = $size;
             $result['type'] = $fileInfo['extension'];
-            $result['full_path'] = $this->attachmentService->getImageFullUrl($filePath);
+            $result['full_path'] = $this->attachmentService->getAttachmentFullUrl($filePath);
             $result['path'] = $filePath;
             $result['original'] = $fileInfo['filename'];
             return [$result];

@@ -5,6 +5,7 @@
     :class="{'ape-uploader-image':isImage, 'ape-uploader-disabled':disabledUpload}"
     name="file"
     :action="uploadToken.host"
+    :headers="uploadHeaders"
     :data="uploadData"
     :on-preview="handlePictureCardPreview"
     :before-upload="beforeUpload"
@@ -65,6 +66,7 @@ export default {
       fileType: '',
       dialogVisible: false,
       dialogImageUrl: '',
+      uploadHeaders:{},
       uploadData: {},
       uploadToken: {
           accessid: '',
@@ -74,6 +76,7 @@ export default {
           expire: 0,
           callback: '',
           dir: '',
+          upload_save: '',
           filename: '',
       },
     };
@@ -171,14 +174,24 @@ export default {
       if(this.fileType){
           fileKey+=this.fileType
       }
-      this.uploadData =  {
-        key: fileKey,
-        policy: this.uploadToken.policy,
-        OSSAccessKeyId: this.uploadToken.accessid,
-        success_action_status: "200", //让服务端返回200,不然，默认会返回204
-        callback: this.uploadToken.callback,
-        signature: this.uploadToken.signature
+      if (this.uploadToken.upload_save == 'oss') {
+        this.uploadData =  {
+          key: fileKey,
+          policy: this.uploadToken.policy,
+          OSSAccessKeyId: this.uploadToken.accessid,
+          success_action_status: "200", //让服务端返回200,不然，默认会返回204
+          callback: this.uploadToken.callback,
+          signature: this.uploadToken.signature
         }
+      }
+      if (this.uploadToken.upload_save == 'local') {
+        this.uploadHeaders={
+          'HYPERF-SESSION-ID':localStorage.getItem("HYPERF_SESSION_ID")
+        }
+        this.uploadData =  {
+          upload_path: this.uploadToken.dir
+        }
+      } 
     },
     /**
      * 格式化文件列表
