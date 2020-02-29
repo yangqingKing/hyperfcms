@@ -76,7 +76,6 @@ abstract class BaseModel extends Model implements CacheableInterface
             if (!$id) {
                 $id = $instance->id;
             }
-            var_dump($id,'999');
         }
 
         return $id;

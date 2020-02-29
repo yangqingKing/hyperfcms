@@ -30,6 +30,7 @@ return [
     ],
     'settings' => [
         'enable_coroutine' => true,
+//        'worker_num' => 1, // 测试协程数据混淆时，用一个进程
         'worker_num' => swoole_cpu_num(),
         'pid_file' => BASE_PATH . '/runtime/hyperf.pid',
         'open_tcp_nodelay' => true,
