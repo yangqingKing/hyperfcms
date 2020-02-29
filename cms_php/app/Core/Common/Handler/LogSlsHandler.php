@@ -48,12 +48,16 @@ class LogSlsHandler extends AbstractProcessingHandler
      */
     public function write(array $record)
     {
-        // 判断系统允许日志类型
-        if ( ! isStdoutLog($record['level_name']) ) {
+        // 判断是否开始日志记录
+        if ( !config('app_log') ) {
             return false;
         }
         // 判断是否处理框架日志
-        if ( ! env('HF_LOG', false) && $record['channel'] == 'hyperf' ) {
+        if ( !config('hf_log')  && $record['channel'] == 'hyperf' ) {
+            return false;
+        }
+        // 判断系统允许日志类型
+        if ( ! isStdoutLog($record['level_name']) ) {
             return false;
         }
         $saveData = $record['context'];

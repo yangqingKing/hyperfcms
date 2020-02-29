@@ -42,22 +42,23 @@ class LogDbHandler extends AbstractProcessingHandler
      */
     public function write(array $record)
     {
-        // 判断系统允许日志类型
-        if ( ! isStdoutLog($record['level_name']) ) {
+        // 判断是否开始日志记录
+        if ( !config('app_log') ) {
             return false;
         }
-
+        // db驱动是，允许打印框架日志，则直接输出
+        if (config('hf_log') && $record['channel'] == 'hyperf') {
+            $output = new ConsoleOutput();
+            $output->writeln($record['formatted']);
+        }
+        // 判断系统允许日志类型
+        if ( !isStdoutLog($record['level_name']) ) {
+            return false;
+        }
         $saveData = $record['context'];
         $saveData['channel'] = $record['channel'];
         $saveData['message'] = is_array($record['message'])?json_encode($record['message']):$record['message'];
         $saveData['level_name'] = $record['level_name'];
-
-        // db驱动是，允许打印框架日志，则直接输出
-        if (env('HF_LOG', false) && $record['channel'] == 'hyperf') {
-            $output = new ConsoleOutput();
-            $output->writeln($record['formatted']);
-        }
-
         // db驱动，不记录框架日志，框架启动时死循环，原因不明
         if ($saveData['channel'] == 'hyperf') {
             return;

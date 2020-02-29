@@ -28,6 +28,10 @@ return [
         'http://www.yoctometer.com',
         'http://www.yinmengkeji.com',
     ],
+    // 是否记录日志
+    'app_log' => env('APP_LOG', false),
+    // 是否记录框架的日志
+    'hf_log' => env('HF_LOG', false),
     // 定义日志类型的输出
     StdoutLoggerInterface::class => [
         'log_level' => [
