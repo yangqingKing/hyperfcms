@@ -48,7 +48,7 @@ class SysLogRepository extends BaseRepository
         $list = $this->sysLogService->getList($where,$order,$pagesInfo['offset'],$pagesInfo['page_size']);
 
         foreach ($list as &$v) {
-            $v['user_id_alias'] = mb_substr($v['user_id'],0,16).'...';
+            $v['user_id_alias'] = $v['user_id']?mb_substr($v['user_id'],0,16).'...':'';
             $v['channel_alias'] = mb_strlen($v['channel']) > 24?mb_substr($v['channel'],0,24).'...':'';
             $v['uri_alias'] = mb_strlen($v['uri']) > 24?mb_substr($v['uri'],0,24).'...':'';
             $v['qid_alias'] = mb_strlen($v['qid']) > 24?mb_substr($v['qid'],0,24).'...':'';

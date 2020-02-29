@@ -226,7 +226,7 @@ export default {
           title: '封面',
           type: 'image',
           value: 'cover_pc_url',
-          width: 60
+          width: 65
         },
         {
           title: '标题',

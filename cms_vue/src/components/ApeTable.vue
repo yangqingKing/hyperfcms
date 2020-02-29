@@ -30,7 +30,7 @@
           :align="v.align?v.align:'left'">
           <template slot-scope="scope">
             <span v-if="typeof(v.value)=='string'">
-              <span v-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
+              <span v-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" width="40px"></span>
               <span v-else-if="v.value_alias">
                 <el-tooltip effect="dark" :content="scope.row[v.value_alias]" placement="top-start" popper-class="ape-table-tooltip">
                   <span v-html="scope.row[v.value]"></span>
