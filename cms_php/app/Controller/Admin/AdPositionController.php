@@ -58,7 +58,6 @@ class AdPositionController extends BaseController
             'pages' => $list['pages'],
             'list' => $list['data'],
         ];
-
         return $this->success($data);
     }
 
