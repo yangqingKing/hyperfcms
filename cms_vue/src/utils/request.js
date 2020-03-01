@@ -68,7 +68,7 @@ service.interceptors.response.use(
       return res.data
     } else {
       Message.error(res.msg)
-      if (res.code === 401 || res.code === 402 || res.code === 2001) {
+      if (res.code === 1002 || res.code === 1003 || res.code === 1004 || res.code === 2001) {
         localStorage.removeItem('user_info')
         localStorage.removeItem('HYPERF_SESSION_ID')
         router.push('/login')

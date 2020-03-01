@@ -24,6 +24,10 @@ use Core\Plugins\BaiDu\Lbs;
 use Hyperf\DbConnection\Db;
 use App\Models\IpRegion;
 use Hyperf\Utils\Parallel;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
+
 
 /**
  * TestController
@@ -34,6 +38,11 @@ use Hyperf\Utils\Parallel;
  * Time：上午11:32
  *
  * @AutoController(prefix="admin_api/test")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
+ *
  */
 class TestController extends BaseController
 {

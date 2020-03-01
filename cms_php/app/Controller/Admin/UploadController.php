@@ -20,6 +20,9 @@ use App\Controller\BaseController;
 use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * UploadController
@@ -30,6 +33,10 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * Time：下午8:17
  *
  * @Controller(prefix="admin_api/upload")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\UploadRepository $uploadRepo
  */

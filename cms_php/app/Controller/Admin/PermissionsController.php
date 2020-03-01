@@ -21,6 +21,9 @@ use Hyperf\HttpServer\Annotation\PostMapping;
 use App\Constants\StatusCode;
 use Throwable;
 use App\Exception\BusinessException;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * PermissionsController
@@ -31,6 +34,10 @@ use App\Exception\BusinessException;
  * Time：下午2:43
  *
  * @Controller(prefix="admin_api/permissions")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\PermissionsRepository $permissionsRepo
  */

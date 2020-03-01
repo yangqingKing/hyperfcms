@@ -142,7 +142,7 @@ class Auth
      * User：YM
      * Date：2020/2/8
      * Time：下午12:20
-     * @param bool $type
+     * @param bool $type 是否返回当前用户数据
      * @return \App\Models\BaseModel|bool|\Hyperf\Database\Model\Model|null|void
      */
     public function check($type = true)

@@ -17,6 +17,9 @@ namespace App\Controller\Admin;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * MenuController
@@ -28,6 +31,9 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  *
  * @Controller(prefix="admin_api/menu")
  *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  * @property \Core\Repositories\Admin\MenuRepository $menuRepo
  */
 class MenuController extends BaseController

@@ -47,7 +47,6 @@ if (! function_exists('requestEntry')) {
     function requestEntry(array $backTrace)
     {
         $moduleName = 'hyperf';
-
         foreach ($backTrace as $v) {
             if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
                 $tmp = array_reverse(explode('\\',trim($v['class'])));

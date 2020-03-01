@@ -18,6 +18,9 @@ namespace App\Controller\Admin;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * SysLogController
@@ -28,6 +31,10 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * Time：上午11:28
  *
  * @Controller(prefix="admin_api/sys_log")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\SysLogRepository $sysLogRepo
  */

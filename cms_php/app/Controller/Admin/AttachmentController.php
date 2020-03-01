@@ -16,7 +16,10 @@ namespace App\Controller\Admin;
 
 
 use App\Controller\BaseController;
+use App\Middleware\LoginAuthMiddleware;
 use Hyperf\HttpServer\Annotation\Controller;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\PostMapping;
 
 /**
@@ -28,6 +31,10 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * Time：下午3:50
  *
  * @Controller(prefix="admin_api/attachment")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\AttachmentRepository $attachmentRepo
  */

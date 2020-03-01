@@ -20,6 +20,9 @@ use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use Throwable;
 use App\Exception\BusinessException;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * RolesController
@@ -30,6 +33,10 @@ use App\Exception\BusinessException;
  * Time：下午9:41
  *
  * @Controller(prefix="admin_api/roles")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\RolesRepository $rolesRepo
  */

@@ -17,7 +17,10 @@ namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * LinkController
@@ -28,6 +31,8 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * Time：下午10:09
  *
  * @Controller(prefix="admin_api/link")
+ *
+ * @Middlewares({@Middleware(LoginAuthMiddleware::class)})
  *
  * @property \Core\Repositories\Admin\LinkRepository $linkRepo
  */

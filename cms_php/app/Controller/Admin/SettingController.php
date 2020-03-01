@@ -18,6 +18,9 @@ namespace App\Controller\Admin;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\LoginAuthMiddleware;
 
 /**
  * SettingController
@@ -28,6 +31,10 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * Time：下午5:52
  *
  * @Controller(prefix="admin_api/setting")
+ *
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\SettingRepository $settingRepo
  */

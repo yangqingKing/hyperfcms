@@ -40,7 +40,7 @@ class StatusCode extends AbstractConstants
     /**
      * @Message("无权限访问！")
      */
-    const ERR_NO_ACCESS = 1001;
+    const ERR_NOT_ACCESS = 1001;
 
     /**
      * @Message("令牌过期！")
@@ -51,6 +51,11 @@ class StatusCode extends AbstractConstants
      * @Message("令牌无效！")
      */
     const ERR_INVALID_TOKEN = 1003;
+
+    /**
+     * @Message("令牌不存在！")
+     */
+    const ERR_NOT_EXIST_TOKEN = 1004;
 
 
 
