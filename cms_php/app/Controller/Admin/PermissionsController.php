@@ -24,6 +24,7 @@ use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 
 /**
  * PermissionsController
@@ -36,7 +37,8 @@ use App\Middleware\LoginAuthMiddleware;
  * @Controller(prefix="admin_api/permissions")
  *
  * @Middlewares({
- *     @Middleware(LoginAuthMiddleware::class)
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
  * @property \Core\Repositories\Admin\PermissionsRepository $permissionsRepo

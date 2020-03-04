@@ -8,6 +8,7 @@ namespace App\Models;
  * @property int $parent_id 
  * @property string $name 
  * @property string $display_name 
+ * @property string $effect_uri 
  * @property string $description 
  * @property int $order 
  * @property \Carbon\Carbon $created_at 
@@ -26,7 +27,7 @@ class SystemPermission extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'parent_id', 'name', 'display_name', 'description', 'order', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'parent_id', 'name', 'display_name', 'effect_uri', 'description', 'order', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -45,7 +46,7 @@ class SystemPermission extends BaseModel
      */
     public function getList($where = [], $order = [])
     {
-        $query = $this->query()->select($this->table . '.id', $this->table . '.parent_id', $this->table . '.parent_id', $this->table . '.display_name', $this->table . '.name', $this->table . '.description');
+        $query = $this->query()->select($this->table . '.id', $this->table . '.parent_id', $this->table . '.parent_id', $this->table . '.display_name', $this->table . '.name', $this->table . '.effect_uri', $this->table . '.description');
         // 循环增加查询条件
         foreach ($where as $k => $v) {
             if ($v || $v != null) {

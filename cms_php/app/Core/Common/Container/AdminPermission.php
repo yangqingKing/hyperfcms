@@ -14,8 +14,10 @@ declare(strict_types=1);
 
 namespace Core\Common\Container;
 
+use Core\Services\PermissionsService;
 use Hyperf\Cache\Annotation\Cacheable;
 use Hyperf\DbConnection\Db;
+use Hyperf\Di\Annotation\Inject;
 
 
 /**
@@ -32,6 +34,12 @@ class AdminPermission
      * 超级管理员用户组id
      */
     const ROOT_ROLE_ID = 1;
+
+    /**
+     * @Inject()
+     * @var PermissionsService
+     */
+    protected $permissionService;
 
     /**
      * checkPermissions
@@ -90,6 +98,26 @@ class AdminPermission
         }
         $list = array_pluck($list,'name');
         return $list;
+    }
+
+    /**
+     * getPermissionsFromUri
+     * 获取uri对应的权限标识
+     * User：YM
+     * Date：2020/3/4
+     * Time：下午11:21
+     * @param string $uri
+     * @return array
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function getPermissionsFromUri($uri = '')
+    {
+        if (!$uri) {
+            return [];
+        }
+        $list = $this->permissionService->getPermissionsFromUri();
+
+        return $list[$uri]??[];
     }
 
 }

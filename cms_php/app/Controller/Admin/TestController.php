@@ -27,6 +27,7 @@ use Hyperf\Utils\Parallel;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 
 
 /**
@@ -40,7 +41,8 @@ use App\Middleware\LoginAuthMiddleware;
  * @AutoController(prefix="admin_api/test")
  *
  * @Middlewares({
- *     @Middleware(LoginAuthMiddleware::class)
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class),
  * })
  *
  */

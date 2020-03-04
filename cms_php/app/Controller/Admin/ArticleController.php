@@ -21,6 +21,7 @@ use Hyperf\HttpServer\Annotation\PostMapping;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 
 /**
  * ArticleController
@@ -33,7 +34,8 @@ use App\Middleware\LoginAuthMiddleware;
  * @Controller(prefix="admin_api/article")
  *
  * @Middlewares({
- *     @Middleware(LoginAuthMiddleware::class)
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
  * @property \Core\Repositories\Admin\ArticleRepository $articleRepo

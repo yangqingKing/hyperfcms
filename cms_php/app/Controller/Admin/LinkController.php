@@ -21,6 +21,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use App\Middleware\LoginAuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 
 /**
  * LinkController
@@ -32,7 +33,10 @@ use App\Middleware\LoginAuthMiddleware;
  *
  * @Controller(prefix="admin_api/link")
  *
- * @Middlewares({@Middleware(LoginAuthMiddleware::class)})
+ * @Middlewares({
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class)
+ * })
  *
  * @property \Core\Repositories\Admin\LinkRepository $linkRepo
  */

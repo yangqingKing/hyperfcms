@@ -21,6 +21,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use App\Middleware\LoginAuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 
 /**
  * AdPositionController
@@ -33,7 +34,8 @@ use App\Middleware\LoginAuthMiddleware;
  * @Controller(prefix="admin_api/ad_position")
  *
  * @Middlewares({
- *     @Middleware(LoginAuthMiddleware::class)
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
  * @property \Core\Repositories\Admin\AdPositionRepository $adPositionRepo

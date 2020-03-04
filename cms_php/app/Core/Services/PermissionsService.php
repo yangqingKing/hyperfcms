@@ -110,6 +110,7 @@ class PermissionsService extends BaseService
      * Time：下午9:13
      * @param $inputData
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function savePermissions($inputData)
     {
@@ -130,6 +131,10 @@ class PermissionsService extends BaseService
             $saveData['name'] = $inputData['name'];
         }
 
+        if (isset($inputData['effect_uri'])){
+            $saveData['effect_uri'] = $inputData['effect_uri'];
+        }
+
         if (isset($inputData['order'])){
             $saveData['order'] = $inputData['order'];
         }
@@ -141,6 +146,7 @@ class PermissionsService extends BaseService
         $id = $this->systemPermissionModel->saveInfo($saveData);
         // 清除缓存
         clearPrefixCache('admin_user_permission');
+        delCache('permissions-from-uri');
         return $id;
     }
 
@@ -168,13 +174,48 @@ class PermissionsService extends BaseService
      * Time：下午7:34
      * @param $id
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function deleteInfo($id)
     {
         $info = $this->systemPermissionModel->deleteInfo($id);
         // 清除缓存
         clearPrefixCache('admin_user_permission');
+        delCache('permissions-from-uri');
         return $info;
+    }
+
+    /**
+     * getPermissionsFromUri
+     * 获取uri对应的权限标识
+     * User：YM
+     * Date：2020/3/4
+     * Time：下午10:57
+     * @return array|iterable
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function getPermissionsFromUri()
+    {
+        $c = getCache('permissions-from-uri');
+        if ($c) {
+          return $c;
+        }
+        $res = [];
+        $list = $this->getList();
+        foreach ($list as $v) {
+            $tmp = $v['effect_uri'];
+            if (!$tmp) {
+                continue;
+            }
+            $tmp = explode(',',$tmp);
+            foreach ($tmp as $v1) {
+                if ( trim($v1) ) {
+                    $res[trim($v1)][] = $v['name'];
+                }
+            }
+        }
+        setCache('permissions-from-uri',$res);
+        return $res;
     }
 
 

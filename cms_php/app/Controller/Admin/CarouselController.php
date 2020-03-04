@@ -21,6 +21,7 @@ use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\PostMapping;
+use App\Middleware\AdminAuthMiddleware;
 
 /**
  * CarouselController
@@ -33,7 +34,8 @@ use Hyperf\HttpServer\Annotation\PostMapping;
  * @Controller(prefix="admin_api/carousel")
  *
  * @Middlewares({
- *     @Middleware(LoginAuthMiddleware::class)
+ *     @Middleware(LoginAuthMiddleware::class),
+ *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
  * @property \Core\Repositories\Admin\CarouselRepository $carouselRepo

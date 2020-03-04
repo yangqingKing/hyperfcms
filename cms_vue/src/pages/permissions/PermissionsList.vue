@@ -86,6 +86,9 @@
               <el-button slot="append" v-if="handleChild" type="danger" @click="toggleInput">{{isInherit?'自定义':'继承父级'}}</el-button>
             </el-input>
           </el-form-item>
+          <el-form-item label="作用路由" prop="effect_uri">
+            <el-input type="textarea" v-model="formData.effect_uri"></el-input>
+          </el-form-item>
           <el-form-item label="备注" prop="description">
             <el-input type="textarea" v-model="formData.description"></el-input>
           </el-form-item>
