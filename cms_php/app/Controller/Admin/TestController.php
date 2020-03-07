@@ -77,6 +77,7 @@ class TestController extends BaseController
             ];
         });
         }
+        
         $results = $parallel->wait();
         $sql = "INSERT INTO ymkj_ip_region(`id`,`name`,`lng`,`lat`) values";
         $sqlValue = [];
