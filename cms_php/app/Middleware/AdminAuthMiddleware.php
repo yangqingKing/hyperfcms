@@ -64,6 +64,10 @@ class AdminAuthMiddleware implements MiddlewareInterface
             if ( count(array_intersect($userPermissions,$uriPermissions)) == 0 ) {
                 throw new BusinessException(StatusCode::ERR_NOT_ACCESS);
             }
+            // demo演示，不允许保存/删除操作。实际使用请注释！
+            if ( stripos($uri,'store') || stripos($uri,'delete') ) {
+                throw new BusinessException(StatusCode::ERR_EXCEPTION,'DEMO演示，禁止危险操作！');
+            }
         }
         return $handler->handle($request);
     }
