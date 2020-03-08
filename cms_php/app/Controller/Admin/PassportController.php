@@ -17,9 +17,10 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
-use Hyperf\HttpServer\Annotation\AutoController;
+use Hyperf\HttpServer\Annotation\Controller;
 use App\Exception\BusinessException;
 use App\Constants\StatusCode;
+use Hyperf\HttpServer\Annotation\PostMapping;
 
 /**
  * PassportController
@@ -29,7 +30,7 @@ use App\Constants\StatusCode;
  * Date：2020/1/7
  * Time：下午6:43
  *
- * @AutoController(prefix="admin_api/passport")
+ * @Controller(prefix="admin_api/passport")
  *
  * @property \Core\Repositories\Admin\PassportRepository $passportRepo
  */
@@ -42,6 +43,8 @@ class PassportController extends BaseController
      * Date：2020/1/8
      * Time：上午11:36
      * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="login")
      */
     public function login()
     {
@@ -65,5 +68,22 @@ class PassportController extends BaseController
         $data = $this->passportRepo->handleLogin($inputData);
 
         return $this->success($data);
+    }
+
+    /**
+     * submitLogout
+     * 函数的含义说明
+     * User：YM
+     * Date：2020/3/8
+     * Time：下午11:35
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="logout")
+     */
+    public function submitLogout()
+    {
+        $this->passportRepo->handleLogout();
+
+        return $this->success('ok');
     }
 }

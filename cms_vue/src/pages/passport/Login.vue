@@ -4,10 +4,10 @@
       <el-tab-pane label="账号密码登录" name="login1">
         <el-form ref="loginForm" :model="loginData" :rules="rules">
           <el-form-item prop="account">
-            <el-input v-model="loginData.account" placeholder="账号" prefix-icon="iconfont icon-shouji4"></el-input>
+            <el-input v-model="loginData.account" placeholder="账号：13999999999" prefix-icon="iconfont icon-shouji4"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" v-model="loginData.password" placeholder="密码" prefix-icon="iconfont icon-lock"></el-input>
+            <el-input type="password" v-model="loginData.password" placeholder="密码：13999999999" prefix-icon="iconfont icon-lock"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="login-button" type="primary" @click="loginClick">登 录</el-button>

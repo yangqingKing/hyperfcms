@@ -168,13 +168,17 @@ class Auth
      * logout
      * 退出登录
      * User：YM
-     * Date：2020/1/10
-     * Time：下午2:58
+     * Date：2020/3/8
+     * Time：下午11:47
+     * @param string $type destroy直接销毁sessionid重建，clear清空整个session，remove清楚登录验证标志
      * @return string
      */
-    public function logout()
+    public function logout($type = 'destroy')
     {
-        destroySession();
+        if ($type === 'destroy') destroySession();
+        if ($type === 'clear') clearSession();
+        if ($type === 'remove') removeSession(self::LOGIN_TAG);
+
         return getSessionId();
     }
 

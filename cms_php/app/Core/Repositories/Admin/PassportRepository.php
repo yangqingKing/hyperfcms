@@ -73,4 +73,18 @@ class PassportRepository extends BaseRepository
         return $id;
     }
 
+    /**
+     * handleLogout
+     * 处理退出
+     * User：YM
+     * Date：2020/3/8
+     * Time：下午11:35
+     * @return string
+     */
+    public function handleLogout()
+    {
+        $info = $this->auth->logout();
+        return $info;
+    }
+
 }
