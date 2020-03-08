@@ -127,18 +127,9 @@ class AdPositionRepository extends BaseRepository
      */
     public function getVideoPreviewInfo($data)
     {
-        if ( !(isset($data['video_id']) && $data['video_id']) ) {
-            throw new Exception('参数不正确!');
-        }
-        $vodConfig = conf_env("aliyun");
-        $req = new MediaPlay($vodConfig['vod']);
-
-        $plyaInfo = $req->getPlayInfo($data);
-        $authInfo = $req->getPlayAuth($data);
-
         $data = [
-            'play_info' => $plyaInfo,
-            'auth_info' => $authInfo
+            'play_info' => '',
+            'auth_info' => ''
         ];
 
         return $data;

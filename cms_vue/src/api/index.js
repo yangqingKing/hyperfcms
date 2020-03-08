@@ -13,8 +13,6 @@ import category from './category'
 import article from './article'
 import live from './live'
 import lecturer from './lecturer'
-import course from './course';
-import authorization from './authorization'
 import attachment from './attachment'
 import sysLog from './sys_log'
 
@@ -50,10 +48,6 @@ export default {
   ...live,
   // 讲师管理
   ...lecturer,
-  // 课程管理
-  ...course,
-  // 授权管理
-  ...authorization,
   // 附件管理
   ...attachment,
   // 系统日志管理

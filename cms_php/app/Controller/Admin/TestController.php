@@ -4,8 +4,6 @@
  *​
  * TestController.php
  *
- * 文件描述
- *
  * User：YM
  * Date：2019/11/13
  * Time：上午11:32
@@ -32,7 +30,7 @@ use App\Middleware\AdminAuthMiddleware;
 
 /**
  * TestController
- * 类的介绍
+ * 测试用！！！
  * @package App\Controller\Admin
  * User：YM
  * Date：2019/11/13

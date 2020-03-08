@@ -217,28 +217,9 @@ class LiveService extends BaseService
      */
     public function getPushPlayStreamInfo($uid)
     {
-        $liveConfig = conf_env('aliyun')['live'];
-        $pushHost = $liveConfig['push_domain'];
-        $pushKey = $liveConfig['push_key'];
-        $playHost = $liveConfig['play_domain'];
-        $playKey = $liveConfig['play_key'];
-        $appName = $liveConfig['app_name'];
-        $streamName = md5($appName.$uid);
-//        $streamName = $uid;
-        $timesatmp = time();
-        $uri = '/'.$appName.'/'.$streamName;
-
-        $pushInfo = 'rtmp://'.$pushHost.$uri.'?auth_key='.$timesatmp.'-'.'0-0-'.md5($uri.'-'.$timesatmp.'-0-0-'.$pushKey);
-
-        $playInfo = [
-            'rtmp://'.$playHost.$uri.'?auth_key='.$timesatmp.'-'.'0-0-'.md5($uri.'-'.$timesatmp.'-0-0-'.$playKey),
-            'http://'.$playHost.$uri.'.flv'.'?auth_key='.$timesatmp.'-'.'0-0-'.md5($uri.'.flv'.'-'.$timesatmp.'-0-0-'.$playKey),
-            'http://'.$playHost.$uri.'.m3u8'.'?auth_key='.$timesatmp.'-'.'0-0-'.md5($uri.'.m3u8'.'-'.$timesatmp.'-0-0-'.$playKey),
-        ];
-
         $data =  [
-            'push_info' => $pushInfo,
-            'play_info' => $playInfo,
+            'push_info' => '',
+            'play_info' => [],
         ];
 
         return $data;

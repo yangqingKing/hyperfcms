@@ -47,7 +47,7 @@ class PermissionsController extends BaseController
 {
     /**
      * getUserPermissions
-     * 函数的含义说明
+     * 获取当前用户拥有的权限
      * User：YM
      * Date：2020/1/11
      * Time：下午2:47

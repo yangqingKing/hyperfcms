@@ -13,9 +13,7 @@ import link from './link'
 import category from './category'
 import article from './article'
 import live from './live'
-import course from './course'
 import lecturer from './lecturer'
-import authorization from './authorization'
 import statistics from './statistics'
 import attachment from './attachment'
 import sysLog from './sys_log'
@@ -47,9 +45,7 @@ const routes = [
       category, // 分类管理
       article, // 文章管理
       live, // 直播管理
-      course, // 课程管理
       lecturer, // 讲师管理
-      authorization, // 授权管理
       statistics, // 统计管理
       attachment, // 附件管理
       sysLog, // 系统日志

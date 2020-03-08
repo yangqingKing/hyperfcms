@@ -63,7 +63,7 @@ class UploadController extends BaseController
 
     /**
      * uploadFile
-     * 函数的含义说明
+     * 文件上传
      * User：YM
      * Date：2020/2/25
      * Time：下午11:56
