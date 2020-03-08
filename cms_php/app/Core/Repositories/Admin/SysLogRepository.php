@@ -49,11 +49,11 @@ class SysLogRepository extends BaseRepository
 
         foreach ($list as &$v) {
             $v['user_id_alias'] = $v['user_id']?mb_substr($v['user_id'],0,16).'...':'';
-            $v['channel_alias'] = mb_strlen($v['channel']) > 24?mb_substr($v['channel'],0,24).'...':'';
-            $v['uri_alias'] = mb_strlen($v['uri']) > 24?mb_substr($v['uri'],0,24).'...':'';
-            $v['qid_alias'] = mb_strlen($v['qid']) > 24?mb_substr($v['qid'],0,24).'...':'';
-            $v['arguments_alias'] = mb_strlen($v['arguments']) > 32?mb_substr($v['arguments'],0,32).'...':'';
-            $v['message_alias'] = mb_strlen($v['message']) > 32?mb_substr($v['message'],0,32).'...':'';
+            $v['channel_alias'] = $v['channel'] && mb_strlen($v['channel']) > 24?mb_substr($v['channel'],0,24).'...':'';
+            $v['uri_alias'] = $v['uri'] && mb_strlen($v['uri']) > 24?mb_substr($v['uri'],0,24).'...':'';
+            $v['qid_alias'] = $v['qid'] && mb_strlen($v['qid']) > 24?mb_substr($v['qid'],0,24).'...':'';
+            $v['arguments_alias'] = $v['arguments'] && mb_strlen($v['arguments']) > 32?mb_substr($v['arguments'],0,32).'...':'';
+            $v['message_alias'] = $v['message'] && mb_strlen($v['message']) > 32?mb_substr($v['message'],0,32).'...':'';
             $v['platform_device'] = $v['platform'].' '.$v['device'];
             $v['request_body_size_alias'] = formatBytes($v['request_body_size']);
             $v['response_body_size_alias'] = formatBytes($v['response_body_size']);

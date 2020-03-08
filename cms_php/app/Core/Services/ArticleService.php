@@ -57,7 +57,7 @@ class ArticleService extends BaseService
             $v['published_alias'] = $v['is_published']?'已发布':'未发布';
             $v['recommend_alias'] = $v['is_recommend']?'已推荐':'未推荐';
             $v['top_alias'] = $v['is_top']?'已置顶':'未置顶';
-            $v['title_alias'] = mb_strlen($v['title']) > 32?mb_substr($v['title'],0,32).'...':'';
+            $v['title_alias'] = $v['title'] && mb_strlen($v['title']) > 32?mb_substr($v['title'],0,32).'...':'';
             unset($v['content']);
         }
         unset($v);
@@ -187,7 +187,7 @@ class ArticleService extends BaseService
         foreach ($tmp as $v) {
             $tmpArr[] = (int)$v;
         }
-        $tmp2 = explode(',', $info['category_2_ids']);
+        $tmp2 = explode(',', $info['category_2_ids']??'');
         $tmpArr2 = [];
         foreach ($tmp2 as $v) {
             $tmpArr2[] = (int)$v;

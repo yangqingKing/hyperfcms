@@ -56,7 +56,7 @@ class LecturerRepository extends BaseRepository
             if ($userInfo) {
                 $list[$k]['relation_user'] = $userInfo['nickname']?$userInfo['mobile'].'('.$userInfo['nickname'].')':$userInfo['mobile'];
             }
-            $list[$k]['intro_alias'] = mb_strlen($v['intro']) > 24?mb_substr($v['intro'],0,24).'...':'';
+            $list[$k]['intro_alias'] = $v['intro'] && mb_strlen($v['intro']) > 24?mb_substr($v['intro'],0,24).'...':'';
         }
         $data = [
             'pages' => $pagesInfo,

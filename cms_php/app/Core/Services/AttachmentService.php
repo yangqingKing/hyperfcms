@@ -45,8 +45,8 @@ class AttachmentService extends BaseService
         $list = $this->attachmentModel->getList($where,$order,$offset,$limit);
         foreach ($list as &$v) {
             $v['size_alias'] = formatBytes($v['size']);
-            $v['path_alias'] =  mb_strlen($v['path']) > 32?mb_substr($v['path'],0,32).'...':'';
-            $v['title_alias'] =  mb_strlen($v['title']) > 16?mb_substr($v['title'],0,16).'...':'';
+            $v['path_alias'] =  $v['path'] && mb_strlen($v['path']) > 32?mb_substr($v['path'],0,32).'...':'';
+            $v['title_alias'] = $v['title'] &&  mb_strlen($v['title']) > 16?mb_substr($v['title'],0,16).'...':'';
         }
         unset($v);
 
