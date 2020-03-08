@@ -94,6 +94,7 @@ class PermissionsController extends BaseController
      * Date：2020/2/4
      * Time：下午9:05
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      *
      * @PostMapping(path="store")
      */
@@ -138,6 +139,7 @@ class PermissionsController extends BaseController
      * Date：2020/2/4
      * Time：下午9:03
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      *
      * @PostMapping(path="order")
      */
@@ -156,6 +158,7 @@ class PermissionsController extends BaseController
      * Date：2020/2/4
      * Time：下午9:02
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      *
      * @PostMapping(path="delete")
      */

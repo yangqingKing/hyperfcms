@@ -62,6 +62,13 @@
           </span>
           <i v-if="v.type=='icon'" class="iconfont" :class="scope.row[v.value]"></i>
           <span v-else-if="v.type == 'image'"> <img :src="scope.row[v.value]" :alt="scope.row[v.value]" height="40px"></span>
+          <template v-else-if="v.value_alias && v.value">
+            <el-tooltip effect="dark" placement="top-start" popper-class="ape-table-tooltip" v-if="scope.row[v.value]">
+              <div slot="content" v-html="scope.row[v.value_alias]"></div>
+              <span v-if="typeof(v)=='object'" v-html="scope.row[v.value]"></span>
+            </el-tooltip>
+            <span v-else v-html="scope.row[v.value_alias]"></span>
+          </template>
           <span v-else>{{ scope.row[v.value] }}</span>
         </template>
       </el-table-column>

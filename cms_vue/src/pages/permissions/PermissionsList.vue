@@ -10,7 +10,7 @@
             <el-button type="primary" size="medium" icon="iconfont " v-if="userPermissions.indexOf('permissions_create') != -1 && buttonType=='text'" @click="addButton(0)">添加权限组</el-button>
           </el-col>
         </el-row>
-        <TreeTable :data="permissionsList" :columns="columns" :loading="loadingStaus" ref="treeTable" highlight-current-row >
+        <TreeTable :data="permissionsList" :columns="columns" :loading="loadingStaus" ref="treeTable" highlight-current-row border>
           <el-table-column
           slot="first-column"
           width="80"
@@ -125,17 +125,22 @@ export default {
         {
           title: 'ID',
           value: 'id',
-          width: 80
+          width: 60
         },
         {
           title: '权限名称',
           operation:true, // 作为展开操作列
           value: 'display_name',
-          width: 240
+          width: 180
         },
         {
           title: '权限标识',
           value: 'name'
+        },
+         {
+          title: '作用路由',
+          value: 'effect_uri_alias',
+          value_alias: 'effect_uri'
         },
         {
           title: '备注',

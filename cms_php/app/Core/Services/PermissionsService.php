@@ -57,6 +57,10 @@ class PermissionsService extends BaseService
     public function getPermissionsTreeList()
     {
         $list = $this->getList();
+        foreach ($list as &$v) {
+            $v['effect_uri_alias'] = $v['effect_uri'] && mb_strlen($v['effect_uri']) > 24?mb_substr($v['effect_uri'],0,24).'...':'';
+        }
+        unset($v);
 
         $tree = handleTreeList($list);
 

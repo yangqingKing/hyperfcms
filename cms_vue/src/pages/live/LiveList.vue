@@ -34,9 +34,9 @@
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-tooltip effect="dark" content="直播信息" placement="top-start">
+                <!-- <el-tooltip effect="dark" content="直播信息" placement="top-start">
                   <el-button size="mini" type="primary" icon="iconfont icon-zhibo2" @click="getLiveStreamInfo(scope.row.id)" plain></el-button>
-                </el-tooltip>
+                </el-tooltip> -->
                 <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('live_edit') != -1" >
                   <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
                 </el-tooltip>
@@ -64,7 +64,7 @@
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-button size="mini" type="primary" icon="iconfont" @click="getLiveStreamInfo(scope.row.id)" plain>直播信息</el-button>
+                <!-- <el-button size="mini" type="primary" icon="iconfont" @click="getLiveStreamInfo(scope.row.id)" plain>直播信息</el-button> -->
                 <el-button size="mini" v-if="userPermissions.indexOf('live_edit') != -1"  @click="editButton(scope.row.id)">编辑</el-button>
                 <el-popover
                   v-if="userPermissions.indexOf('live_delete') != -1" 

@@ -12,7 +12,7 @@
             <div class="mod-index">
               <h3>项目介绍</h3>
               <ul>
-                <li>Gitee地址：<a href="https://gitee.com/beijing_youmi/youmi_hyperfcms" target="_blank">https://gitee.com/beijing_youmi/youmi_hyperfcms</a></li>
+                <li>Gitee地址：<a href="https://gitee.com/beijing_youmi/youmi_hyperfcms_open" target="_blank">https://gitee.com/beijing_youmi/youmi_hyperfcms_open</a></li>
                 <li>如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持</li>
               </ul>
               <h3>项目沟通</h3>

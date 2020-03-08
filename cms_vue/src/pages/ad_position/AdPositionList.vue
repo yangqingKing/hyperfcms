@@ -24,9 +24,9 @@
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-tooltip effect="dark" content="预览" placement="top-start">
+                <!-- <el-tooltip effect="dark" content="预览" placement="top-start">
                   <el-button v-if="scope.row.video_status" size="mini" class="view-video" icon="iconfont icon-shipin2" @click="videoPreview(scope.row)"></el-button>
-                </el-tooltip>
+                </el-tooltip> -->
                 <el-tooltip effect="dark" content="编辑" placement="top-start"  v-if="userPermissions.indexOf('ad_position_edit') != -1" >
                   <el-button size="mini" icon="el-icon-edit" @click="editButton(scope.row.id)"></el-button>
                 </el-tooltip>
@@ -54,7 +54,7 @@
             label="操作">
             <template slot-scope="scope">
               <span>
-                <el-button v-if="scope.row.video_status" size="mini" class="view-video" icon="iconfont" @click="videoPreview(scope.row)">预览</el-button>
+                <!-- <el-button v-if="scope.row.video_status" size="mini" class="view-video" icon="iconfont" @click="videoPreview(scope.row)">预览</el-button> -->
                 <el-button size="mini" v-if="userPermissions.indexOf('ad_position_edit') != -1"  @click="editButton(scope.row.id)">编辑</el-button>
                 <el-popover
                   v-if="userPermissions.indexOf('ad_position_delete') != -1" 
@@ -143,21 +143,21 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
+          <!-- <el-row>
             <el-col :span="22">
               <el-form-item label="视频" prop="aliyun_video_id" ref="aliyunVodUload">
                 <ApeAliyunVodUpload :is-start-upload="isStartUpload" :upload-file-list="uploadVodList" @handleUploadChange="handleVodUploadChange" @handleUploadRemove="handleVodUploadRemove" @handleUploadSuccess="handleVodUploadSuccess"></ApeAliyunVodUpload>
               </el-form-item>
             </el-col>
-          </el-row>
+          </el-row> -->
         </el-form>     
       </template>
     </ApeDrawer>
-    <div class="ape-aliyun-player-mask" :class="{'is-video-preview':isVideoPreview}">
+    <!-- <div class="ape-aliyun-player-mask" :class="{'is-video-preview':isVideoPreview}">
       <h2 class="header-title">视频预览</h2>
       <el-button class="close-button" type="danger" size="mini" icon="iconfont icon-close" circle @click="closeVideoPreview"></el-button>
       <ApeAliyunPlayer ref="apeAliyunPlayer" :auto-play="true" :width="'640px'" :height="'480px'"></ApeAliyunPlayer>
-    </div>
+    </div> -->
   </div >
 </template>
 

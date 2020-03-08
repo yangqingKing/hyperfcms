@@ -74,6 +74,7 @@ class PermissionsRepository extends BaseRepository
      * Time：下午9:07
      * @param $data
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function savePermissions($data)
     {
@@ -109,6 +110,7 @@ class PermissionsRepository extends BaseRepository
      * Time：下午9:08
      * @param array $ids
      * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function orderPermissions($ids = [])
     {
@@ -137,6 +139,7 @@ class PermissionsRepository extends BaseRepository
      * Time：下午9:08
      * @param $id
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function deleteInfo($id)
     {
