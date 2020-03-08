@@ -182,7 +182,7 @@ class ArticleService extends BaseService
         $info = $this->articleModel->getInfo($id);
         $info['cover_info'] = $this->attachmentService->getInfo($info['cover']);
         $info['attachment_info'] = $this->attachmentService->getInfo($info['attachment']);
-        $tmp = explode(',', $info['category_ids']);
+        $tmp = explode(',', $info['category_ids']??'');
         $tmpArr = [];
         foreach ($tmp as $v) {
             $tmpArr[] = (int)$v;
