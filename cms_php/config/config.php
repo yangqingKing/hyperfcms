@@ -28,6 +28,9 @@ return [
         'http://localhost',
         'http://www.yoctometer.com',
         'http://www.yinmengkeji.com',
+        'http://www.hyperfcms.com',
+        'http://demo.hyperfcms.com',
+        'http://cors-demo.hyperfcms.com',
     ],
     // 是否记录日志
     'app_log' => env('APP_LOG', false),
