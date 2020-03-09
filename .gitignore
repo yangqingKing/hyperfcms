@@ -9,6 +9,7 @@
 /cms_vue/node_modules/
 /cms_vue/dist/
 /cms_vue/yarn.lock
+/cms_vue/.env*
 
 
 # system ignore
