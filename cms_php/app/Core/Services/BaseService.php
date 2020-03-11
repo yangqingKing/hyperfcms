@@ -106,7 +106,7 @@ class BaseService
         $className = "App\\Models\\{$key}";
 
         if (file_exists($fileName)) {
-            //这里的注释写法是有问题的，model不要常驻内存，会产生数据混淆问题
+            //model一般不要常驻内存
             //return $this->container->get($className);
             return make($className);
         } else {
