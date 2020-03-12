@@ -573,6 +573,13 @@ CREATE TABLE `ymkj_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='管理员用户表';
 
 -- ----------------------------
+--  Records of `ymkj_user`
+-- ----------------------------
+BEGIN;
+INSERT INTO `ymkj_user` VALUES ('ymzc3fyszbexumu2qndo3a83a35e2c7', '13999999999', 'ceshi199', null, '测试账号', '0', null, null, '$2y$10$ZiqByL5CFxhh7J9v..zDNeZbItVXOQ2P7TQk9tUKR/DXwyqnfVufy', '2020-02-05 16:58:11', '2020-03-08 23:27:41', null);
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `ymkj_user_course`
 -- ----------------------------
 DROP TABLE IF EXISTS `ymkj_user_course`;
