@@ -16,8 +16,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/admin_api': {
-        target: 'http://localhost:9501',
-        // target: 'http://demo.hyperfcms.com',
+        target: process.env.VUE_APP_POROXY_TARGET,
         changeOrigin: true,
         pathRewrite: {
           // '^/admin_api': 'admin_api'
