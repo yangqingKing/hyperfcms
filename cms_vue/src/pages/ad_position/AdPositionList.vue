@@ -143,21 +143,9 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <!-- <el-row>
-            <el-col :span="22">
-              <el-form-item label="视频" prop="aliyun_video_id" ref="aliyunVodUload">
-                <ApeAliyunVodUpload :is-start-upload="isStartUpload" :upload-file-list="uploadVodList" @handleUploadChange="handleVodUploadChange" @handleUploadRemove="handleVodUploadRemove" @handleUploadSuccess="handleVodUploadSuccess"></ApeAliyunVodUpload>
-              </el-form-item>
-            </el-col>
-          </el-row> -->
         </el-form>     
       </template>
     </ApeDrawer>
-    <!-- <div class="ape-aliyun-player-mask" :class="{'is-video-preview':isVideoPreview}">
-      <h2 class="header-title">视频预览</h2>
-      <el-button class="close-button" type="danger" size="mini" icon="iconfont icon-close" circle @click="closeVideoPreview"></el-button>
-      <ApeAliyunPlayer ref="apeAliyunPlayer" :auto-play="true" :width="'640px'" :height="'480px'"></ApeAliyunPlayer>
-    </div> -->
   </div >
 </template>
 
@@ -166,8 +154,6 @@ import PageHeaderLayout from '@/layouts/PageHeaderLayout'
 import ApeTable from '@/components/ApeTable'
 import ApeDrawer from '@/components/ApeDrawer'
 import ApeUploader from '@/components/ApeUploader'
-import ApeAliyunVodUpload from '@/components/ApeAliyunVodUpload'
-import ApeAliyunPlayer from '@/components/ApeAliyunPlayer'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -175,9 +161,7 @@ export default {
     PageHeaderLayout,
     ApeTable,
     ApeDrawer,
-    ApeUploader,
-    ApeAliyunVodUpload,
-    ApeAliyunPlayer
+    ApeUploader
   },
   data() {
     return {
