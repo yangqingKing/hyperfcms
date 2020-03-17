@@ -98,10 +98,11 @@ class RolesRepository extends BaseRepository
      */
     public function deleteInfo($id)
     {
-        // 删除用户组下对应用户的缓存权限
+        // 删除用户组下对应用户的缓存权限，缓存菜单
         $ids = $this->rolesService->getRoleUsers($id);
         if ($ids) {
             flushAnnotationCache('admin-user-permission',$ids);
+            flushAnnotationCache('admin-user-menu',$ids);
         }
 
         $info = $this->rolesService->deleteInfo($id);
@@ -175,10 +176,11 @@ class RolesRepository extends BaseRepository
             }
         }
         $status = $this->rolesService->saveRolesPermissions($saveData);
-        // 删除用户组下对应用户的缓存权限
+        // 删除用户组下对应用户的缓存权限，缓存菜单
         $ids = $this->rolesService->getRoleUsers($roleId);
         if ($ids) {
             flushAnnotationCache('admin-user-permission',$ids);
+            flushAnnotationCache('admin-user-menu',$ids);
         }
 
         return $status;

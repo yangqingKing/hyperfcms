@@ -217,6 +217,8 @@ class RolesService extends BaseService
         $info = $this->systemRolesUserModel->saveInfo($data);
         // 删除用户权限缓存
         flushAnnotationCache('admin-user-permission',$data['user_id']);
+        // 删除用户菜单缓存
+        flushAnnotationCache('admin-user-menu',$data['user_id']);
         return $info;
     }
 
@@ -248,6 +250,8 @@ class RolesService extends BaseService
         $info = $this->systemRolesUserModel->deleteRolesUser($where);
         // 删除用户权限缓存
         flushAnnotationCache('admin-user-permission',$where['user_id']);
+        // 删除用户菜单缓存
+        flushAnnotationCache('admin-user-menu',$where['user_id']);
         return $info;
     }
 
