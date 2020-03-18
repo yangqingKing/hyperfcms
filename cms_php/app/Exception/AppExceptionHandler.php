@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace App\Exception;
 
 use Hyperf\Di\Annotation\Inject;
-use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Psr\Http\Message\ResponseInterface;
@@ -25,13 +24,6 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 
 class AppExceptionHandler extends ExceptionHandler
 {
-    /**
-     * @var StdoutLoggerInterface
-     */
-    protected $logger;
-
-
-
     /**
      * @Inject
      * @var Response
@@ -58,20 +50,20 @@ class AppExceptionHandler extends ExceptionHandler
             $logName = requestEntry($throwable->getTrace());
         }
         // 获取日志实例
-        $this->logger = Log::get($logName);
+        $logger = Log::get($logName);
 
         // 判断是否由业务异常类抛出的异常
         if ($throwable instanceof BusinessException) {
             // 阻止异常冒泡
             $this->stopPropagation();
             // 业务逻辑错误日志处理
-            $this->logger->warning($throwableMsg,getLogArguments());
+            $logger->warning($throwableMsg,getLogArguments());
             return $this->response->error($throwable->getCode(),$throwable->getMessage());
         }
 
 
         // 系统错误日志处理
-        $this->logger->error($throwableMsg,getLogArguments());
+        $logger->error($throwableMsg,getLogArguments());
         $msg = !empty($throwable->getMessage())?$throwable->getMessage():StatusCode::getMessage(StatusCode::ERR_SERVER);
         return $response->withAddedHeader('content-type', 'text/html; charset=utf-8')
             ->withStatus(StatusCode::ERR_SERVER)

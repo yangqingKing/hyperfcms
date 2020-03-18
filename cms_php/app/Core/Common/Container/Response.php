@@ -21,7 +21,6 @@ use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Hyperf\Utils\Coroutine;
 use Core\Common\Facade\Log;
-use Hyperf\Contract\StdoutLoggerInterface;
 
 /**
  * ReqResponse
@@ -33,11 +32,6 @@ use Hyperf\Contract\StdoutLoggerInterface;
  */
 class Response
 {
-    /**
-     * @var StdoutLoggerInterface
-     */
-    protected $logger;
-
     /**
      * @Inject
      * @var RequestInterface
@@ -73,8 +67,8 @@ class Response
         $executionTime = microtime(true) - Context::get('request_start_time');
         $rbs = strlen($response->getBody()->getContents());
         // 获取日志实例，记录日志
-        $this->logger = Log::get(requestEntry(Coroutine::getBackTrace()));
-        $this->logger->info($msg,getLogArguments($executionTime,$rbs));
+        $logger = Log::get(requestEntry(Coroutine::getBackTrace()));
+        $logger->info($msg,getLogArguments($executionTime,$rbs));
 
         return $response;
     }
