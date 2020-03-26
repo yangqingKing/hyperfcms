@@ -382,7 +382,7 @@ CREATE TABLE `ymkj_live` (
 DROP TABLE IF EXISTS `ymkj_logs`;
 CREATE TABLE `ymkj_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `qid` char(32) DEFAULT NULL COMMENT '请求唯一ID',
+  `qid` char(36) DEFAULT NULL COMMENT '请求唯一ID',
   `server_name` varchar(255) DEFAULT NULL COMMENT '网站域名（多域名发布网站可区分）',
   `server_addr` varchar(255) DEFAULT NULL COMMENT '服务器IP',
   `remote_addr` varchar(255) DEFAULT NULL COMMENT '客户端IP，负载均衡该值有影响',
