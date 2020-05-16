@@ -46,20 +46,28 @@ if (! function_exists('requestEntry')) {
      */
     function requestEntry(array $backTrace)
     {
-        $moduleName = 'hyperf';
+        $moduleName = '';
         foreach ($backTrace as $v) {
-            if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php') && $v['line'] == 143) {
+            if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php')) {
                 $tmp = array_reverse(explode('\\',trim($v['class'])));
-                $module = str_replace('controller','',strtolower($tmp[1]));
-                $class = str_replace('controller','',strtolower($tmp[0]));
-                $function = $v['function'];
-                $moduleName = $class.'-'.$function;
-                if ($module) {
-                    $moduleName = $module.'-'.$moduleName;
+                if (substr(strtolower($tmp[0]),-10) == 'controller') {
+                    $module = str_replace('controller','',strtolower($tmp[1]));
+                    $class = str_replace('controller','',strtolower($tmp[0]));
+                    $function = $v['function'];
+                    $moduleName = $class.'-'.$function;
+                    if ($module) {
+                        $moduleName = $module.'-'.$moduleName;
+                    }
+                    break;
                 }
-                break;
             }
         }
+        if (!$moduleName) {
+            $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $uri = $request->getRequestUri();
+            $moduleName = str_replace('/','-',ltrim($uri,'/'));
+        }
+        $moduleName = $moduleName??'hyperf';
         return $moduleName;
     }
 }
