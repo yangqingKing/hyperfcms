@@ -401,18 +401,24 @@ if (! function_exists('getLogArguments')) {
      */
     function getLogArguments($executionTime = null,$rbs = 0)
     {
-        $request = ApplicationContext::getContainer()->get(RequestInterface::class);
-        $requestHeaders = $request->getHeaders();
-        $serverParams = $request->getServerParams();
-        $agent = new Agent();
-        $agent->setUserAgent($requestHeaders['user-agent'][0]);
-        $arguments = $request->all();
-        if (isset($arguments['password'])) {
-            unset($arguments['password']);
+        if (Context::get('http_request_flag') === true) {
+            $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $requestHeaders = $request->getHeaders();
+            $serverParams = $request->getServerParams();
+            $arguments = $request->all();
+            if (isset($arguments['password'])) {
+                unset($arguments['password']);
+            }
+            $auth = ApplicationContext::getContainer()->get(Auth::class);
+            $userId = $auth->check(false);
+            $uuid = getCookie('HYPERF_SESSION_ID');
+            $url = $request->fullUrl();
+        } else {
+            $requestHeaders = $serverParams = $arguments = [];
+            $uuid = $userId = $url = '';
         }
-        $auth = ApplicationContext::getContainer()->get(Auth::class);
-        $userId = $auth->check(false);
-        $uuid = getCookie('HYPERF_SESSION_ID');
+        $agent = new Agent();
+        $agent->setUserAgent($requestHeaders['user-agent'][0]??'');
         $ip = $requestHeaders['x-real-ip'][0]??$requestHeaders['x-forwarded-for'][0]??'';
         // ip转换地域
         if($ip && ip2long($ip) != false){
@@ -433,7 +439,7 @@ if (! function_exists('getLogArguments')) {
             'platform' => $agent->platform()??'',
             'device' => $agent->device()??'',
             'browser' => $agent->browser()??'',
-            'url' => $request->fullUrl()??'',
+            'url' => $url,
             'uri' => $serverParams['request_uri']??'',
             'arguments' => $arguments?json_encode($arguments):'',
             'method' => $serverParams['request_method']??'',
