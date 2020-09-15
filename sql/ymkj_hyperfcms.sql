@@ -33,8 +33,8 @@ CREATE TABLE `ymkj_ad_carousel` (
   `is_new_win` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否新窗口打开0否1是',
   `is_show` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否显示1显示0不显示',
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `name` (`title`),
   KEY `type` (`c_type`)
@@ -55,8 +55,8 @@ CREATE TABLE `ymkj_ad_link` (
   `target` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '打开方式，_blank新开页，_self当前窗口',
   `additional` varchar(255) DEFAULT NULL COMMENT '附加字段',
   `description` varchar(255) NOT NULL COMMENT '描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='友情链接';
 
@@ -76,8 +76,8 @@ CREATE TABLE `ymkj_ad_position` (
   `is_show` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否显示1显示0不显示',
   `additional` varchar(255) NOT NULL COMMENT '附加字段，存储需要而外显示的信息',
   `description` varchar(255) NOT NULL COMMENT '描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index2` (`unique_identify`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='广告位';
@@ -110,7 +110,7 @@ CREATE TABLE `ymkj_article` (
   `seo_title` varchar(255) DEFAULT NULL COMMENT 'seo关键词标题',
   `seo_keywords` varchar(255) DEFAULT NULL COMMENT 'seo关键词',
   `seo_description` varchar(255) DEFAULT NULL COMMENT 'seo描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -127,7 +127,7 @@ CREATE TABLE `ymkj_article_attachment` (
   `intro` varchar(255) DEFAULT NULL COMMENT '简介',
   `article_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文章id',
   `attachment_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '附件id',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `article_id` (`article_id`)
@@ -164,9 +164,9 @@ CREATE TABLE `ymkj_authorization_info` (
   `authorization_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '授权类型2手动授权',
   `authorization_status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '授权状态1授权中2取消授权',
   `handle_user` varchar(32) NOT NULL COMMENT '操作人',
-  `handle_time` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '操作时间',
+  `handle_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '操作时间',
   `remarks` varchar(255) NOT NULL COMMENT '备注',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
@@ -232,7 +232,7 @@ CREATE TABLE `ymkj_course` (
   `seo_title` varchar(255) DEFAULT NULL,
   `seo_keywords` varchar(255) DEFAULT NULL COMMENT 'seo关键词',
   `seo_description` varchar(255) DEFAULT NULL COMMENT 'seo描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -249,7 +249,7 @@ CREATE TABLE `ymkj_course_chapter` (
   `intro` varchar(255) NOT NULL COMMENT '章节描述',
   `attach_id` int(10) DEFAULT NULL COMMENT '附件id',
   `order` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `course_id` (`course_id`)
@@ -265,7 +265,7 @@ CREATE TABLE `ymkj_course_comments` (
   `course_id` int(10) DEFAULT '0' COMMENT '关联课程id',
   `video_id` int(10) DEFAULT '0' COMMENT '关联视频id',
   `content` text COMMENT '评论内容',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -282,8 +282,8 @@ CREATE TABLE `ymkj_course_learning` (
   `video_id` int(10) unsigned NOT NULL COMMENT '视频id',
   `progress` int(10) DEFAULT '0' COMMENT '视频播放进度',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '学习状态 1学习中 2已学完',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `user_course` (`user_id`,`course_id`),
   KEY `user_video` (`user_id`,`course_id`,`video_id`),
@@ -304,7 +304,7 @@ CREATE TABLE `ymkj_course_play_record` (
   `play_start` int(10) unsigned NOT NULL COMMENT '视频播放开始时间，单位秒',
   `play_end` int(10) unsigned NOT NULL COMMENT '视频播放停止，单位秒',
   `play_time` int(10) unsigned NOT NULL COMMENT '播放了多长时间，单位秒',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '添加时间',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '添加时间',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `user_video` (`user_id`,`course_id`,`video_id`),
@@ -348,8 +348,8 @@ CREATE TABLE `ymkj_lecturer` (
   `additional` varchar(255) DEFAULT NULL COMMENT '附加',
   `details` text COMMENT '详情',
   `image` varchar(255) DEFAULT NULL COMMENT '讲师照片',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `index1` (`user_id`),
   KEY `index3` (`famous_nickname`)
@@ -366,11 +366,11 @@ CREATE TABLE `ymkj_live` (
   `title` varchar(255) DEFAULT '' COMMENT '直播标题',
   `intro` varchar(255) DEFAULT '' COMMENT '直播描述',
   `cover` varchar(255) DEFAULT NULL COMMENT '封面',
-  `start_time` timestamp NULL DEFAULT '1970-01-01 00:00:00',
-  `end_time` timestamp NULL DEFAULT '1970-01-01 00:00:00',
+  `start_time` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `order` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index1` (`course_id`)
@@ -382,7 +382,7 @@ CREATE TABLE `ymkj_live` (
 DROP TABLE IF EXISTS `ymkj_logs`;
 CREATE TABLE `ymkj_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `qid` char(32) DEFAULT NULL COMMENT '请求唯一ID',
+  `qid` char(36) DEFAULT NULL COMMENT '请求唯一ID',
   `server_name` varchar(255) DEFAULT NULL COMMENT '网站域名（多域名发布网站可区分）',
   `server_addr` varchar(255) DEFAULT NULL COMMENT '服务器IP',
   `remote_addr` varchar(255) DEFAULT NULL COMMENT '客户端IP，负载均衡该值有影响',
@@ -423,8 +423,8 @@ CREATE TABLE `ymkj_setting` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL COMMENT '系统设置名',
   `value` text COMMENT '系统设置值',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统设置表';
@@ -450,8 +450,8 @@ CREATE TABLE `ymkj_system_menu` (
   `order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序',
   `additional` varchar(255) DEFAULT NULL COMMENT '附加字段',
   `description` varchar(255) DEFAULT NULL COMMENT '菜单描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='菜单';
 
@@ -474,8 +474,8 @@ CREATE TABLE `ymkj_system_permissions` (
   `effect_uri` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '管理的路由',
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '权限简介',
   `order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `system_permissions_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='权限';
@@ -496,8 +496,8 @@ CREATE TABLE `ymkj_system_roles` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色唯一标识',
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色名称',
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
-  `created_at` timestamp NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `system_roles_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='角色';
@@ -587,7 +587,7 @@ CREATE TABLE `ymkj_user_course` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
   `course_id` int(10) unsigned DEFAULT NULL COMMENT '课程id',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index3` (`course_id`,`user_id`),
@@ -615,8 +615,8 @@ CREATE TABLE `ymkj_video` (
   `seo_title` varchar(255) DEFAULT NULL COMMENT 'seo标题',
   `seo_keywords` varchar(255) DEFAULT NULL COMMENT 'seo关键词',
   `seo_description` varchar(255) DEFAULT NULL COMMENT 'seo描述',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`course_id`,`chapter_id`),
@@ -635,7 +635,7 @@ CREATE TABLE `ymkj_video_logs` (
   `aliyun_video_id` varchar(45) NOT NULL COMMENT '阿里云视频点播视频ID',
   `info` text NOT NULL COMMENT '日志信息,通知内容json存储',
   `type` varchar(45) NOT NULL COMMENT '日志类型success、error',
-  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='视频接收通知日志表';
