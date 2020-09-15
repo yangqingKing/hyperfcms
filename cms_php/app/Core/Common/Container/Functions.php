@@ -490,7 +490,7 @@ if (! function_exists('isMobileNum')) {
      */
     function isMobileNum($v)
     {
-        $search = '/^0?1[3|4|5|6|7|8][0-9]\d{8}$/';
+        $search = '/^0?1[3-9][0-9]\d{8}$/';
         if (preg_match($search, $v)) {
             return true;
         } else {
@@ -626,7 +626,6 @@ if (! function_exists('array_pluck')) {
 }
 
 if (! function_exists('flushAnnotationCache')) {
-
     /**
      * flushAnnotationCache
      * 刷新注解缓存，清楚注解缓存

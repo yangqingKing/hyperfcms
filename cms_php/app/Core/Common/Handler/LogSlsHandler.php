@@ -46,7 +46,7 @@ class LogSlsHandler extends AbstractProcessingHandler
      * @param array $record
      * @return bool|void
      */
-    public function write(array $record)
+    public function write(array $record): void
     {
         // 判断是否开始日志记录
         if ( !config('app_log') ) {

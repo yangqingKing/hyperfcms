@@ -41,7 +41,7 @@ return [
         'buffer_output_size' => 4 * 1024 * 1024,
         // 静态资源
         'document_root' => BASE_PATH . '/public',
-        'static_handler_locations' => ['/'],
+//        'static_handler_locations' => ['/'],
         'enable_static_handler' => true,
         // 是否后台运行
         'daemonize' => env('DAEMONIZE', 0),

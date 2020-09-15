@@ -40,11 +40,11 @@ class LogDbHandler extends AbstractProcessingHandler
      * @param array $record
      * @return bool|void
      */
-    public function write(array $record)
+    public function write(array $record) : void
     {
         // 判断是否开始日志记录
         if ( !config('app_log') ) {
-            return false;
+            return;
         }
         // db驱动是，允许打印框架日志，则直接输出
         if (config('hf_log') && $record['channel'] == 'hyperf') {
@@ -53,7 +53,7 @@ class LogDbHandler extends AbstractProcessingHandler
         }
         // 判断系统允许日志类型
         if ( !isStdoutLog($record['level_name']) ) {
-            return false;
+            return;
         }
         $saveData = $record['context'];
         $saveData['channel'] = $record['channel'];
@@ -69,6 +69,5 @@ class LogDbHandler extends AbstractProcessingHandler
 //            $log->saveInfo($saveData);
             Log::create($saveData);
         });
-
     }
 }
