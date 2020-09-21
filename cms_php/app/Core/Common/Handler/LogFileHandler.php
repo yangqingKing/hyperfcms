@@ -73,7 +73,7 @@ class LogFileHandler extends StreamHandler
      * @param array $record
      * @return bool
      */
-    public function isHandling(array $record)
+    public function isHandling(array $record): bool
     {
         switch ($record['level']) {
             case Logger::DEBUG:
